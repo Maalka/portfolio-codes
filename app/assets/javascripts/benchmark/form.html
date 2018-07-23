@@ -39,6 +39,8 @@
                     <div class="sixteen wide column" style="margin-top:-10px;">
                         <div class="ui divider"></div>
                     </div>
+
+                    <files ng-if="auxModel.approach === 'performance'"></files>
                     <!--<div class="five wide column">-->
                         <!--<label class="design-label">Country</label>-->
                     <!--</div>-->
@@ -74,7 +76,7 @@
                         <!--&lt;!&ndash;</div>&ndash;&gt;-->
                     <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-                    <div class="five wide column">
+                    <div class="five wide column" ng-if="auxModel.approach === 'prescriptive'">
                         <label class="design-label">City
                             <div class="tooltip">
                                 <sup><i class="blue circle info icon"></i></sup>
@@ -82,7 +84,7 @@
                             </div>
                         </label>
                     </div>
-                    <div class="eleven wide column" ng-if="auxModel.country==='United States' || auxModel.country==='Canada'">
+                    <div class="eleven wide column" ng-if="auxModel.country==='United States'  && auxModel.approach === 'prescriptive' || auxModel.country==='Canada' && auxModel.approach === 'prescriptive'">
                         <div class="inline fields required">
                             <div class="sixteen wide field">
                                 <select class="ui dropdown search"
@@ -95,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="eleven wide column" ng-if="auxModel.country!=='United States' && auxModel.country!=='Canada'">
+                    <div class="eleven wide column" ng-if="auxModel.country!=='United States' && auxModel.country!=='Canada' && auxModel.approach === 'prescriptive'">
                         <div class="inline fields required">
                             <div class="sixteen wide field">
                                 <select class="ui dropdown search"
@@ -120,10 +122,10 @@
                         </div>
                     </div>
 
-                    <div class="five wide column">
+                    <div class="five wide column" ng-if="auxModel.approach === 'prescriptive'">
                         <label>{{propText}}</label>
                     </div>
-                    <div class="eleven wide column">
+                    <div class="eleven wide column" ng-if="auxModel.approach === 'prescriptive'">
                         <div class="inline fields required">
                             <div class="sixteen wide field">
                                 <select class="ui dropdown search"
