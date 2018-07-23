@@ -23,8 +23,10 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
 
     $scope.auxModel = {};
+    $scope.auxModel.country = 'United States';
+    $scope.auxModel.state = "CA";
     $scope.temp = {};
-    $scope.auxModel.state = "";
+
     $scope.tempModel = {};
     $scope.energies = [{}, {}];
     $scope.pvList = [{id:0,name:"PV SYSTEM",showDivider:false}];
@@ -125,7 +127,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
     $scope.clearGeography = function () {
         $scope.temp.city = undefined;
-        $scope.auxModel.state = undefined;
+        //$scope.auxModel.state = undefined;
     };
 
 
@@ -755,46 +757,19 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
             ]
         };
 
+        $scope.geographicProperties.city = [];
 
         for (var i = 0; i < cities.length; i++) {
             $scope.geographicProperties.country.push(cities[i].country);
+
+            if (cities[i].country === $scope.auxModel.country){
+                for (var j = 0; j < cities[i].cities.length; j++) {
+                    if (cities[i].cities[j].state_id === 'CA'){
+                        $scope.geographicProperties.city.push(cities[i].cities[j]);
+                    }
+                }
+            }
         }
-
-        $scope.$watch("auxModel.state", function (v) {
-            $scope.geographicProperties.city = [];
-
-            if (v !== undefined && v !== null && $scope.auxModel.country !== undefined && $scope.auxModel.country !== null) {
-                for (var i = 0; i < cities.length; i++) {
-                    if (cities[i].country === $scope.auxModel.country){
-                        for (var j = 0; j < cities[i].cities.length; j++) {
-                            if (cities[i].cities[j].state_id === v){
-                                $scope.geographicProperties.city.push(cities[i].cities[j]);
-                            }
-                        }
-                    }
-                }
-            }
-
-        });
-
-        $scope.$watch("auxModel.country", function (v) {
-            $scope.geographicProperties.city = [];
-
-            if (v !== undefined && v !== null) {
-                if (v === "United States" || v === "Canada"){
-                    $scope.auxModel.state = null;
-                } else {
-                    for (var i = 0; i < cities.length; i++) {
-                        if (cities[i].country === $scope.auxModel.country){
-                            for (var j = 0; j < cities[i].cities.length; j++) {
-                                $scope.geographicProperties.city.push(cities[i].cities[j]);
-                            }
-                        }
-                    }
-                }
-            }
-
-        });
 
 
 

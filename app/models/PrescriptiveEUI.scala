@@ -297,7 +297,7 @@ case class PrescriptiveValues(parameters:JsValue) {
 
   def chooseLookupTable(validatedPrescriptiveParams: ValidatedPrescriptiveParams): Future[String] =  Future{
     validatedPrescriptiveParams.prescriptive_resource match {
-          case 0 => "prescriptive_0.json"
+          case 0 => "prescriptive_tdv_0.json"
           case _ => throw new Exception("Cannot Identify Appropriate Lookup Table: Check prescriptive_resource value!")
         }
   }
