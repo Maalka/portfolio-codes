@@ -57,7 +57,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         var largeQueryList = window.matchMedia('(min-width: 1919px)');                  
 
         var updateMatchMedia= function (q) { 
-            //console.log(q);
+            console.log(q);
             if (printQueryList.matches) {
                 $scope.media = "print";                                    
             } else if (phoneQueryList.matches) {
