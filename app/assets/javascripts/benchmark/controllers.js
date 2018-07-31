@@ -25,6 +25,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
     $scope.auxModel = {};
     $scope.auxModel.country = 'United States';
     $scope.auxModel.state = "CA";
+    $scope.auxModel.climate_zone = null;
     $scope.temp = {};
 
     $scope.tempModel = {};
@@ -56,7 +57,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         var largeQueryList = window.matchMedia('(min-width: 1919px)');                  
 
         var updateMatchMedia= function (q) { 
-            console.log(q);
+            //console.log(q);
             if (printQueryList.matches) {
                 $scope.media = "print";                                    
             } else if (phoneQueryList.matches) {
@@ -530,7 +531,6 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
             $scope.submitArray = [];
 
 
-            $scope.auxModel.climate_zone = $scope.temp.city.cz;
             $scope.auxModel.lat = $scope.temp.city.lat;
             $scope.auxModel.lon = $scope.temp.city.lon;
 
@@ -689,6 +689,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         $scope.geographicProperties = {
             country : [],
             city : [],
+            climate_zone : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
             state: [
                 {id:"AL",name:"Alabama",filter_id:"United States"},
                 {id:"AK",name:"Alaska",filter_id:"United States"},
@@ -756,6 +757,8 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
                 {id:"YT",name:"Yukon",filter_id:"Canada"}
             ]
         };
+
+
 
         $scope.geographicProperties.city = [];
 

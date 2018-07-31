@@ -11,6 +11,7 @@ define(['angular', 'common'], function(angular) {
 			},
             'getSolarFile': function(model) {
                 return playRoutes.controllers.SolarQueryController.getFile().post(model).then(function (response)  {
+                console.log(response);
                     /// handle errors (500 etc)
                     return response.data;
                 });
