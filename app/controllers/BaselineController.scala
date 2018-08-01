@@ -328,7 +328,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
             },
             "climate_zone": {
               "type": "string",
-              "enum": ["1A", "1B", "2A", "2B", "3A", "3B", "3C", "4A", "4B", "4C", "5A", "5B", "5C", "6A", "6B", "7", "8"],
+              "enum": ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"],
               "required": true
             },
             "file_id": {

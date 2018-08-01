@@ -237,6 +237,8 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
     $scope.getFile = function(city){
 
+            console.log(city);
+
             var getStation = function(stations){
                 if ($scope.auxModel.country === 'United States'){
                     return stations.us_station.id;
@@ -261,7 +263,6 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         $q.resolve($scope.futures).then(function (results) {
 
             $scope.buildingRequirements = $scope.setBuildingRequirements(results);
-
 
             $scope.solarResults = $scope.getPropResponseField(results,"pvwatts_system_details");
             $scope.pv_capacity = $scope.buildingRequirements.pv_capacity;
@@ -689,7 +690,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         $scope.geographicProperties = {
             country : [],
             city : [],
-            climate_zone : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+            climate_zone : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"],
             state: [
                 {id:"AL",name:"Alabama",filter_id:"United States"},
                 {id:"AK",name:"Alaska",filter_id:"United States"},

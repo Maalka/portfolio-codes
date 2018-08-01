@@ -134,7 +134,7 @@ case class SolarProperties(parameters: JsValue) {
     val climateZone = prescriptive_resource match {
       case 0 => {
         solarResources.climate_zone match {
-          case Some(a) if List("1A", "1B", "2A", "2B", "3A", "3B", "3C", "4A", "4B", "4C", "5A", "5B", "5C", "6A", "6B", "7", "8").contains(a) => a
+          case Some(a) if List("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16").contains(a) => a
           case _ => throw new Exception("Not a valid Climate Zone for given Prescriptive Resource! ")
         }
       }
