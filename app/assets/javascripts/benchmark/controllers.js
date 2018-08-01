@@ -23,9 +23,11 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
 
     $scope.auxModel = {};
+
     $scope.auxModel.country = 'United States';
     $scope.auxModel.state = "CA";
     $scope.auxModel.climate_zone = null;
+    $scope.auxModel.prescriptive_resource = 0;
     $scope.temp = {};
 
     $scope.tempModel = {};
@@ -455,6 +457,16 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         }
     });
 
+    $scope.$watch("auxModel.prescriptive_resource", function (value) {
+        if (value === undefined) {
+            return;
+        }
+        // only submit if the user has already CLICK on the submit button
+        if($scope.forms.hasValidated) {
+            $scope.submit();
+        }
+    });
+
     $scope.submit = function () {
 
         $scope.solarResults = null;
@@ -686,6 +698,12 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
                 ]
         };
 
+        $scope.prescriptiveResource = [
+            {id:0,name:"Site"},
+            {id:1,name:"Source"},
+            {id:2,name:"TDV"},
+            {id:3,name:"Carbon"}
+        ];
 
         $scope.geographicProperties = {
             country : [],

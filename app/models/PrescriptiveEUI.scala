@@ -297,7 +297,10 @@ case class PrescriptiveValues(parameters:JsValue) {
 
   def chooseLookupTable(validatedPrescriptiveParams: ValidatedPrescriptiveParams): Future[String] =  Future{
     validatedPrescriptiveParams.prescriptive_resource match {
-          case 0 => "prescriptive_eui_0.json"
+          case 0 => "prescriptive_site_0.json"
+          case 1 => "prescriptive_source_0.json"
+          case 2 => "prescriptive_carbon_0.json"
+          case 3 => "prescriptive_tdv_0.json"
           case _ => throw new Exception("Cannot Identify Appropriate Lookup Table: Check prescriptive_resource value!")
         }
   }
@@ -334,8 +337,6 @@ case class PrescriptiveValues(parameters:JsValue) {
       case _ => throw new Exception("Prescriptive Resource or Climate Zone Incorrect!")
     }
   }
-
-
 
   def getValidatedPropParams(propDesc: PropDesc): Future[ValidatedPropTypes] = Future {
     val propType:String = propDesc.building_type match {
