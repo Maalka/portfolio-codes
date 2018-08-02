@@ -201,7 +201,8 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
               "required":true
             },
             "prescriptive_resource": {
-              "type": ["integer","null"]
+              "type": ["integer","null"],
+              "enum": [0,1,2,3]
             },
             "reporting_units": {
               "type": "string",

@@ -481,30 +481,6 @@ define(['angular'], function() {
             $scope.tableAreaUnits="(m²)";
         }
 
-        var validEnergy = function(e) {
-            return (e.energy_type !== undefined &&
-                    e.energy_name !== undefined &&
-                    e.energy_units !== undefined &&
-                    e.energy_use);
-        };
-
-        var mapEnergy = function (e) {
-            return {
-                'energy_type': (e.energy_type) ? e.energy_type.id : undefined,
-                'energy_name': (e.energy_type) ? e.energy_type.name : null,
-                'energy_units': e.energy_units,
-                'energy_use': Number(e.energy_use)
-            };
-        };
-
-        var getFullEnergyList = function () {
-
-            var energyListFromRegular = $scope.energies.map(mapEnergy).filter(validEnergy);
-
-            energyListFromRegular.push.apply(energyListFromRegular);
-
-            return energyListFromRegular;
-        };
 
         var getPropTypes = function () {
 
@@ -528,13 +504,6 @@ define(['angular'], function() {
         if($scope.forms.baselineForm.$valid){
 
             $scope.submitArray = [];
-
-
-            if($scope.energies.map(mapEnergy).filter(validEnergy).length===0){
-                $scope.auxModel.energies=null;
-            } else {
-                $scope.auxModel.energies = getFullEnergyList();
-            }
 
             if($scope.auxModel.approach === 'performance' && $scope.auxModel.energies!==null || $scope.auxModel.approach === 'prescriptive'){
                 $scope.auxModel.prop_types = getPropTypes();
