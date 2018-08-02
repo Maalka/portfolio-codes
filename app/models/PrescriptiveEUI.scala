@@ -20,7 +20,6 @@ import squants.space.{Area, SquareFeet, SquareMeters}
 
 case class PrescriptiveValues(parameters:JsValue) {
 
-  val finalConversion:MetricConversion = MetricConversion(parameters)
 
   def getBuildingSize:Future[Double] = {
     for {
@@ -46,13 +45,13 @@ case class PrescriptiveValues(parameters:JsValue) {
 
   def lookupPrescriptiveEndUses(metric:Option[String]): Future[EndUseDistribution] = {
     for {
-      electric <- lookupPrescriptiveElectricityWeighted(metric)
-      ng <- lookupPrescriptiveNGWeighted(metric)
+      electric <- lookupPrescriptiveElectricityWeighted
+      ng <- lookupPrescriptiveNGWeighted
       weightedEndUseDistList <- getWeightedEndUSeDistList(electric,ng)
     } yield weightedEndUseDistList
   }
 
-  def lookupPrescriptiveElectricityWeighted(metric:Option[String]): Future[ElectricityDistribution] = {
+  def lookupPrescriptiveElectricityWeighted: Future[ElectricityDistribution] = {
     for {
       lookupParams <- getPrescriptiveParams
       lookupTableName <- chooseLookupTable(lookupParams)
@@ -60,13 +59,11 @@ case class PrescriptiveValues(parameters:JsValue) {
       areaWeights <- getAreaWeights(validatedPropList)
       elecDistList:List[ElectricityDistribution] <- Future.sequence(validatedPropList.map(lookupPrescriptiveElectricity(_)))
       weightedElecDistList <- getWeightedElecDistList(areaWeights,elecDistList)
-      conversionMetrics <- finalConversion.getConversionMetrics(metric)
-      electric_converted <- finalConversion.convertMetrics(weightedElecDistList,None,conversionMetrics,metric)
-    } yield electric_converted
+    } yield weightedElecDistList
   }
 
 
-  def lookupPrescriptiveNGWeighted(metric:Option[String]): Future[NaturalGasDistribution] = {
+  def lookupPrescriptiveNGWeighted: Future[NaturalGasDistribution] = {
     for {
       lookupParams <- getPrescriptiveParams
       lookupTableName <- chooseLookupTable(lookupParams)
@@ -74,9 +71,7 @@ case class PrescriptiveValues(parameters:JsValue) {
       areaWeights <- getAreaWeights(validatedPropList)
       ngDistList: List[NaturalGasDistribution] <- Future.sequence(validatedPropList.map(lookupPrescriptiveNG(_)))
       weightedNGDistList <- getWeightedNGDistList(areaWeights,ngDistList)
-      conversionMetrics <- finalConversion.getConversionMetrics(metric)
-      ng_converted <- finalConversion.convertMetrics(weightedNGDistList,None,conversionMetrics,metric)
-    } yield ng_converted
+    } yield weightedNGDistList
   }
 
 

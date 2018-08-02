@@ -93,16 +93,6 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
      ))
    }
 
-   def energyListToJSValue(a: List[EnergyMetrics]): JsValue = {
-     Json.toJson(a.map {b =>
-       JsObject(Seq(
-         "energy_name" -> JsString(b.energyName),
-         "energy_type" -> JsString(b.energyType),
-         "energy_use" -> JsNumber(b.energyUse),
-         "energy_units" -> JsString(b.energyUnits)
-       ))
-     })
-   }
 
   def roundAt(p: Int)(n: Double): Double = {
     val s = math pow(10, p);
@@ -131,7 +121,6 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
               case _: ElectricityDistribution => a.toString -> electricityDistributionToJSValue(b.asInstanceOf[ElectricityDistribution])
               case _: NaturalGasDistribution => a.toString -> ngDistributionToJSValue(b.asInstanceOf[NaturalGasDistribution])
               case _: EndUseDistribution => a.toString -> endUseDistributionToJSValue(b.asInstanceOf[EndUseDistribution])
-              case _: List[EnergyMetrics] => a.toString -> energyListToJSValue(b.asInstanceOf[List[EnergyMetrics]])
             }
             ret
           }
@@ -140,7 +129,6 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
       case v: List[Any] => Right {
         Json.toJson(v.map {
           case a: Energy => energyToJSValue(a)
-          case a: ValidatedEnergy => JsObject(Seq(a.energyType -> energyToJSValue(a.energyValue)))
           case a: ValidatedSolarMetrics => JsObject(Seq(
             "system_capacity" -> JsNumber(a.system_capacity),
             "module_type" -> JsNumber(a.module_type),
@@ -158,28 +146,6 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
         })
         }
       case v: String => Right(Json.toJson(v))
-      case v: ValidatedConversionDetails => Right(JsObject(Seq(
-        "metric_type" -> JsString(v.metric_type),
-        "conversion_resource" -> JsNumber(v.conversion_resource),
-        "source_electricity" -> JsNumber(v.source("electricity")),
-        "source_natural_gas" -> JsNumber(v.source("natural_gas")),
-        "source_fuel_oil" -> JsNumber(v.source("fuel_oil")),
-        "source_propane" -> JsNumber(v.source("propane")),
-        "source_steam" -> JsNumber(v.source("steam")),
-        "source_hot_water" -> JsNumber(v.source("hot_water")),
-        "source_chilled_water" -> JsNumber(v.source("chilled_water")),
-        "source_coal" -> JsNumber(v.source("coal")),
-        "source_other" -> JsNumber(v.source("other")),
-        "carbon_electricity" -> JsNumber(v.carbon("electricity")),
-        "carbon_natural_gas" -> JsNumber(v.carbon("natural_gas")),
-        "carbon_fuel_oil" -> JsNumber(v.carbon("fuel_oil")),
-        "carbon_propane" -> JsNumber(v.carbon("propane")),
-        "carbon_steam" -> JsNumber(v.carbon("steam")),
-        "carbon_hot_water" -> JsNumber(v.carbon("hot_water")),
-        "carbon_chilled_water" -> JsNumber(v.carbon("chilled_water")),
-        "carbon_coal" -> JsNumber(v.carbon("coal")),
-        "carbon_other" -> JsNumber(v.carbon("other"))
-      )))
       case None => Left("Could not recognize input type")
     }
   }
@@ -254,7 +220,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
               "properties": {
                 "metric_type": {
                   "type": "string",
-                  "enum": ["site", "source", "carbon"]
+                  "enum": ["site"]
                 },
                 "conversion_resource": {
                   "type": "integer",
@@ -542,20 +508,6 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
         }
 
 
-        val performanceRequirements: Future[Map[String,Any]] = {
-          for {
-            cc_energy <- Baseline.solarConversionEnergy
-            totalSite <- Baseline.getTotalSiteEnergy
-            pvTotal <- solarTotal
-          } yield {
-            Map(
-              "re_rec_onsite_pv" -> pvTotal / 1000 * cc_energy,
-              "building_energy" -> MegawattHours(totalSite to MegawattHours).value * cc_energy,
-              "re_total_needed" -> MegawattHours(totalSite to MegawattHours).value * cc_energy,
-              "re_procured" -> Math.max(MegawattHours(totalSite to MegawattHours).value - (pvTotal/1000),0.0) * cc_energy
-            )
-          }
-        }
         val prescriptiveRequirements: Future[Map[String,Any]] = {
           for {
             cc_energy <- Baseline.solarConversionEnergy
@@ -611,10 +563,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
 
         val futures = Future.sequence(Seq(
 
-          performanceRequirements.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
           prescriptiveRequirements.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-
-          Baseline.getSiteMetrics.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
           Baseline.getPrescriptiveMetrics.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
 
           Baseline.getPV.map(api(_)).recover { case NonFatal(th) => apiRecover(th) } ,
@@ -625,17 +574,13 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
           solar_warnings.recover { case NonFatal(th) => apiRecover(th) } ,
           merged.recover { case NonFatal(th) => apiRecover(th) },
 
-          Baseline.getBuildingData.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-          Baseline.getMetrics.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
+          Baseline.getBuildingData.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
 
         ))
 
         val fieldNames = Seq(
 
-          "performance_requirements",
           "prescriptive_requirements",
-
-          "performance_metrics",
           "prescriptive_metrics",
 
           "pv_array",
@@ -645,8 +590,8 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
           "pvwatts_warnings",
           "pvwatts_system_details",
 
-          "building_sub_types",
-          "conversion_metrics"
+          "building_sub_types"
+
         )
 
         futures.map(fieldNames.zip(_)).map { r =>

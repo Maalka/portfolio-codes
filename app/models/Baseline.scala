@@ -26,15 +26,10 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
   val result = parameters.as[List[JsValue]]
 
   val pvSystems: SolarProperties = SolarProperties(result.head)
-  val metricConversion: MetricConversion = MetricConversion(result.head)
-  val submittedEnergy: EUICalculator = EUICalculator(result.head)
   val prescriptiveEUI = PrescriptiveValues(result.head)
 
   def getPV = pvSystems.setPVDefaults
   def pVWattsResponse: Future[JsValue] = nrel_client.makeWsRequest(Seq.empty[(String, String)])
-
-  def getBuildingEnergyList: Future[EnergyList] = submittedEnergy.getSiteEnergyList
-  def getMetrics: Future[ValidatedConversionDetails] = metricConversion.getConversionMetrics(None)
 
   def getBuildingData: Future[List[ValidatedPropTypes]] = {
 
@@ -61,34 +56,6 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
       systems <- getPV
       capacity <- Future(systems.map(_.system_capacity).sum)
     } yield capacity
-  }
-
-  def getSiteMetrics:Future[Map[String,Any]] = {
-    //Site EUI and Energy have to be converted to reportingUnits for output as last step, carbon and source are already converted
-      for {
-      buildingSize <- prescriptiveEUI.getBuildingSize
-      convertedBuildingSize <- convertSize(buildingSize,"imperial")
-
-      totalSite <- submittedEnergy.getTotalSiteEnergy
-      totalCarbon <- getTotalActualCarbon
-      totalSource <- getTotalActualSource
-
-      convertedTotalSite <- convertEnergy(totalSite)
-      convertedTotalSource <- convertEnergy(totalSource)
-
-      energyList <- submittedEnergy.getSiteEnergyList
-
-      } yield {
-          Map(
-          "site_energy"->convertedTotalSite,
-          "source_energy"->convertedTotalSource,
-          "carbon_tonnes"->totalCarbon,
-          "site_eui"->convertedTotalSite / convertedBuildingSize,
-          "source_eui"->totalSource / convertedBuildingSize,
-          "carbon_intensity"->totalCarbon / convertedBuildingSize,
-          "building_energy_list"-> energyList.energies
-          )
-      }
   }
 
   def getPrescriptiveMetrics:Future[Map[String,Any]] = {
@@ -126,23 +93,6 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
       }
   }
 
-  def getTotalSiteEnergy: Future[Energy] = {
-    for {
-      totalSite <- submittedEnergy.getTotalSiteEnergy
-      convertedTotalSite <- convertEnergy(totalSite)
-    } yield convertedTotalSite
-  }
-
-
-  def getTotalActualCarbon: Future[Double] = getTotalActualMetric(Some("carbon"))
-  def getTotalActualSource: Future[Energy] = {
-    for {
-      totalSource <- getTotalActualMetric(Some("source"))
-      converted <- convertEnergy(KBtus(totalSource))
-    } yield converted
-  }
-
-
 
 
 
@@ -161,7 +111,7 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
 
   def getPrescriptiveElectricity: Future[ElectricityDistribution] = {
     for {
-      prescriptiveElectricityWeighted <- prescriptiveEUI.lookupPrescriptiveElectricityWeighted(None)
+      prescriptiveElectricityWeighted <- prescriptiveEUI.lookupPrescriptiveElectricityWeighted
       converted <- convertPrescriptive(prescriptiveElectricityWeighted)
     } yield converted
 
@@ -169,7 +119,7 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
 
   def getPrescriptiveNG: Future[NaturalGasDistribution] = {
     for {
-      prescriptiveNGWeighted <- prescriptiveEUI.lookupPrescriptiveNGWeighted(None)
+      prescriptiveNGWeighted <- prescriptiveEUI.lookupPrescriptiveNGWeighted
       converted <- convertPrescriptive(prescriptiveNGWeighted)
     } yield converted
   }
@@ -211,19 +161,6 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
       prescriptiveTotalEnergy <- getPrescriptiveTotalSiteIntensity
       building_size <- prescriptiveEUI.getBuildingSize
     } yield prescriptiveTotalEnergy*building_size
-  }
-
-
-  def getTotalActualMetric(metric_type: Option[String]): Future[Double] = {
-    //this returns in the output reporting metric
-    for {
-      energyList <- submittedEnergy.getValidateSiteEnergyList
-      conversionMetrics <- metricConversion.getConversionMetrics(metric_type)
-      metricList:List[ValidatedEnergy] <- Future.sequence(energyList.map {
-        case a: ValidatedEnergy => metricConversion.convertMetrics(a, Some(a.energyType), conversionMetrics, metric_type)
-      })
-      sum <- Future(metricList.map(_.energyValue.value).sum )
-    } yield sum
   }
 
 
