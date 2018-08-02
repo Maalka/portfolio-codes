@@ -76,41 +76,25 @@
                         <!--&lt;!&ndash;</div>&ndash;&gt;-->
                     <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-                    <div class="five wide column" ng-if="auxModel.approach === 'prescriptive'">
-                        <label class="design-label">City
-                            <div class="tooltip">
-                                <sup><i class="blue circle info icon"></i></sup>
-                                <span class="tooltiptext">Select a city from the list.</span>
-                            </div>
-                        </label>
-                    </div>
-                    <div class="eleven wide column" ng-if="auxModel.approach === 'prescriptive'">
-                        <div class="inline fields required">
-                            <div class="sixteen wide field">
-                                <select class="ui dropdown search"
-                                        ng-model="temp.city"
-                                        ng-change="getFile(temp.city)"
-                                        ng-options="item as item.city for item in geographicProperties.city  | orderBy:'city'"
-                                        name="city">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="five wide column" ng-if="auxModel.approach === 'prescriptive'">
                         <label class="design-label">Climate Zone
                             <div class="tooltip">
                                 <sup><i class="blue circle info icon"></i></sup>
-                                <span class="tooltiptext">Select a Title 24 Climate Zone.</span>
+                                    <span class="tooltipimage">
+                                        <img src="/assets/images/climate_zones.png" style="position:absolute;left: -10px;z-index:9999;width:400px;height:500px;">
+                                    </span>
                             </div>
+
                         </label>
                     </div>
                     <div class="eleven wide column" ng-if="auxModel.approach === 'prescriptive'">
                         <div class="inline fields required">
                             <div class="sixteen wide field">
                                 <select class="ui dropdown search"
-                                        ng-model="auxModel.climate_zone"
-                                        ng-options="zone for zone in geographicProperties.climate_zone"
+                                        ng-model="climate_info"
+                                        ng-change="getFile(climate_info)"
+                                        ng-options="item as item.id for item in geographicProperties.climate_info"
                                         name="climate_zone">
                                     <option value="">Select</option>
                                 </select>

@@ -5,7 +5,7 @@
  * Dashboard controllers.
  */
 //define(["./test/sample_response_test_data"], function(sampleTestData) {
-define(['angular','json!../../data/cities.json'], function(angular, cities) {
+define(['angular'], function() {
   'use strict';
   var RootCtrl = function($rootScope) { 
     $rootScope.includeHeader = maalkaIncludeHeader;
@@ -128,11 +128,16 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         $scope.clearGeography();
     });
 
+
+    $scope.getFile = function(item){
+            $scope.auxModel.climate_zone = item.id;
+            $scope.auxModel.file_id = item.file_id;
+        };
+
     $scope.clearGeography = function () {
         $scope.temp.city = undefined;
         //$scope.auxModel.state = undefined;
     };
-
 
 
     //populate user-input energy information table to calculate site/source EUI and Energy Star metrics
@@ -236,25 +241,6 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
             }
     };
 
-
-    $scope.getFile = function(city){
-
-            console.log(city);
-
-            var getStation = function(stations){
-                if ($scope.auxModel.country === 'United States'){
-                    return stations.us_station.id;
-                } else {
-                    return stations.intl_station.id;
-                }
-            };
-
-            var location = {"lat":city.lat, "lon":city.lon};
-            $scope.futures = benchmarkServices.getSolarFile(location);
-            $q.resolve($scope.futures).then(function (results) {
-                $scope.auxModel.file_id = (typeof results === 'undefined') ? null : getStation(results);
-            });
-        };
 
     $scope.computeBenchmarkResult = function(){
 
@@ -544,10 +530,6 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
             $scope.submitArray = [];
 
 
-            $scope.auxModel.lat = $scope.temp.city.lat;
-            $scope.auxModel.lon = $scope.temp.city.lon;
-
-
             if($scope.energies.map(mapEnergy).filter(validEnergy).length===0){
                 $scope.auxModel.energies=null;
             } else {
@@ -708,7 +690,25 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         $scope.geographicProperties = {
             country : [],
             city : [],
-            climate_zone : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"],
+            climate_info : [
+                {id:"0",file_id:"0-24283"},
+                {id:"1",file_id:"1-724957"},
+                {id:"2",file_id:"1-724930"},
+                {id:"3",file_id:"1-724945"},
+                {id:"4",file_id:"1-723940"},
+                {id:"5",file_id:"1-722956"},
+                {id:"6",file_id:"1-722900"},
+                {id:"7",file_id:"1-722976"},
+                {id:"8",file_id:"1-722880"},
+                {id:"9",file_id:"1-722869"},
+                {id:"10",file_id:"1-725910"},
+                {id:"11",file_id:"1-724839"},
+                {id:"12",file_id:"0-93193"},
+                {id:"13",file_id:"Source"},
+                {id:"14",file_id:"1-723820"},
+                {id:"15",file_id:"1-722868"},
+                {id:"16",file_id:"1-725845"}
+            ],
             state: [
                 {id:"AL",name:"Alabama",filter_id:"United States"},
                 {id:"AK",name:"Alaska",filter_id:"United States"},
@@ -779,19 +779,6 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
 
 
-        $scope.geographicProperties.city = [];
-
-        for (var i = 0; i < cities.length; i++) {
-            $scope.geographicProperties.country.push(cities[i].country);
-
-            if (cities[i].country === $scope.auxModel.country){
-                for (var j = 0; j < cities[i].cities.length; j++) {
-                    if (cities[i].cities[j].state_id === 'CA'){
-                        $scope.geographicProperties.city.push(cities[i].cities[j]);
-                    }
-                }
-            }
-        }
 
 
 
