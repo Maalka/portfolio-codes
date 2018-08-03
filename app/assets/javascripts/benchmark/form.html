@@ -41,41 +41,6 @@
                     </div>
 
                     <files ng-if="auxModel.approach === 'performance'"></files>
-                    <!--<div class="five wide column">-->
-                        <!--<label class="design-label">Country</label>-->
-                    <!--</div>-->
-                    <!--<div class="eleven wide column">-->
-                        <!--<div class="inline fields">-->
-                            <!--<div class="sixteen wide field required">-->
-                                <!--<select class="ui dropdown search"-->
-                                        <!--ng-model="auxModel.country"-->
-                                        <!--ng-options="item as item for item in geographicProperties.country"-->
-                                        <!--required-->
-                                        <!--name="country">-->
-                                    <!--<option value="">Select</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--&lt;!&ndash;<div class="five wide column" ng-if="auxModel.country==='United States'">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<label class="design-label">State</label>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<div class="five wide column" ng-if="auxModel.country==='Canada'">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<label class="design-label">Province</label>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<div class="eleven wide column" ng-if="auxModel.country==='United States' || auxModel.country==='Canada'">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<div class="inline fields">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<div class="eight wide field">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<select class="ui dropdown search"&ndash;&gt;-->
-                                        <!--&lt;!&ndash;ng-model="auxModel.state"&ndash;&gt;-->
-                                        <!--&lt;!&ndash;ng-options="item.id as item.name for item in geographicProperties.state | filter: {filter_id: auxModel.country}"&ndash;&gt;-->
-                                        <!--&lt;!&ndash;name="state">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<option value="">Select</option>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</select>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
 
                     <div class="five wide column" ng-if="auxModel.approach === 'prescriptive'">
                         <label class="design-label">Climate Zone
@@ -101,19 +66,7 @@
                             </div>
                         </div>
                     </div>
-<!--                    <div class="eleven wide column" ng-if="auxModel.country!=='United States' && auxModel.country!=='Canada' && auxModel.approach === 'prescriptive'">
-                        <div class="inline fields required">
-                            <div class="sixteen wide field">
-                                <select class="ui dropdown search"
-                                        ng-model="temp.city"
-                                        ng-change="getFile(temp.city)"
-                                        ng-options="item as item.city for item in geographicProperties.city  | orderBy:'city'"
-                                        name="city">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>-->
+
                     <div class="five wide column" ng-if="auxModel.approach === 'prescriptive'">
                         <label class="design-label">Number of Stories</label>
                     </div>

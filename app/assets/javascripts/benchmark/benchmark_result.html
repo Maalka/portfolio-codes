@@ -63,20 +63,37 @@
             </div>
         </div>
 
+
         <div class="sixteen wide column" style="padding-left:20px; padding-right:20px; padding-bottom:10px; background-color:white;" ng-if="prescriptiveRequirements && endUses && showBar===true  && auxModel.approach === 'prescriptive'">
-			<div class="right aligned eleven wide column">
-				<label class="design-label">Metric</label>
-				<div class="inline fields">
-					<div class="eight wide field">
-						<select class="ui dropdown search"
-								ng-model="auxModel.prescriptive_resource"
-								ng-options="item.id as item.name for item in prescriptiveResource"
-								name="state">
-							<option value="">Select</option>
-						</select>
+
+
+			<div class="ui sixteen wide grid">
+
+					<div class="twelve wide column right aligned">
+						<label class="row-label">Metric:</label>
 					</div>
-				</div>
+					<div class="four wide column" style="padding-left:10px;">
+						<div class="inline fields">
+							<div class="sixteen wide field">
+								<select class="ui dropdown"
+										ng-model="auxModel.prescriptive_resource"
+										ng-options="item.id as item.name for item in prescriptiveResource"
+										name="resource">
+									<option value="">Select</option>
+								</select>
+							</div>
+						</div>
+
+
+					</div>
+
+
+
+
+
 			</div>
+
+
 			<div bar prescriptive-requirements="prescriptiveRequirements" end-uses="endUses" units="tableEUIUnits" style="width: 100%;"></div>
 			<p style="font-size:10px;">Building Energy Consumption and End Uses are based on a <b>code compliant prototype building</b>
 				modeled by Pacific Northwest National Laboratory. Actual building energy consumption will vary from modeled results.</p>

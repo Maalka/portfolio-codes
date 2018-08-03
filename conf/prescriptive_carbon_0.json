@@ -35,7 +35,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.012415763,
@@ -597,7 +597,7 @@
         ]
     },
     "Hospital": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.538798647,
@@ -632,7 +632,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.192223452,
@@ -1194,7 +1194,7 @@
         ]
     },
     "SchoolPrimary": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -1229,7 +1229,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -1791,7 +1791,7 @@
         ]
     },
     "Warehouse": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -1826,7 +1826,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -2388,7 +2388,7 @@
         ]
     },
     "HotelSmall": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -2423,7 +2423,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -2985,7 +2985,7 @@
         ]
     },
     "HotelLarge": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -3020,7 +3020,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -3582,7 +3582,7 @@
         ]
     },
     "RetailStandalone": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -3617,7 +3617,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -4179,7 +4179,7 @@
         ]
     },
     "Hotel": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -4214,7 +4214,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -4776,7 +4776,7 @@
         ]
     },
     "RestaurantFastFood": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -4811,7 +4811,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -5373,7 +5373,7 @@
         ]
     },
     "ApartmentHighRise": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.050112492,
@@ -5408,7 +5408,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.024831526,
@@ -5970,7 +5970,7 @@
         ]
     },
     "School": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -6005,7 +6005,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -6567,7 +6567,7 @@
         ]
     },
     "AllOthers": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.039260743,
@@ -6602,7 +6602,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.014470331999999999,
@@ -7164,7 +7164,7 @@
         ]
     },
     "Restaurant": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -7199,7 +7199,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -7761,7 +7761,7 @@
         ]
     },
     "RetailStripmall": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -7796,7 +7796,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -8358,7 +8358,7 @@
         ]
     },
     "OfficeMedium": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -8393,7 +8393,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -8955,7 +8955,7 @@
         ]
     },
     "Healthcare": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.269399324,
@@ -8990,7 +8990,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.096111726,
@@ -9552,7 +9552,7 @@
         ]
     },
     "Retail": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -9587,7 +9587,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -10149,7 +10149,7 @@
         ]
     },
     "SchoolSecondary": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -10184,7 +10184,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -10746,7 +10746,7 @@
         ]
     },
     "OutPatientHealthCare": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -10781,7 +10781,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -11343,7 +11343,7 @@
         ]
     },
     "Office": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -11378,7 +11378,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -11940,7 +11940,7 @@
         ]
     },
     "OfficeSmall": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -11975,7 +11975,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -12537,7 +12537,7 @@
         ]
     },
     "RestaurantSitDown": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -12572,7 +12572,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -13134,7 +13134,7 @@
         ]
     },
     "ApartmentMidRise": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -13169,7 +13169,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.0,
@@ -13731,7 +13731,7 @@
         ]
     },
     "OfficeLarge": {
-        "6A": [
+        "1": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 1.469166961,
@@ -13766,7 +13766,7 @@
                 "ng_heatRec": 0
             }
         ],
-        "6B": [
+        "2": [
             {
                 "ng_intLgt": 0,
                 "elec_heatRej": 0.15861308,

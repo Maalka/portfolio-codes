@@ -1,6 +1,11 @@
 .design-label {
 	line-height:1.7em !important;
 }
+
+.row-label {
+	line-height:2.0em !important;
+}
+
 .building .static, .reduction .static {
 	width: 100% !important;
 }
