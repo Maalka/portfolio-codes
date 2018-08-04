@@ -2,10 +2,10 @@
 <table class="rimas" style="margin-top:5px; margin-bottom:10px; font-size: 15px;">
 
     <tr>
-        <td class="halfspace">Estimated Site EUI: <b>{{endUses.eui | number: 2}}</b>&nbsp;&nbsp;{{tableEUIUnits}}</td>
+        <td class="halfspace">{{prescriptiveTableIntensityText}} <b>{{endUses.eui | number: 2}}</b>&nbsp;&nbsp;{{prescriptiveTableIntensityUnits}}</td>
     </tr>
     <tr>
-        <td class="halfspace">Estimated Energy Consumption: <b>{{endUses.energy | number: 2}}&nbsp;&nbsp;</b>{{tableBigEnergyUnits}}</td></td>
+        <td class="halfspace">{{prescriptiveTableResourceText}} <b>{{endUses.energy | number: 2}}&nbsp;&nbsp;</b>{{prescriptiveTableUnits}}</td></td>
     </tr>
     </tbody>
 </table>
@@ -23,7 +23,7 @@
         </tr>
         <tr>
             <td class = "onespace" style="width:25%;"></td>
-            <td class = "center" style="width:25%;"><i>({{tableEUIUnits}})</i></td>
+            <td class = "center" style="width:25%;"><i>({{prescriptiveTableIntensityUnits}})</i></td>
             <td class = "center" style="width:25%;"></td>
             <td style="width:2%"></td>
         </tr>

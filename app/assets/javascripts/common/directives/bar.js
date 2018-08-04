@@ -230,7 +230,7 @@ define(['angular','highcharts', './main'], function(angular) {
               }
             });
 
-            $scope.$watch("tableEUIUnits", function (br) {
+            $scope.$watch("barPlotUnits", function (br) {
 
               if (chart !== undefined) {
                 if (br !== undefined) {

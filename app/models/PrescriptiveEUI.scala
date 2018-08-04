@@ -28,57 +28,58 @@ case class PrescriptiveValues(parameters:JsValue) {
     } yield building_size
   }
 
-  def lookupPrescriptiveTotalMetricIntensity(metric:Option[String]): Future[Energy] = {
+  def lookupPrescriptiveTotalMetricIntensity(sourceOption:Option[String]): Future[Energy] = {
     for {
-      weightedEndUseDistList <- lookupPrescriptiveEndUses(metric)
+      weightedEndUseDistList <- lookupPrescriptiveEndUses(sourceOption)
       totalEUI <- getPrescriptiveTotalEUI(weightedEndUseDistList)
     } yield KBtus(totalEUI)
   }
 
 
-  def lookupPrescriptiveEndUsePercents(metric:Option[String]): Future[EndUseDistribution] = {
+  def lookupPrescriptiveEndUsePercents(sourceOption:Option[String]): Future[EndUseDistribution] = {
     for {
-      weightedEndUseDistList <- lookupPrescriptiveEndUses(metric)
+      weightedEndUseDistList <- lookupPrescriptiveEndUses(sourceOption)
       endUsePercents <- getEndUseDistPercents(weightedEndUseDistList)
     } yield endUsePercents
   }
 
-  def lookupPrescriptiveEndUses(metric:Option[String]): Future[EndUseDistribution] = {
+  def lookupPrescriptiveEndUses(sourceOption:Option[String]): Future[EndUseDistribution] = {
     for {
-      electric <- lookupPrescriptiveElectricityWeighted
-      ng <- lookupPrescriptiveNGWeighted
+      electric <- lookupPrescriptiveElectricityWeighted(sourceOption)
+      ng <- lookupPrescriptiveNGWeighted(sourceOption)
       weightedEndUseDistList <- getWeightedEndUSeDistList(electric,ng)
     } yield weightedEndUseDistList
   }
 
-  def lookupPrescriptiveElectricityWeighted: Future[ElectricityDistribution] = {
+  def lookupPrescriptiveElectricityWeighted(sourceOption:Option[String]): Future[ElectricityDistribution] = {
     for {
-      lookupParams <- getPrescriptiveParams
-      lookupTableName <- chooseLookupTable(lookupParams)
       validatedPropList <- getValidatedPropList
       areaWeights <- getAreaWeights(validatedPropList)
-      elecDistList:List[ElectricityDistribution] <- Future.sequence(validatedPropList.map(lookupPrescriptiveElectricity(_)))
+      elecDistList:List[ElectricityDistribution] <- Future.sequence(validatedPropList.map(lookupPrescriptiveElectricity(_,sourceOption)))
       weightedElecDistList <- getWeightedElecDistList(areaWeights,elecDistList)
     } yield weightedElecDistList
   }
 
 
-  def lookupPrescriptiveNGWeighted: Future[NaturalGasDistribution] = {
+  def lookupPrescriptiveNGWeighted(sourceOption:Option[String]): Future[NaturalGasDistribution] = {
     for {
-      lookupParams <- getPrescriptiveParams
-      lookupTableName <- chooseLookupTable(lookupParams)
       validatedPropList <- getValidatedPropList
       areaWeights <- getAreaWeights(validatedPropList)
-      ngDistList: List[NaturalGasDistribution] <- Future.sequence(validatedPropList.map(lookupPrescriptiveNG(_)))
+      ngDistList: List[NaturalGasDistribution] <- Future.sequence(validatedPropList.map(lookupPrescriptiveNG(_,sourceOption)))
       weightedNGDistList <- getWeightedNGDistList(areaWeights,ngDistList)
     } yield weightedNGDistList
   }
 
 
-  def lookupPrescriptiveElectricity(propDesc:ValidatedPropTypes): Future[ElectricityDistribution] = {
+  def lookupPrescriptiveElectricity(propDesc:ValidatedPropTypes,sourceOption:Option[String]): Future[ElectricityDistribution] = {
     for {
       lookupParams <- getPrescriptiveParams
-      lookupTableName <- chooseLookupTable(lookupParams)
+      lookupTableName <- {
+        sourceOption match {
+          case Some("source") => Future{"prescriptive_source_0.json"}
+          case _ => chooseLookupTable(lookupParams)
+        }
+      }
       prescriptiveEUITable <- loadLookupTable(lookupTableName)
       euiDist <-
         Future {
@@ -92,10 +93,15 @@ case class PrescriptiveValues(parameters:JsValue) {
         }
     } yield euiDist
   }
-  def lookupPrescriptiveNG(propDesc:ValidatedPropTypes): Future[NaturalGasDistribution] = {
+  def lookupPrescriptiveNG(propDesc:ValidatedPropTypes,sourceOption:Option[String]): Future[NaturalGasDistribution] = {
     for {
       lookupParams <- getPrescriptiveParams
-      lookupTableName <- chooseLookupTable(lookupParams)
+      lookupTableName <- {
+        sourceOption match {
+          case Some("source") => Future{"prescriptive_source_0.json"}
+          case _ => chooseLookupTable(lookupParams)
+        }
+      }
       prescriptiveEUITable <- loadLookupTable(lookupTableName)
       euiDist <-
         Future {
@@ -294,11 +300,12 @@ case class PrescriptiveValues(parameters:JsValue) {
     validatedPrescriptiveParams.prescriptive_resource match {
           case 0 => "prescriptive_site_0.json"
           case 1 => "prescriptive_source_0.json"
-          case 2 => "prescriptive_carbon_0.json"
-          case 3 => "prescriptive_tdv_0.json"
+          case 2 => "prescriptive_tdv_0.json"
+          case 3 => "prescriptive_carbon_0.json"
           case _ => throw new Exception("Cannot Identify Appropriate Lookup Table: Check prescriptive_resource value!")
         }
   }
+
 
   def loadLookupTable(filename:String): Future[JsValue] = {
     for {

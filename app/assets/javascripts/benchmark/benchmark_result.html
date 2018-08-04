@@ -8,20 +8,20 @@
 			</div>
 		</div>
 
-		<div class="right aligned eleven wide column">
-			<form class="ui form " ng-class="{'error': !forms.baselineForm.$valid}">
-				<div class="ui radio checkbox">
-					<input type="radio" id="project-reporting-metric" ng-model="auxModel.reporting_units"
-						   value='metric'>
-					<label for="project-reporting-metric">metric</label>
-				</div>
-				<div class="ui radio checkbox">
-					<input type="radio" id="project-reporting-imperial" ng-model="auxModel.reporting_units" ng-init="auxModel.reporting_units='imperial'"
-						   value='imperial'>
-					<label for='project-reporting-imperial'>imperial</label>
-				</div>
-			</form>
-		</div>
+		<!--<div class="right aligned eleven wide column">-->
+			<!--<form class="ui form " ng-class="{'error': !forms.baselineForm.$valid}">-->
+				<!--<div class="ui radio checkbox">-->
+					<!--<input type="radio" id="project-reporting-metric" ng-model="auxModel.reporting_units"-->
+						   <!--value='metric'>-->
+					<!--<label for="project-reporting-metric">metric</label>-->
+				<!--</div>-->
+				<!--<div class="ui radio checkbox">-->
+					<!--<input type="radio" id="project-reporting-imperial" ng-model="auxModel.reporting_units" ng-init="auxModel.reporting_units='imperial'"-->
+						   <!--value='imperial'>-->
+					<!--<label for='project-reporting-imperial'>imperial</label>-->
+				<!--</div>-->
+			<!--</form>-->
+		<!--</div>-->
 	</div>
 
 
@@ -69,10 +69,10 @@
 
 			<div class="ui sixteen wide grid">
 
-					<div class="twelve wide column right aligned">
-						<label class="row-label">Metric:</label>
+					<div class="thirteen wide column right aligned">
+						<label class="row-label" style="margin-right:12px;">Metric:</label>
 					</div>
-					<div class="four wide column" style="padding-left:10px;">
+					<div class="three wide column" style="padding-left:0px;">
 						<div class="inline fields">
 							<div class="sixteen wide field">
 								<select class="ui dropdown"
@@ -84,7 +84,6 @@
 							</div>
 						</div>
 
-
 					</div>
 
 
@@ -94,7 +93,7 @@
 			</div>
 
 
-			<div bar prescriptive-requirements="prescriptiveRequirements" end-uses="endUses" units="tableEUIUnits" style="width: 100%;"></div>
+			<div bar prescriptive-requirements="prescriptiveRequirements" end-uses="endUses" units="barPlotUnits" style="width: 100%;"></div>
 			<p style="font-size:10px;">Building Energy Consumption and End Uses are based on a <b>code compliant prototype building</b>
 				modeled by Pacific Northwest National Laboratory. Actual building energy consumption will vary from modeled results.</p>
 		</div>

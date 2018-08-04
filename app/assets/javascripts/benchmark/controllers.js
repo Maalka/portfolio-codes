@@ -28,6 +28,7 @@ define(['angular'], function() {
     $scope.auxModel.state = "CA";
     $scope.auxModel.climate_zone = null;
     $scope.auxModel.prescriptive_resource = 0;
+    $scope.auxModel.reporting_units = "imperial";
     $scope.temp = {};
 
     $scope.tempModel = {};
@@ -250,14 +251,14 @@ define(['angular'], function() {
 
         $q.resolve($scope.futures).then(function (results) {
 
-            $scope.buildingRequirements = $scope.setBuildingRequirements(results);
+            $scope.buildingRequirements = $scope.setBuildingRequirements(results,"source");
 
             $scope.solarResults = $scope.getPropResponseField(results,"pvwatts_system_details");
             $scope.pv_capacity = $scope.buildingRequirements.pv_capacity;
 
             $scope.solarMonthly = (typeof $scope.solarResults === 'undefined') ? undefined : $scope.solarResults.outputs;
 
-            $scope.prescriptiveRequirements = $scope.computePrescriptiveRequirements(results);
+            $scope.prescriptiveRequirements = $scope.setBuildingRequirements(results,"user");
 
             $scope.endUses = $scope.computeEndUses(results);
 
@@ -265,16 +266,6 @@ define(['angular'], function() {
             $scope.showBar = false;
 
         });
-    };
-
-    $scope.setBuildingRequirements = function(results){
-
-        if($scope.auxModel.approach === "performance"){
-                return $scope.computePerformanceRequirements(results);
-            } else {
-                return $scope.computePrescriptiveRequirements(results);
-            }
-
     };
 
 
@@ -300,41 +291,24 @@ define(['angular'], function() {
         return size.reduce(add, 0);
     };
 
-    $scope.computePerformanceRequirements = function(results){
-
-        var performance_requirements = $scope.getPropResponseField(results,"performance_requirements");
-
-        var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
-        var building_size = $scope.getPropSize(building_sub_types);
-
-        var performanceTable = {
-              "pv_area": ($scope.getPropResponseField(results,"pv_area")),
-              "pv_capacity": ($scope.getPropResponseField(results,"pv_capacity_kW")),
-              "building_energy": (performance_requirements.building_energy),
-              "required": (performance_requirements.re_total_needed),
-              "pv_potential": (performance_requirements.re_rec_onsite_pv),
-              "procured": (performance_requirements.re_procured),
-
-              "building_energy_norm": (performance_requirements.building_energy / building_size * 1000),
-              "required_norm": (performance_requirements.re_total_needed / building_size * 1000),
-              "pv_potential_norm": (performance_requirements.re_rec_onsite_pv / building_size * 1000),
-              "procured_norm": (performance_requirements.re_procured / building_size * 1000)
-        };
-
-
-        return performanceTable;
+    $scope.setPrescriptiveRequirements = function(results, metric){
+        if(metric === "source"){
+            return $scope.getPropResponseField(results,"source_requirements");
+        } else {
+            return $scope.getPropResponseField(results,"prescriptive_requirements");
+        }
     };
 
-    $scope.computePrescriptiveRequirements = function(results){
+    $scope.setBuildingRequirements = function(results, metric){
 
-        var prescriptive_requirements = $scope.getPropResponseField(results,"prescriptive_requirements");
+        var prescriptive_requirements = $scope.setPrescriptiveRequirements(results,metric);
 
         if(prescriptive_requirements) {
 
             var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
             var building_size = $scope.getPropSize(building_sub_types);
 
-            var prescriptiveTable = {
+            var sourceTable = {
                   "pv_area": ($scope.getPropResponseField(results,"pv_area")),
                   "pv_capacity": ($scope.getPropResponseField(results,"pv_capacity_kW")),
                   "building_energy": (prescriptive_requirements.prescriptive_building_energy),
@@ -348,15 +322,11 @@ define(['angular'], function() {
                   "procured_norm": (prescriptive_requirements.prescriptive_re_procured / building_size * 1000)
             };
 
-            return prescriptiveTable;
+            return sourceTable;
 
         } else {
             return undefined;
         }
-
-
-
-
     };
 
     $scope.computeEndUses = function(results){
@@ -473,13 +443,50 @@ define(['angular'], function() {
             $scope.tableBigEnergyUnits="MBtu/yr";
             $scope.tableEUIUnits="kBtu/ft²-yr";
             $scope.tableAreaUnits="(ft²)";
+
+            if ($scope.auxModel.prescriptive_resource === 3) {
+                $scope.barPlotUnits="lb CO₂/ft²-yr";
+                $scope.prescriptiveTableUnits="Tons CO₂/yr";
+                $scope.prescriptiveTableIntensityUnits="lb CO₂/ft²-yr";
+
+            } else {
+                $scope.barPlotUnits="kBtu/ft²-yr";
+                $scope.prescriptiveTableUnits="MBtu/yr";
+                $scope.prescriptiveTableIntensityUnits="kBtu/ft²-yr";
+            }
         }else {
             $scope.tableEnergyUnits="(kWh)";
             $scope.graphEnergyUnits="kWh";
             $scope.tableBigEnergyUnits="MWh/yr";
             $scope.tableEUIUnits="kWh/m²-yr";
             $scope.tableAreaUnits="(m²)";
+
+            if ($scope.auxModel.prescriptive_resource === 3) {
+                $scope.barPlotUnits="kg CO₂/m²-yr";
+                $scope.prescriptiveTableUnits="Metric Tons CO₂/yr";
+                $scope.prescriptiveTableIntensityUnits="kg CO₂/m²-yr";
+            } else {
+                $scope.barPlotUnits="kWh/m²-yr";
+                $scope.prescriptiveTableUnits="MWh/yr";
+                $scope.prescriptiveTableIntensityUnits="kWh/m²-yr";
+            }
         }
+
+         if ($scope.auxModel.prescriptive_resource === 0) {
+            $scope.prescriptiveTableIntensityText="Estimated Site EUI:";
+            $scope.prescriptiveTableResourceText="Estimated Site Energy Consumption:";
+        } else if ($scope.auxModel.prescriptive_resource === 1) {
+            $scope.prescriptiveTableIntensityText="Estimated Source EUI:";
+            $scope.prescriptiveTableResourceText="Estimated Source Energy Consumption:";
+        } else if ($scope.auxModel.prescriptive_resource === 2) {
+            $scope.prescriptiveTableIntensityText="Estimated TDV Intensity:";
+            $scope.prescriptiveTableResourceText="Estimated TDV Total:";
+        } else if ($scope.auxModel.prescriptive_resource === 3) {
+            $scope.prescriptiveTableIntensityText="Estimated Carbon Intensity:";
+            $scope.prescriptiveTableResourceText="Estimated Total Carbon Emissions:";
+
+        }
+
 
 
         var getPropTypes = function () {
@@ -534,28 +541,13 @@ define(['angular'], function() {
 
             buildingType: {
                 commercial: [
-                    //{id:"OfficeLarge",name:"Office - Large"},
-                    //{id:"OfficeMedium",name:"Office - Medium"},
-                    //{id:"OfficeSmall",name:"Office - Small"},
                     {id:"Office",name:"Office"},
-                    //{id:"RetailStandalone",name:"Retail - Standalone"},
-                    //{id:"RetailStripmall",name:"Retail - Stripmall"},
                     {id:"Retail",name:"Retail"},
-                    //{id:"SchoolPrimary",name:"School - Primary"},
-                    //{id:"SchoolSecondary",name:"School - Secondary"},
                     {id:"School",name:"School"},
-                    //{id:"Hospital",name:"Hospital"},
-                    //{id:"OutPatientHealthCare",name:"Healthcare - Outpatient"},
                     {id:"Healthcare",name:"Healthcare"},
-                    //{id:"RestaurantSitDown",name:"Restaurant - Sit Down"},
-                    //{id:"RestaurantFastFood",name:"Restaurant - Fast Food"},
                     {id:"Restaurant",name:"Restaurant"},
-                    //{id:"HotelLarge",name:"Hotel - Large"},
-                    //{id:"HotelSmall",name:"Hotel - Small"},
                     {id:"Hotel",name:"Hotel"},
                     {id:"Warehouse",name:"Warehouse"},
-                    //{id:"ApartmentHighRise",name:"Apartment - High Rise"},
-                    //{id:"ApartmentMidRise",name:"Apartment - Mid Rise"} ,
                     {id:"Apartment",name:"Apartment"},
                     {id:"AllOthers",name:"Other"}
                 ]

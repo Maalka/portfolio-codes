@@ -512,7 +512,21 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
         val prescriptiveRequirements: Future[Map[String,Any]] = {
           for {
             cc_energy <- Baseline.solarConversionEnergy
-            totalPrescriptive <- Baseline.getPrescriptiveTotalSite
+            totalPrescriptive <- Baseline.getPrescriptiveTotalMetric
+            pvTotal <- solarTotal
+          } yield {
+            Map(
+              "re_rec_onsite_pv" -> pvTotal / 1000 * cc_energy,
+              "prescriptive_building_energy" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
+              "prescriptive_re_total_needed" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
+              "prescriptive_re_procured" -> Math.max(MegawattHours(totalPrescriptive to MegawattHours).value - (pvTotal/1000),0.0) * cc_energy
+              )
+          }
+        }
+        val sourceRequirements: Future[Map[String,Any]] = {
+          for {
+            cc_energy <- Baseline.solarConversionEnergy
+            totalPrescriptive <- Baseline.getPrescriptiveTotalSource
             pvTotal <- solarTotal
           } yield {
             Map(
@@ -565,6 +579,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
         val futures = Future.sequence(Seq(
 
           prescriptiveRequirements.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
+          sourceRequirements.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
           Baseline.getPrescriptiveMetrics.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
 
           Baseline.getPV.map(api(_)).recover { case NonFatal(th) => apiRecover(th) } ,
@@ -582,6 +597,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
         val fieldNames = Seq(
 
           "prescriptive_requirements",
+          "source_requirements",
           "prescriptive_metrics",
 
           "pv_array",

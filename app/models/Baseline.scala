@@ -64,11 +64,7 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
       buildingSize <- prescriptiveEUI.getBuildingSize
       convertedBuildingSize <- convertSize(buildingSize, "imperial")
 
-      totalCarbon <- getPrescriptiveTotalCarbon
-      totalSource <- getPrescriptiveTotalSource
-      totalSite <- getPrescriptiveTotalSite
-
-      convertedTotalSource <- convertEnergy(totalSource)
+      totalSite <- getPrescriptiveTotalMetric
       convertedTotalSite <- convertEnergy(totalSite)
 
 
@@ -80,11 +76,7 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
       } yield {
         Map(
           "site_energy"->convertedTotalSite,
-          "source_energy"->convertedTotalSource,
-          "carbon_tonnes"->totalCarbon,
           "site_eui"->convertedTotalSite / convertedBuildingSize,
-          "source_eui"->convertedTotalSource / convertedBuildingSize,
-          "carbon_intensity"->totalCarbon / convertedBuildingSize,
           "prescriptive_end_use_metric_data"->prescriptiveEndUses,
           "prescriptive_electricity_metric_data"->prescriptiveElectricity,
           "prescriptive_natural_gas_metric_data"->prescriptiveNG,
@@ -92,6 +84,25 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
         )
       }
   }
+
+  def getPrescriptiveSourceMetrics:Future[Map[String,Any]] = {
+
+      for {
+      buildingSize <- prescriptiveEUI.getBuildingSize
+      convertedBuildingSize <- convertSize(buildingSize, "imperial")
+
+      totalSite <- getPrescriptiveTotalSource
+      convertedTotalSite <- convertEnergy(totalSite)
+
+
+      } yield {
+        Map(
+          "source_energy"->convertedTotalSite,
+          "source_eui"->convertedTotalSite / convertedBuildingSize
+        )
+      }
+  }
+
 
 
 
@@ -111,7 +122,7 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
 
   def getPrescriptiveElectricity: Future[ElectricityDistribution] = {
     for {
-      prescriptiveElectricityWeighted <- prescriptiveEUI.lookupPrescriptiveElectricityWeighted
+      prescriptiveElectricityWeighted <- prescriptiveEUI.lookupPrescriptiveElectricityWeighted(None)
       converted <- convertPrescriptive(prescriptiveElectricityWeighted)
     } yield converted
 
@@ -119,23 +130,24 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
 
   def getPrescriptiveNG: Future[NaturalGasDistribution] = {
     for {
-      prescriptiveNGWeighted <- prescriptiveEUI.lookupPrescriptiveNGWeighted
+      prescriptiveNGWeighted <- prescriptiveEUI.lookupPrescriptiveNGWeighted(None)
       converted <- convertPrescriptive(prescriptiveNGWeighted)
     } yield converted
   }
 
-  def getPrescriptiveTotalCarbonIntensity: Future[Energy] = {
+  def getPrescriptiveMetricIntensity: Future[Energy] = {
     for {
-      prescriptiveTotalEUI <- prescriptiveEUI.lookupPrescriptiveTotalMetricIntensity(Some("carbon"))
+      prescriptiveTotalEUI <- prescriptiveEUI.lookupPrescriptiveTotalMetricIntensity(None)
     } yield prescriptiveTotalEUI
   }
 
-  def getPrescriptiveTotalCarbon: Future[Energy] = {
+  def getPrescriptiveTotalMetric: Future[Energy] = {
     for {
-      prescriptiveTotalCarbon <- getPrescriptiveTotalCarbonIntensity
+      prescriptiveTotalEnergy <- getPrescriptiveMetricIntensity
       building_size <- prescriptiveEUI.getBuildingSize
-    } yield prescriptiveTotalCarbon * building_size
+    } yield prescriptiveTotalEnergy*building_size
   }
+
 
   def getPrescriptiveTotalSourceIntensity: Future[Energy] = {
     for {
@@ -150,18 +162,6 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
     } yield prescriptiveTotalEnergy*building_size
   }
 
-  def getPrescriptiveTotalSiteIntensity: Future[Energy] = {
-    for {
-      prescriptiveTotalEUI <- prescriptiveEUI.lookupPrescriptiveTotalMetricIntensity(Some("site"))
-    } yield prescriptiveTotalEUI
-  }
-
-  def getPrescriptiveTotalSite: Future[Energy] = {
-    for {
-      prescriptiveTotalEnergy <- getPrescriptiveTotalSiteIntensity
-      building_size <- prescriptiveEUI.getBuildingSize
-    } yield prescriptiveTotalEnergy*building_size
-  }
 
 
   //default reporting units are IMPERIAL (kbtu, square feet, ...)
