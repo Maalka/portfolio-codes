@@ -27,7 +27,7 @@ define(['angular'], function() {
     $scope.auxModel.country = 'United States';
     $scope.auxModel.state = "CA";
     $scope.auxModel.climate_zone = null;
-    $scope.auxModel.prescriptive_resource = 0;
+    $scope.auxModel.prescriptive_resource = 1;
     $scope.auxModel.reporting_units = "imperial";
     $scope.temp = {};
 
@@ -258,7 +258,7 @@ define(['angular'], function() {
 
             $scope.solarMonthly = (typeof $scope.solarResults === 'undefined') ? undefined : $scope.solarResults.outputs;
 
-            $scope.prescriptiveRequirements = $scope.setBuildingRequirements(results,"user");
+            $scope.prescriptiveRequirements = $scope.setBuildingRequirements(results,"other");
 
             $scope.endUses = $scope.computeEndUses(results);
 
@@ -319,8 +319,18 @@ define(['angular'], function() {
                   "building_energy_norm": (prescriptive_requirements.prescriptive_building_energy / building_size * 1000),
                   "required_norm": (prescriptive_requirements.prescriptive_re_total_needed / building_size * 1000),
                   "pv_potential_norm": (prescriptive_requirements.re_rec_onsite_pv / building_size * 1000),
-                  "procured_norm": (prescriptive_requirements.prescriptive_re_procured / building_size * 1000)
+                  "procured_norm": (prescriptive_requirements.prescriptive_re_procured / building_size * 1000),
+
+                  "prescriptive_resource": $scope.auxModel.prescriptive_resource
             };
+
+//             if(metric === 1){
+//                sourceTable.procured = (prescriptive_requirements.prescriptive_re_procured);
+//                sourceTable.procured_norm = (prescriptive_requirements.prescriptive_re_procured / building_size * 1000);
+//             } else {
+//                sourceTable.procured = null;
+//                sourceTable.procured_norm = null;
+//             }
 
             return sourceTable;
 
@@ -652,20 +662,19 @@ define(['angular'], function() {
             country : [],
             city : [],
             climate_info : [
-                {id:"0",file_id:"0-24283"},
-                {id:"1",file_id:"1-724957"},
-                {id:"2",file_id:"1-724930"},
-                {id:"3",file_id:"1-724945"},
-                {id:"4",file_id:"1-723940"},
-                {id:"5",file_id:"1-722956"},
-                {id:"6",file_id:"1-722900"},
-                {id:"7",file_id:"1-722976"},
-                {id:"8",file_id:"1-722880"},
-                {id:"9",file_id:"1-722869"},
-                {id:"10",file_id:"1-725910"},
-                {id:"11",file_id:"1-724839"},
-                {id:"12",file_id:"0-93193"},
-                {id:"13",file_id:"Source"},
+                {id:"1",file_id:"0-24283"},
+                {id:"2",file_id:"1-724957"},
+                {id:"3",file_id:"1-724930"},
+                {id:"4",file_id:"1-724945"},
+                {id:"5",file_id:"1-723940"},
+                {id:"6",file_id:"1-722956"},
+                {id:"7",file_id:"1-722900"},
+                {id:"8",file_id:"1-722976"},
+                {id:"9",file_id:"1-722880"},
+                {id:"10",file_id:"1-722869"},
+                {id:"11",file_id:"1-725910"},
+                {id:"12",file_id:"1-724839"},
+                {id:"13",file_id:"0-93193"},
                 {id:"14",file_id:"1-723820"},
                 {id:"15",file_id:"1-722868"},
                 {id:"16",file_id:"1-725845"}

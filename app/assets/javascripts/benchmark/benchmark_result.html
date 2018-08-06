@@ -54,10 +54,10 @@
             <div class="ui sixteen wide grid">
                 <div class="sixteen wide column left aligned">
                     <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;" ng-if="showBar">
-                        <a href class="drop" ng-click="showPrescriptive()"><i class="caret down icon"></i>ESTIMATED BUILDING ENERGY CONSUMPTION</a>
+                        <a href class="drop" ng-click="showPrescriptive()"><i class="caret down icon"></i>ESTIMATED BUILDING ENERGY IMPACTS</a>
                     </h3>
                     <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;" ng-if="!showBar">
-                        <a href class="drop" ng-click="showPrescriptive()"><i class="caret right icon"></i>ESTIMATED BUILDING ENERGY CONSUMPTION</a>
+                        <a href class="drop" ng-click="showPrescriptive()"><i class="caret right icon"></i>ESTIMATED BUILDING ENERGY IMPACTS</a>
                     </h3>
                 </div>
             </div>
@@ -94,8 +94,8 @@
 
 
 			<div bar prescriptive-requirements="prescriptiveRequirements" end-uses="endUses" units="barPlotUnits" style="width: 100%;"></div>
-			<p style="font-size:10px;">Building Energy Consumption and End Uses are based on a <b>code compliant prototype building</b>
-				modeled by Pacific Northwest National Laboratory. Actual building energy consumption will vary from modeled results.</p>
+			<p style="font-size:10px;">Building Energy Impacts and End Uses are based on <b>code compliant prototype buildings</b>
+				modeled by NORESCO in their Impact Analysis. Actual building energy consumption will vary from modeled results.</p>
 		</div>
 
 		<div class=" teal sixteen wide column" ng-if="prescriptiveRequirements && endUses && showBar===true && auxModel.approach === 'prescriptive'">
