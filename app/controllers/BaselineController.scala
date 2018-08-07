@@ -512,28 +512,31 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
         val prescriptiveRequirements: Future[Map[String,Any]] = {
           for {
             cc_energy <- Baseline.solarConversionEnergy
+            conversionType <- Baseline.getPrescriptiveType
+            conversionConstant <- Baseline.getSolarConversionConstant(conversionType,"solar")
             totalPrescriptive <- Baseline.getPrescriptiveTotalMetric
             pvTotal <- solarTotal
           } yield {
             Map(
-              "re_rec_onsite_pv" -> pvTotal / 1000 * cc_energy,
+              "re_rec_onsite_pv" -> pvTotal * conversionConstant / 1000 * cc_energy,
               "prescriptive_building_energy" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
               "prescriptive_re_total_needed" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
-              "prescriptive_re_procured" -> Math.max(MegawattHours(totalPrescriptive to MegawattHours).value - (pvTotal/1000),0.0) * cc_energy
+              "prescriptive_re_procured" -> Math.max(MegawattHours(totalPrescriptive to MegawattHours).value - (pvTotal*conversionConstant/1000),0.0) * cc_energy
               )
           }
         }
         val sourceRequirements: Future[Map[String,Any]] = {
           for {
+            conversionConstant <- Baseline.getSolarConversionConstant("source","solar")
             cc_energy <- Baseline.solarConversionEnergy
             totalPrescriptive <- Baseline.getPrescriptiveTotalSource
             pvTotal <- solarTotal
           } yield {
             Map(
-              "re_rec_onsite_pv" -> pvTotal / 1000 * cc_energy,
+              "re_rec_onsite_pv" -> pvTotal * conversionConstant / 1000 * cc_energy,
               "prescriptive_building_energy" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
               "prescriptive_re_total_needed" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
-              "prescriptive_re_procured" -> Math.max(MegawattHours(totalPrescriptive to MegawattHours).value - (pvTotal/1000),0.0) * cc_energy
+              "prescriptive_re_procured" -> Math.max(MegawattHours(totalPrescriptive to MegawattHours).value - (pvTotal * conversionConstant /1000),0.0) * cc_energy
               )
           }
         }

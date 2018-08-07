@@ -251,6 +251,8 @@ define(['angular'], function() {
 
         $q.resolve($scope.futures).then(function (results) {
 
+            console.log(results);
+
             $scope.buildingRequirements = $scope.setBuildingRequirements(results,"source");
 
             $scope.solarResults = $scope.getPropResponseField(results,"pvwatts_system_details");
