@@ -556,12 +556,10 @@ define(['angular'], function() {
                     {id:"Office",name:"Office"},
                     {id:"Retail",name:"Retail"},
                     {id:"School",name:"School"},
-                    {id:"Healthcare",name:"Healthcare"},
                     {id:"Restaurant",name:"Restaurant"},
                     {id:"Hotel",name:"Hotel"},
                     {id:"Warehouse",name:"Warehouse"},
-                    {id:"Apartment",name:"Apartment"},
-                    {id:"AllOthers",name:"Other"}
+                    {id:"Apartment",name:"Apartment"}
                 ]
             }
         };
