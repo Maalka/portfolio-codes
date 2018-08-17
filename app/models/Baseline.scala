@@ -61,50 +61,47 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
   def getPrescriptiveMetrics:Future[Map[String,Any]] = {
 
       for {
-      buildingSize <- prescriptiveEUI.getBuildingSize
-      convertedBuildingSize <- convertSize(buildingSize, "imperial")
+        buildingSize <- prescriptiveEUI.getBuildingSize
+        convertedBuildingSize <- convertSize(buildingSize, "imperial")
 
-      totalSite <- getPrescriptiveTotalMetric
-      convertedTotalSite <- convertEnergy(totalSite)
+        totalSite <- getPrescriptiveTotalMetric
+        convertedTotalSite <- convertEnergy(totalSite)
 
 
-      prescriptiveEndUses <- getPrescriptiveEndUses
-      prescriptiveElectricity <- getPrescriptiveElectricity
-      prescriptiveNG <- getPrescriptiveNG
-      prescriptiveEndUsePercents <- getPrescriptiveEndUsePercents
-
-      } yield {
-        Map(
-          "site_energy"->convertedTotalSite,
-          "site_eui"->convertedTotalSite / convertedBuildingSize,
-          "prescriptive_end_use_metric_data"->prescriptiveEndUses,
-          "prescriptive_electricity_metric_data"->prescriptiveElectricity,
-          "prescriptive_natural_gas_metric_data"->prescriptiveNG,
-          "prescriptive_end_use_metric_percents"->prescriptiveEndUsePercents
-        )
-      }
+        prescriptiveEndUses <- getPrescriptiveEndUses
+        prescriptiveElectricity <- getPrescriptiveElectricity
+        prescriptiveNG <- getPrescriptiveNG
+        prescriptiveEndUsePercents <- getPrescriptiveEndUsePercents
+        metricsMap <- Future{
+          Map(
+            "site_energy"->convertedTotalSite,
+            "site_eui"->convertedTotalSite / convertedBuildingSize,
+            "prescriptive_end_use_metric_data"->prescriptiveEndUses,
+            "prescriptive_electricity_metric_data"->prescriptiveElectricity,
+            "prescriptive_natural_gas_metric_data"->prescriptiveNG,
+            "prescriptive_end_use_metric_percents"->prescriptiveEndUsePercents
+          )
+        }
+      } yield metricsMap
   }
+
 
   def getPrescriptiveSourceMetrics:Future[Map[String,Any]] = {
 
       for {
-      buildingSize <- prescriptiveEUI.getBuildingSize
-      convertedBuildingSize <- convertSize(buildingSize, "imperial")
+        buildingSize <- prescriptiveEUI.getBuildingSize
+        convertedBuildingSize <- convertSize(buildingSize, "imperial")
 
-      totalSite <- getPrescriptiveTotalSource
-      convertedTotalSite <- convertEnergy(totalSite)
-
-
-      } yield {
-        Map(
-          "source_energy"->convertedTotalSite,
-          "source_eui"->convertedTotalSite / convertedBuildingSize
-        )
-      }
+        totalSite <- getPrescriptiveTotalSource
+        convertedTotalSite <- convertEnergy(totalSite)
+        metricsMap <- Future{
+          Map(
+            "source_energy"->convertedTotalSite,
+            "source_eui"->convertedTotalSite / convertedBuildingSize
+          )
+        }
+      } yield metricsMap
   }
-
-
-
 
 
   def getPrescriptiveEndUsePercents: Future[EndUseDistribution] = {

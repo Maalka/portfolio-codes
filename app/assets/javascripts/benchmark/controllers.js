@@ -326,14 +326,6 @@ define(['angular'], function() {
                   "prescriptive_resource": $scope.auxModel.prescriptive_resource
             };
 
-//             if(metric === 1){
-//                sourceTable.procured = (prescriptive_requirements.prescriptive_re_procured);
-//                sourceTable.procured_norm = (prescriptive_requirements.prescriptive_re_procured / building_size * 1000);
-//             } else {
-//                sourceTable.procured = null;
-//                sourceTable.procured_norm = null;
-//             }
-
             return sourceTable;
 
         } else {
