@@ -275,6 +275,27 @@ case class ReportingUnits(reporting_units:String)
         resource match {
           case "solar" => {
             cz match {
+              case "1" => 2501.0 / 3412
+              case "2" =>	2526.0 / 3412
+              case "3" =>	2527.0 / 3412
+              case "4" =>	2537.0 / 3412
+              case "5" =>	2512.0 / 3412
+              case "6" =>	2491.0 / 3412
+              case "7" =>	2509.0 / 3412
+              case "8" =>	2537.0 / 3412
+              case "9" =>	2551.0 / 3412
+              case "10" =>	2525.0 / 3412
+              case "11" =>	2530.0 / 3412
+              case "12" =>	2486.0 / 3412
+              case "13" =>	2472.0 / 3412
+              case "14" =>	2526.0 / 3412
+              case "15" =>	2542.0 / 3412
+              case "16" =>	2588.0 / 3412
+              case _ =>  throw new Exception ("Could not identify climate zone!")
+            }
+          }
+          case "wind" => {
+            cz match {
               case "1" => 4768.0 / 3412
               case "2" =>	4768.0 / 3412
               case "3" =>	4768.0 / 3412
@@ -294,27 +315,6 @@ case class ReportingUnits(reporting_units:String)
               case _ =>  throw new Exception ("Could not identify climate zone!")
             }
           }
-          case "wind" => {
-            cz match {
-              case "1" => 2435.0 / 3412
-              case "2" =>	2435.0 / 3412
-              case "3" =>	2435.0 / 3412
-              case "4" =>	2435.0 / 3412
-              case "5" =>	2435.0 / 3412
-              case "6" =>	2764.0 / 3412
-              case "7" =>	2764.0 / 3412
-              case "8" =>	2764.0 / 3412
-              case "9" =>	2764.0 / 3412
-              case "10" =>	2764.0 / 3412
-              case "11" =>	2435.0 / 3412
-              case "12" =>	2435.0 / 3412
-              case "13" =>	2435.0 / 3412
-              case "14" =>	2764.0 / 3412
-              case "15" =>	2764.0 / 3412
-              case "16" =>	2764.0 / 3412
-              case _ =>  throw new Exception ("Could not identify climate zone!")
-            }
-          }
           case _ =>  throw new Exception ("Could not identify resource type (wind/solar)!")
         }
       }
@@ -322,22 +322,22 @@ case class ReportingUnits(reporting_units:String)
         resource match {
           case "solar" => {
             cz match {
-              case "1" => 24.62 / 3.412
-              case "2" =>	27.34 / 3.412
-              case "3" =>	25.41 / 3.412
-              case "4" =>	27.05 / 3.412
-              case "5" =>	25.33 / 3.412
-              case "6" =>	28.97 / 3.412
-              case "7" =>	29.74 / 3.412
-              case "8" =>	30.47 / 3.412
-              case "9" =>	29.41 / 3.412
-              case "10" =>	28.88 / 3.412
-              case "11" =>	27.99 / 3.412
-              case "12" =>	27.71 / 3.412
-              case "13" =>	27.5 / 3.412
-              case "14" =>	30.09 / 3.412
-              case "15" =>	29.01 / 3.412
-              case "16" =>	24.79 / 3.412
+              case "1" => 24.10 / 3.412
+              case "2" =>	25.79 / 3.412
+              case "3" =>	24.39 / 3.412
+              case "4" =>	25.12 / 3.412
+              case "5" =>	24.17 / 3.412
+              case "6" =>	25.55 / 3.412
+              case "7" =>	28.02 / 3.412
+              case "8" =>	26.93 / 3.412
+              case "9" =>	26.04 / 3.412
+              case "10" =>	24.94 / 3.412
+              case "11" =>	26.04 / 3.412
+              case "12" =>	25.77 / 3.412
+              case "13" =>	25.20 / 3.412
+              case "14" =>	26.53 / 3.412
+              case "15" =>	25.44 / 3.412
+              case "16" =>	24.13 / 3.412
               case _ =>  throw new Exception ("Could not identify climate zone!")
             }
           }
@@ -369,6 +369,27 @@ case class ReportingUnits(reporting_units:String)
         resource match {
           case "solar" => {
             cz match {
+              case "1" => 323.0 / 3412
+              case "2" =>	326.0 / 3412
+              case "3" =>	326.0 / 3412
+              case "4" =>	327.0 / 3412
+              case "5" =>	324.0 / 3412
+              case "6" =>	321.0 / 3412
+              case "7" =>	324.0 / 3412
+              case "8" =>	327.0 / 3412
+              case "9" =>	329.0 / 3412
+              case "10" =>	326.0 / 3412
+              case "11" =>	326.0 / 3412
+              case "12" =>	321.0 / 3412
+              case "13" =>	319.0 / 3412
+              case "14" =>	326.0 / 3412
+              case "15" =>	328.0 / 3412
+              case "16" =>	334.0 / 3412
+              case _ =>  throw new Exception ("Could not identify climate zone!")
+            }
+          }
+          case "wind" => {
+            cz match {
               case "1" => 623.0 / 3412
               case "2" =>	623.0 / 3412
               case "3" =>	623.0 / 3412
@@ -385,27 +406,6 @@ case class ReportingUnits(reporting_units:String)
               case "14" =>	607.0 / 3412
               case "15" =>	607.0 / 3412
               case "16" =>	607.0 / 3412
-              case _ =>  throw new Exception ("Could not identify climate zone!")
-            }
-          }
-          case "wind" => {
-            cz match {
-              case "1" => 314.0 / 3412
-              case "2" =>	314.0 / 3412
-              case "3" =>	314.0 / 3412
-              case "4" =>	314.0 / 3412
-              case "5" =>	314.0 / 3412
-              case "6" =>	357.0 / 3412
-              case "7" =>	357.0 / 3412
-              case "8" =>	357.0 / 3412
-              case "9" =>	357.0 / 3412
-              case "10" =>	357.0 / 3412
-              case "11" =>	314.0 / 3412
-              case "12" =>	314.0 / 3412
-              case "13" =>	314.0 / 3412
-              case "14" =>	357.0 / 3412
-              case "15" =>	357.0 / 3412
-              case "16" =>	357.0 / 3412
               case _ =>  throw new Exception ("Could not identify climate zone!")
             }
           }
