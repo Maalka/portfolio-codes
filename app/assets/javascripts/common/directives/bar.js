@@ -193,16 +193,16 @@ define(['angular','highcharts', './main'], function(angular) {
                           legendID: 0,
                       },
                       {
-                          name: 'On site',
-                          color: '#398371',
-                          data: [[1,$scope.prescriptiveRequirements.pv_potential_norm]],
-                          legendID: 1,
-                      },
-                      {
                           name: 'Off site',
                           color: '#b0cdc6',
                           data: [[1,$scope.showRenewable('data')]],
                           legendID: $scope.showRenewable('legend'),
+                      },
+                      {
+                          name: 'On site',
+                          color: '#398371',
+                          data: [[1,$scope.prescriptiveRequirements.pv_potential_norm]],
+                          legendID: 1,
                       }
                   ]
               };

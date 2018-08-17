@@ -59,8 +59,8 @@ define(['angular'], function() {
         var desktopQueryList = window.matchMedia('(min-width: 1200px) and (max-width: 1919px');                  
         var largeQueryList = window.matchMedia('(min-width: 1919px)');                  
 
-        var updateMatchMedia= function (q) { 
-            console.log(q);
+        var updateMatchMedia= function () {
+            //console.log(q);
             if (printQueryList.matches) {
                 $scope.media = "print";                                    
             } else if (phoneQueryList.matches) {
@@ -77,7 +77,7 @@ define(['angular'], function() {
                 $scope.largeScreen = false;
             }
 
-            console.log($scope.media);
+           // console.log($scope.media);
             $timeout(function () {
                 $scope.$apply();
             });
@@ -253,19 +253,18 @@ define(['angular'], function() {
 
             console.log(results);
 
-            $scope.buildingRequirements = $scope.setBuildingRequirements(results,"source");
-
             $scope.solarResults = $scope.getPropResponseField(results,"pvwatts_system_details");
-            $scope.pv_capacity = $scope.buildingRequirements.pv_capacity;
-
             $scope.solarMonthly = (typeof $scope.solarResults === 'undefined') ? undefined : $scope.solarResults.outputs;
 
+            $scope.buildingRequirements = $scope.setBuildingRequirements(results,"source");
             $scope.prescriptiveRequirements = $scope.setBuildingRequirements(results,"other");
+
+            $scope.pv_capacity = (typeof $scope.buildingRequirements !== 'undefined') ? $scope.buildingRequirements.pv_capacity : undefined;
 
             $scope.endUses = $scope.computeEndUses(results);
 
             $scope.showSolar = false;
-            $scope.showBar = false;
+            //$scope.showBar = false;
 
         });
     };
