@@ -68,6 +68,8 @@ libraryDependencies ++= Seq(
 
   "org.typelevel" %% "squants" % "1.3.1-maalka-1.0",
 
+  "com.github.tototoshi" %% "scala-csv" % "1.2.1",
+
   "com.typesafe.akka" %% "akka-slf4j" % "2.5.9",
   "com.typesafe.akka" %% "akka-stream" % "2.5.9",
   "com.typesafe.play" %% "play-json-joda" % "2.6.8",
