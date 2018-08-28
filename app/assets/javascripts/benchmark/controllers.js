@@ -5,7 +5,7 @@
  * Dashboard controllers.
  */
 //define(["./test/sample_response_test_data"], function(sampleTestData) {
-define(['angular','json!../../data/cities.json'], function(angular, cities) {
+define(['angular'], function() {
   'use strict';
   var RootCtrl = function($rootScope) { 
     $rootScope.includeHeader = maalkaIncludeHeader;
@@ -23,8 +23,14 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
 
     $scope.auxModel = {};
+
+    $scope.auxModel.country = 'United States';
+    $scope.auxModel.state = "CA";
+    $scope.auxModel.climate_zone = null;
+    $scope.auxModel.prescriptive_resource = 1;
+    $scope.auxModel.reporting_units = "imperial";
     $scope.temp = {};
-    $scope.auxModel.state = "";
+
     $scope.tempModel = {};
     $scope.energies = [{}, {}];
     $scope.pvList = [{id:0,name:"PV SYSTEM",showDivider:false}];
@@ -53,8 +59,8 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         var desktopQueryList = window.matchMedia('(min-width: 1200px) and (max-width: 1919px');                  
         var largeQueryList = window.matchMedia('(min-width: 1919px)');                  
 
-        var updateMatchMedia= function (q) { 
-            console.log(q);
+        var updateMatchMedia= function () {
+            //console.log(q);
             if (printQueryList.matches) {
                 $scope.media = "print";                                    
             } else if (phoneQueryList.matches) {
@@ -71,7 +77,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
                 $scope.largeScreen = false;
             }
 
-            console.log($scope.media);
+           // console.log($scope.media);
             $timeout(function () {
                 $scope.$apply();
             });
@@ -123,11 +129,16 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         $scope.clearGeography();
     });
 
+
+    $scope.getFile = function(item){
+            $scope.auxModel.climate_zone = item.id;
+            $scope.auxModel.file_id = item.file_id;
+        };
+
     $scope.clearGeography = function () {
         $scope.temp.city = undefined;
-        $scope.auxModel.state = undefined;
+        //$scope.auxModel.state = undefined;
     };
-
 
 
     //populate user-input energy information table to calculate site/source EUI and Energy Star metrics
@@ -232,23 +243,6 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
     };
 
 
-    $scope.getFile = function(city){
-
-            var getStation = function(stations){
-                if ($scope.auxModel.country === 'United States'){
-                    return stations.us_station.id;
-                } else {
-                    return stations.intl_station.id;
-                }
-            };
-
-            var location = {"lat":city.lat, "lon":city.lon};
-            $scope.futures = benchmarkServices.getSolarFile(location);
-            $q.resolve($scope.futures).then(function (results) {
-                $scope.auxModel.file_id = (typeof results === 'undefined') ? null : getStation(results);
-            });
-        };
-
     $scope.computeBenchmarkResult = function(){
 
         $log.info($scope.submitArray);
@@ -257,32 +251,22 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
         $q.resolve($scope.futures).then(function (results) {
 
-            $scope.buildingRequirements = $scope.setBuildingRequirements(results);
-
+            console.log(results);
 
             $scope.solarResults = $scope.getPropResponseField(results,"pvwatts_system_details");
-            $scope.pv_capacity = $scope.buildingRequirements.pv_capacity;
-
             $scope.solarMonthly = (typeof $scope.solarResults === 'undefined') ? undefined : $scope.solarResults.outputs;
 
-            $scope.prescriptiveRequirements = $scope.computePrescriptiveRequirements(results);
+            $scope.buildingRequirements = $scope.setBuildingRequirements(results,"source");
+            $scope.prescriptiveRequirements = $scope.setBuildingRequirements(results,"other");
+
+            $scope.pv_capacity = (typeof $scope.buildingRequirements !== 'undefined') ? $scope.buildingRequirements.pv_capacity : undefined;
 
             $scope.endUses = $scope.computeEndUses(results);
 
             $scope.showSolar = false;
-            $scope.showBar = false;
+            //$scope.showBar = false;
 
         });
-    };
-
-    $scope.setBuildingRequirements = function(results){
-
-        if($scope.auxModel.approach === "performance"){
-                return $scope.computePerformanceRequirements(results);
-            } else {
-                return $scope.computePrescriptiveRequirements(results);
-            }
-
     };
 
 
@@ -308,41 +292,24 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         return size.reduce(add, 0);
     };
 
-    $scope.computePerformanceRequirements = function(results){
-
-        var performance_requirements = $scope.getPropResponseField(results,"performance_requirements");
-
-        var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
-        var building_size = $scope.getPropSize(building_sub_types);
-
-        var performanceTable = {
-              "pv_area": ($scope.getPropResponseField(results,"pv_area")),
-              "pv_capacity": ($scope.getPropResponseField(results,"pv_capacity_kW")),
-              "building_energy": (performance_requirements.building_energy),
-              "required": (performance_requirements.re_total_needed),
-              "pv_potential": (performance_requirements.re_rec_onsite_pv),
-              "procured": (performance_requirements.re_procured),
-
-              "building_energy_norm": (performance_requirements.building_energy / building_size * 1000),
-              "required_norm": (performance_requirements.re_total_needed / building_size * 1000),
-              "pv_potential_norm": (performance_requirements.re_rec_onsite_pv / building_size * 1000),
-              "procured_norm": (performance_requirements.re_procured / building_size * 1000)
-        };
-
-
-        return performanceTable;
+    $scope.setPrescriptiveRequirements = function(results, metric){
+        if(metric === "source"){
+            return $scope.getPropResponseField(results,"source_requirements");
+        } else {
+            return $scope.getPropResponseField(results,"prescriptive_requirements");
+        }
     };
 
-    $scope.computePrescriptiveRequirements = function(results){
+    $scope.setBuildingRequirements = function(results, metric){
 
-        var prescriptive_requirements = $scope.getPropResponseField(results,"prescriptive_requirements");
+        var prescriptive_requirements = $scope.setPrescriptiveRequirements(results,metric);
 
         if(prescriptive_requirements) {
 
             var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
             var building_size = $scope.getPropSize(building_sub_types);
 
-            var prescriptiveTable = {
+            var sourceTable = {
                   "pv_area": ($scope.getPropResponseField(results,"pv_area")),
                   "pv_capacity": ($scope.getPropResponseField(results,"pv_capacity_kW")),
                   "building_energy": (prescriptive_requirements.prescriptive_building_energy),
@@ -353,18 +320,16 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
                   "building_energy_norm": (prescriptive_requirements.prescriptive_building_energy / building_size * 1000),
                   "required_norm": (prescriptive_requirements.prescriptive_re_total_needed / building_size * 1000),
                   "pv_potential_norm": (prescriptive_requirements.re_rec_onsite_pv / building_size * 1000),
-                  "procured_norm": (prescriptive_requirements.prescriptive_re_procured / building_size * 1000)
+                  "procured_norm": (prescriptive_requirements.prescriptive_re_procured / building_size * 1000),
+
+                  "prescriptive_resource": $scope.auxModel.prescriptive_resource
             };
 
-            return prescriptiveTable;
+            return sourceTable;
 
         } else {
             return undefined;
         }
-
-
-
-
     };
 
     $scope.computeEndUses = function(results){
@@ -451,6 +416,16 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         }
     });
 
+    $scope.$watch("auxModel.prescriptive_resource", function (value) {
+        if (value === undefined) {
+            return;
+        }
+        // only submit if the user has already CLICK on the submit button
+        if($scope.forms.hasValidated) {
+            $scope.submit();
+        }
+    });
+
     $scope.submit = function () {
 
         $scope.solarResults = null;
@@ -471,38 +446,51 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
             $scope.tableBigEnergyUnits="MBtu/yr";
             $scope.tableEUIUnits="kBtu/ft²-yr";
             $scope.tableAreaUnits="(ft²)";
+
+            if ($scope.auxModel.prescriptive_resource === 3) {
+                $scope.barPlotUnits="lb CO₂/ft²-yr";
+                $scope.prescriptiveTableUnits="Tons CO₂/yr";
+                $scope.prescriptiveTableIntensityUnits="lb CO₂/ft²-yr";
+
+            } else {
+                $scope.barPlotUnits="kBtu/ft²-yr";
+                $scope.prescriptiveTableUnits="MBtu/yr";
+                $scope.prescriptiveTableIntensityUnits="kBtu/ft²-yr";
+            }
         }else {
             $scope.tableEnergyUnits="(kWh)";
             $scope.graphEnergyUnits="kWh";
             $scope.tableBigEnergyUnits="MWh/yr";
             $scope.tableEUIUnits="kWh/m²-yr";
             $scope.tableAreaUnits="(m²)";
+
+            if ($scope.auxModel.prescriptive_resource === 3) {
+                $scope.barPlotUnits="kg CO₂/m²-yr";
+                $scope.prescriptiveTableUnits="Metric Tons CO₂/yr";
+                $scope.prescriptiveTableIntensityUnits="kg CO₂/m²-yr";
+            } else {
+                $scope.barPlotUnits="kWh/m²-yr";
+                $scope.prescriptiveTableUnits="MWh/yr";
+                $scope.prescriptiveTableIntensityUnits="kWh/m²-yr";
+            }
         }
 
-        var validEnergy = function(e) {
-            return (e.energy_type !== undefined &&
-                    e.energy_name !== undefined &&
-                    e.energy_units !== undefined &&
-                    e.energy_use);
-        };
+         if ($scope.auxModel.prescriptive_resource === 0) {
+            $scope.prescriptiveTableIntensityText="Estimated Site EUI:";
+            $scope.prescriptiveTableResourceText="Estimated Site Energy Consumption:";
+        } else if ($scope.auxModel.prescriptive_resource === 1) {
+            $scope.prescriptiveTableIntensityText="Estimated Source EUI:";
+            $scope.prescriptiveTableResourceText="Estimated Source Energy Consumption:";
+        } else if ($scope.auxModel.prescriptive_resource === 2) {
+            $scope.prescriptiveTableIntensityText="Estimated TDV Intensity:";
+            $scope.prescriptiveTableResourceText="Estimated TDV Total:";
+        } else if ($scope.auxModel.prescriptive_resource === 3) {
+            $scope.prescriptiveTableIntensityText="Estimated Carbon Intensity:";
+            $scope.prescriptiveTableResourceText="Estimated Total Carbon Emissions:";
 
-        var mapEnergy = function (e) {
-            return {
-                'energy_type': (e.energy_type) ? e.energy_type.id : undefined,
-                'energy_name': (e.energy_type) ? e.energy_type.name : null,
-                'energy_units': e.energy_units,
-                'energy_use': Number(e.energy_use)
-            };
-        };
+        }
 
-        var getFullEnergyList = function () {
 
-            var energyListFromRegular = $scope.energies.map(mapEnergy).filter(validEnergy);
-
-            energyListFromRegular.push.apply(energyListFromRegular);
-
-            return energyListFromRegular;
-        };
 
         var getPropTypes = function () {
 
@@ -526,18 +514,6 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         if($scope.forms.baselineForm.$valid){
 
             $scope.submitArray = [];
-
-
-            $scope.auxModel.climate_zone = $scope.temp.city.cz;
-            $scope.auxModel.lat = $scope.temp.city.lat;
-            $scope.auxModel.lon = $scope.temp.city.lon;
-
-
-            if($scope.energies.map(mapEnergy).filter(validEnergy).length===0){
-                $scope.auxModel.energies=null;
-            } else {
-                $scope.auxModel.energies = getFullEnergyList();
-            }
 
             if($scope.auxModel.approach === 'performance' && $scope.auxModel.energies!==null || $scope.auxModel.approach === 'prescriptive'){
                 $scope.auxModel.prop_types = getPropTypes();
@@ -568,30 +544,13 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
             buildingType: {
                 commercial: [
-                    //{id:"OfficeLarge",name:"Office - Large"},
-                    //{id:"OfficeMedium",name:"Office - Medium"},
-                    //{id:"OfficeSmall",name:"Office - Small"},
                     {id:"Office",name:"Office"},
-                    //{id:"RetailStandalone",name:"Retail - Standalone"},
-                    //{id:"RetailStripmall",name:"Retail - Stripmall"},
                     {id:"Retail",name:"Retail"},
-                    //{id:"SchoolPrimary",name:"School - Primary"},
-                    //{id:"SchoolSecondary",name:"School - Secondary"},
                     {id:"School",name:"School"},
-                    //{id:"Hospital",name:"Hospital"},
-                    //{id:"OutPatientHealthCare",name:"Healthcare - Outpatient"},
-                    {id:"Healthcare",name:"Healthcare"},
-                    //{id:"RestaurantSitDown",name:"Restaurant - Sit Down"},
-                    //{id:"RestaurantFastFood",name:"Restaurant - Fast Food"},
                     {id:"Restaurant",name:"Restaurant"},
-                    //{id:"HotelLarge",name:"Hotel - Large"},
-                    //{id:"HotelSmall",name:"Hotel - Small"},
                     {id:"Hotel",name:"Hotel"},
                     {id:"Warehouse",name:"Warehouse"},
-                    //{id:"ApartmentHighRise",name:"Apartment - High Rise"},
-                    //{id:"ApartmentMidRise",name:"Apartment - Mid Rise"} ,
-                    {id:"Apartment",name:"Apartment"},
-                    {id:"AllOthers",name:"Other"}
+                    {id:"Apartment",name:"Apartment"}
                 ]
             }
         };
@@ -683,10 +642,34 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
                 ]
         };
 
+        $scope.prescriptiveResource = [
+            {id:0,name:"Site"},
+            {id:1,name:"Source"},
+            {id:2,name:"TDV"},
+            {id:3,name:"Carbon"}
+        ];
 
         $scope.geographicProperties = {
             country : [],
             city : [],
+            climate_info : [
+                {id:"1",file_id:"0-24283"},
+                {id:"2",file_id:"1-724957"},
+                {id:"3",file_id:"1-724930"},
+                {id:"4",file_id:"1-724945"},
+                {id:"5",file_id:"1-723940"},
+                {id:"6",file_id:"1-722956"},
+                {id:"7",file_id:"1-722900"},
+                {id:"8",file_id:"1-722976"},
+                {id:"9",file_id:"1-722880"},
+                {id:"10",file_id:"1-722869"},
+                {id:"11",file_id:"1-725910"},
+                {id:"12",file_id:"1-724839"},
+                {id:"13",file_id:"0-93193"},
+                {id:"14",file_id:"1-723820"},
+                {id:"15",file_id:"1-722868"},
+                {id:"16",file_id:"1-725845"}
+            ],
             state: [
                 {id:"AL",name:"Alabama",filter_id:"United States"},
                 {id:"AK",name:"Alaska",filter_id:"United States"},
@@ -756,45 +739,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         };
 
 
-        for (var i = 0; i < cities.length; i++) {
-            $scope.geographicProperties.country.push(cities[i].country);
-        }
 
-        $scope.$watch("auxModel.state", function (v) {
-            $scope.geographicProperties.city = [];
-
-            if (v !== undefined && v !== null && $scope.auxModel.country !== undefined && $scope.auxModel.country !== null) {
-                for (var i = 0; i < cities.length; i++) {
-                    if (cities[i].country === $scope.auxModel.country){
-                        for (var j = 0; j < cities[i].cities.length; j++) {
-                            if (cities[i].cities[j].state_id === v){
-                                $scope.geographicProperties.city.push(cities[i].cities[j]);
-                            }
-                        }
-                    }
-                }
-            }
-
-        });
-
-        $scope.$watch("auxModel.country", function (v) {
-            $scope.geographicProperties.city = [];
-
-            if (v !== undefined && v !== null) {
-                if (v === "United States" || v === "Canada"){
-                    $scope.auxModel.state = null;
-                } else {
-                    for (var i = 0; i < cities.length; i++) {
-                        if (cities[i].country === $scope.auxModel.country){
-                            for (var j = 0; j < cities[i].cities.length; j++) {
-                                $scope.geographicProperties.city.push(cities[i].cities[j]);
-                            }
-                        }
-                    }
-                }
-            }
-
-        });
 
 
 

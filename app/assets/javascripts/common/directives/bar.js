@@ -18,6 +18,7 @@ define(['angular','highcharts', './main'], function(angular) {
             prescriptiveRequirements: '=prescriptiveRequirements'
           },
           controller: ["$scope", "$element","$timeout", function ($scope, $element, $timeout) {
+
             var chart;
 
             var loadSeries = function(chart) {
@@ -42,6 +43,20 @@ define(['angular','highcharts', './main'], function(angular) {
                     }
                 }
             };
+
+
+            $scope.showRenewable = function(attr){
+                if($scope.prescriptiveRequirements.prescriptive_resource === 1){
+                    if(attr==='legend'){
+                        return 1;
+                    }else if(attr==='data'){
+                        return $scope.prescriptiveRequirements.procured_norm;
+                    }
+                } else {
+                    return null;
+                }
+            };
+
 
             $scope.getOtherEndUses = function(){
                 var sumOther = 0;
@@ -178,15 +193,15 @@ define(['angular','highcharts', './main'], function(angular) {
                           legendID: 0,
                       },
                       {
+                          name: 'Off site',
+                          color: '#b0cdc6',
+                          data: [[1,$scope.showRenewable('data')]],
+                          legendID: $scope.showRenewable('legend'),
+                      },
+                      {
                           name: 'On site',
                           color: '#398371',
                           data: [[1,$scope.prescriptiveRequirements.pv_potential_norm]],
-                          legendID: 1,
-                      },
-                      {
-                          name: 'Off site',
-                          color: '#b0cdc6',
-                          data: [[1,$scope.prescriptiveRequirements.procured_norm]],
                           legendID: 1,
                       }
                   ]
@@ -230,7 +245,7 @@ define(['angular','highcharts', './main'], function(angular) {
               }
             });
 
-            $scope.$watch("tableEUIUnits", function (br) {
+            $scope.$watch("barPlotUnits", function (br) {
 
               if (chart !== undefined) {
                 if (br !== undefined) {

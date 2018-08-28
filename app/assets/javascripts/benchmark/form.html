@@ -39,79 +39,38 @@
                     <div class="sixteen wide column" style="margin-top:-10px;">
                         <div class="ui divider"></div>
                     </div>
-                    <div class="five wide column">
-                        <label class="design-label">Country</label>
-                    </div>
-                    <div class="eleven wide column">
-                        <div class="inline fields">
-                            <div class="sixteen wide field required">
-                                <select class="ui dropdown search"
-                                        ng-model="auxModel.country"
-                                        ng-options="item as item for item in geographicProperties.country"
-                                        required
-                                        name="country">
-                                    <option value="">Select</option>
-                                </select>
+
+                    <files ng-if="auxModel.approach === 'performance'"></files>
+
+                    <div class="five wide column" ng-if="auxModel.approach === 'prescriptive'">
+                        <label class="design-label">Climate Zone
+                            <div class="tooltip">
+                                <sup><i class="blue circle info icon"></i></sup>
+                                    <span class="tooltipimage">
+                                        <img src="/assets/images/climate_zones.png" style="position:absolute;left: -10px;z-index:9999;width:400px;height:500px;">
+                                    </span>
                             </div>
-                        </div>
+
+                        </label>
                     </div>
-                    <div class="five wide column" ng-if="auxModel.country==='United States'">
-                        <label class="design-label">State</label>
-                    </div>
-                    <div class="five wide column" ng-if="auxModel.country==='Canada'">
-                        <label class="design-label">Province</label>
-                    </div>
-                    <div class="eleven wide column" ng-if="auxModel.country==='United States' || auxModel.country==='Canada'">
-                        <div class="inline fields">
-                            <div class="eight wide field">
+                    <div class="eleven wide column" ng-if="auxModel.approach === 'prescriptive'">
+                        <div class="inline fields required">
+                            <div class="sixteen wide field">
                                 <select class="ui dropdown search"
-                                        ng-model="auxModel.state"
-                                        ng-options="item.id as item.name for item in geographicProperties.state | filter: {filter_id: auxModel.country}"
-                                        name="state">
+                                        ng-model="climate_info"
+                                        ng-change="getFile(climate_info)"
+                                        ng-options="item as item.id for item in geographicProperties.climate_info"
+                                        name="climate_zone">
                                     <option value="">Select</option>
                                 </select>
                             </div>
                         </div>
                     </div>
 
-                    <div class="five wide column">
-                        <label class="design-label">City
-                            <div class="tooltip">
-                                <sup><i class="blue circle info icon"></i></sup>
-                                <span class="tooltiptext">Select a city from the list.</span>
-                            </div>
-                        </label>
-                    </div>
-                    <div class="eleven wide column" ng-if="auxModel.country==='United States' || auxModel.country==='Canada'">
-                        <div class="inline fields required">
-                            <div class="sixteen wide field">
-                                <select class="ui dropdown search"
-                                        ng-model="temp.city"
-                                        ng-change="getFile(temp.city)"
-                                        ng-options="item as item.city for item in geographicProperties.city  | orderBy:'city'"
-                                        name="city">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="eleven wide column" ng-if="auxModel.country!=='United States' && auxModel.country!=='Canada'">
-                        <div class="inline fields required">
-                            <div class="sixteen wide field">
-                                <select class="ui dropdown search"
-                                        ng-model="temp.city"
-                                        ng-change="getFile(temp.city)"
-                                        ng-options="item as item.city for item in geographicProperties.city  | orderBy:'city'"
-                                        name="city">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="five wide column">
+                    <div class="five wide column" ng-if="auxModel.approach === 'prescriptive'">
                         <label class="design-label">Number of Stories</label>
                     </div>
-                    <div class="eleven wide column">
+                    <div class="eleven wide column" ng-if="auxModel.approach === 'prescriptive'">
                         <div class="inline fields">
                             <div class="sixteen wide field required">
                                 <input type="number" ng-model="auxModel.stories"
@@ -120,10 +79,10 @@
                         </div>
                     </div>
 
-                    <div class="five wide column">
+                    <div class="five wide column" ng-if="auxModel.approach === 'prescriptive'">
                         <label>{{propText}}</label>
                     </div>
-                    <div class="eleven wide column">
+                    <div class="eleven wide column" ng-if="auxModel.approach === 'prescriptive'">
                         <div class="inline fields required">
                             <div class="sixteen wide field">
                                 <select class="ui dropdown search"
@@ -166,71 +125,71 @@
 
 
 
-            <h3 class="ui header" ng-if="auxModel.approach === 'performance'"><i class="lightning icon"></i>MODELED ANNUAL ENERGY CONSUMPTION</h3>
-            <div class="ui segment energy-entry" ng-if="auxModel.approach === 'performance'">
-                <div class="field">
-                    Enter the modeled total annual energy consumption, by fuel type, below.
-                </div>
-                </p>
-                <div>
-                    <div class="ui grid">
-                        <div class="five wide column">
-                            <br />Energy Type
-                        </div>
-                        <div class="five wide column">
-                            <br />Units
-                        </div>
-                        <div class="six wide column">
-                            Modeled Total Annual<br />
-                            Energy Consumption
-                        </div>
-                        <div ng-repeat-start="energyEntry in energies" class="five wide column">
-                            <div class="field">
-                                <select class="ui dropdown"
-                                        ng-model="energyEntry.energy_type"
-                                        ng-options="item as item.name for item in energyProperties.energyType track by item.name">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="five wide column">
-                            <div class="field">
-                                <select class="ui dropdown"
-                                        ng-model="energyEntry.energy_units"
-                                        ng-options="item.id as item.name for item in energyProperties.energyUnits | filter: {filter_id: energyEntry.energy_type.id}">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="five wide column">
-                            <div class="ui input">
-                                <input type="number" ng-model="energyEntry.energy_use" value ="{{energyEntry.energyUse}}">
-                            </div>
-                        </div>
-                        <div ng-repeat-end class="one wide column">
-                            <div class="ui large labeled button"
-                                 ng-click="removeRow($index)"
-                                 style="margin-top:.4em;">
-                                <i class="minus red circle icon"></i>
-                            </div>
-                        </div>
+            <!--<h3 class="ui header" ng-if="auxModel.approach === 'performance'"><i class="lightning icon"></i>MODELED ANNUAL ENERGY CONSUMPTION</h3>-->
+            <!--<div class="ui segment energy-entry" ng-if="auxModel.approach === 'performance'">-->
+                <!--<div class="field">-->
+                    <!--Enter the modeled total annual energy consumption, by fuel type, below.-->
+                <!--</div>-->
+                <!--</p>-->
+                <!--<div>-->
+                    <!--<div class="ui grid">-->
+                        <!--<div class="five wide column">-->
+                            <!--<br />Energy Type-->
+                        <!--</div>-->
+                        <!--<div class="five wide column">-->
+                            <!--<br />Units-->
+                        <!--</div>-->
+                        <!--<div class="six wide column">-->
+                            <!--Modeled Total Annual<br />-->
+                            <!--Energy Consumption-->
+                        <!--</div>-->
+                        <!--<div ng-repeat-start="energyEntry in energies" class="five wide column">-->
+                            <!--<div class="field">-->
+                                <!--<select class="ui dropdown"-->
+                                        <!--ng-model="energyEntry.energy_type"-->
+                                        <!--ng-options="item as item.name for item in energyProperties.energyType track by item.name">-->
+                                    <!--<option value="">Select</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="five wide column">-->
+                            <!--<div class="field">-->
+                                <!--<select class="ui dropdown"-->
+                                        <!--ng-model="energyEntry.energy_units"-->
+                                        <!--ng-options="item.id as item.name for item in energyProperties.energyUnits | filter: {filter_id: energyEntry.energy_type.id}">-->
+                                    <!--<option value="">Select</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="five wide column">-->
+                            <!--<div class="ui input">-->
+                                <!--<input type="number" ng-model="energyEntry.energy_use" value ="{{energyEntry.energyUse}}">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div ng-repeat-end class="one wide column">-->
+                            <!--<div class="ui large labeled button"-->
+                                 <!--ng-click="removeRow($index)"-->
+                                 <!--style="margin-top:.4em;">-->
+                                <!--<i class="minus red circle icon"></i>-->
+                            <!--</div>-->
+                        <!--</div>-->
 
-                        <div class="ui fifteen wide column right aligned">
-                            <label class="design-label">Add another entry</label>
-                        </div>
-                        <div class="one wide column">
-                            <div class="ui large labeled button" ng-click="addPV()" style="margin-top:.4em;">
-                                <i class="add green circle icon"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <!--<div class="ui fifteen wide column right aligned">-->
+                            <!--<label class="design-label">Add another entry</label>-->
+                        <!--</div>-->
+                        <!--<div class="one wide column">-->
+                            <!--<div class="ui large labeled button" ng-click="addPV()" style="margin-top:.4em;">-->
+                                <!--<i class="add green circle icon"></i>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
 
-            <h3 class="ui header"><i class="fa fa-sun-o icon" aria-hidden="true">
+            <h3 class="ui header" ng-if="auxModel.approach === 'prescriptive'"><i class="fa fa-sun-o icon" aria-hidden="true">
             </i>ON-SITE PV SYSTEMS</h3>
 
-            <div class="ui segment">
+            <div class="ui segment" ng-if="auxModel.approach === 'prescriptive'">
                 <div class ="field">
                     Default Values estimate on-site building PV system potential.
                     Uncheck Use Default Values to enter custom inputs. If

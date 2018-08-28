@@ -7,7 +7,11 @@ name := "znc"
 organization in ThisBuild := "com.maalka"
 
 // TODO Set your version here
+<<<<<<< HEAD
 version := "1.0.10.0"
+=======
+version := "1.1.0.2_california"
+>>>>>>> california
 
 scalaVersion in ThisBuild := "2.11.6"
 
@@ -68,8 +72,10 @@ libraryDependencies ++= Seq(
 
   "org.typelevel" %% "squants" % "1.3.1-maalka-1.0",
 
-  "com.typesafe.akka" %% "akka-slf4j" % "2.5.9",
-  "com.typesafe.akka" %% "akka-stream" % "2.5.9",
+  "com.github.tototoshi" %% "scala-csv" % "1.2.1",
+
+  "com.typesafe.akka" %% "akka-slf4j" % "2.5.15",
+  "com.typesafe.akka" %% "akka-stream" % "2.5.15",
   "com.typesafe.play" %% "play-json-joda" % "2.6.8",
   "org.joda" % "joda-convert" % "1.9.2",
   "com.typesafe.play" %% "play-json" % "2.6.8",

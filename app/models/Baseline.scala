@@ -26,15 +26,10 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
   val result = parameters.as[List[JsValue]]
 
   val pvSystems: SolarProperties = SolarProperties(result.head)
-  val metricConversion: MetricConversion = MetricConversion(result.head)
-  val submittedEnergy: EUICalculator = EUICalculator(result.head)
   val prescriptiveEUI = PrescriptiveValues(result.head)
 
   def getPV = pvSystems.setPVDefaults
   def pVWattsResponse: Future[JsValue] = nrel_client.makeWsRequest(Seq.empty[(String, String)])
-
-  def getBuildingEnergyList: Future[EnergyList] = submittedEnergy.getSiteEnergyList
-  def getMetrics: Future[ValidatedConversionDetails] = metricConversion.getConversionMetrics(None)
 
   def getBuildingData: Future[List[ValidatedPropTypes]] = {
 
@@ -63,19 +58,16 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
     } yield capacity
   }
 
-  def getSiteMetrics:Future[Map[String,Any]] = {
-    //Site EUI and Energy have to be converted to reportingUnits for output as last step, carbon and source are already converted
+  def getPrescriptiveMetrics:Future[Map[String,Any]] = {
+
       for {
-      buildingSize <- prescriptiveEUI.getBuildingSize
-      convertedBuildingSize <- convertSize(buildingSize,"imperial")
+        buildingSize <- prescriptiveEUI.getBuildingSize
+        convertedBuildingSize <- convertSize(buildingSize, "imperial")
 
-      totalSite <- submittedEnergy.getTotalSiteEnergy
-      totalCarbon <- getTotalActualCarbon
-      totalSource <- getTotalActualSource
+        totalSite <- getPrescriptiveTotalMetric
+        convertedTotalSite <- convertEnergy(totalSite)
 
-      convertedTotalSite <- convertEnergy(totalSite)
-      convertedTotalSource <- convertEnergy(totalSource)
-
+<<<<<<< HEAD
       energyList <- submittedEnergy.getSiteEnergyList
         metricsMap <- Future {
           Map(
@@ -86,13 +78,28 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
             "source_eui"->totalSource / convertedBuildingSize,
             "carbon_intensity"->totalCarbon / convertedBuildingSize,
             "building_energy_list"-> energyList.energies
+=======
+
+        prescriptiveEndUses <- getPrescriptiveEndUses
+        prescriptiveElectricity <- getPrescriptiveElectricity
+        prescriptiveNG <- getPrescriptiveNG
+        prescriptiveEndUsePercents <- getPrescriptiveEndUsePercents
+        metricsMap <- Future{
+          Map(
+            "site_energy"->convertedTotalSite,
+            "site_eui"->convertedTotalSite / convertedBuildingSize,
+            "prescriptive_end_use_metric_data"->prescriptiveEndUses,
+            "prescriptive_electricity_metric_data"->prescriptiveElectricity,
+            "prescriptive_natural_gas_metric_data"->prescriptiveNG,
+            "prescriptive_end_use_metric_percents"->prescriptiveEndUsePercents
+>>>>>>> california
           )
         }
       } yield metricsMap
   }
 
-  def getPrescriptiveMetrics:Future[Map[String,Any]] = {
 
+<<<<<<< HEAD
     for {
       buildingSize <- prescriptiveEUI.getBuildingSize
       convertedBuildingSize <- convertSize(buildingSize, "imperial")
@@ -134,18 +141,24 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
       convertedTotalSite <- convertEnergy(totalSite)
     } yield convertedTotalSite
   }
+=======
+  def getPrescriptiveSourceMetrics:Future[Map[String,Any]] = {
+>>>>>>> california
 
+      for {
+        buildingSize <- prescriptiveEUI.getBuildingSize
+        convertedBuildingSize <- convertSize(buildingSize, "imperial")
 
-  def getTotalActualCarbon: Future[Double] = getTotalActualMetric(Some("carbon"))
-  def getTotalActualSource: Future[Energy] = {
-    for {
-      totalSource <- getTotalActualMetric(Some("source"))
-      converted <- convertEnergy(KBtus(totalSource))
-    } yield converted
+        totalSite <- getPrescriptiveTotalSource
+        convertedTotalSite <- convertEnergy(totalSite)
+        metricsMap <- Future{
+          Map(
+            "source_energy"->convertedTotalSite,
+            "source_eui"->convertedTotalSite / convertedBuildingSize
+          )
+        }
+      } yield metricsMap
   }
-
-
-
 
 
   def getPrescriptiveEndUsePercents: Future[EndUseDistribution] = {
@@ -176,18 +189,19 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
     } yield converted
   }
 
-  def getPrescriptiveTotalCarbonIntensity: Future[Energy] = {
+  def getPrescriptiveMetricIntensity: Future[Energy] = {
     for {
-      prescriptiveTotalEUI <- prescriptiveEUI.lookupPrescriptiveTotalMetricIntensity(Some("carbon"))
+      prescriptiveTotalEUI <- prescriptiveEUI.lookupPrescriptiveTotalMetricIntensity(None)
     } yield prescriptiveTotalEUI
   }
 
-  def getPrescriptiveTotalCarbon: Future[Energy] = {
+  def getPrescriptiveTotalMetric: Future[Energy] = {
     for {
-      prescriptiveTotalCarbon <- getPrescriptiveTotalCarbonIntensity
+      prescriptiveTotalEnergy <- getPrescriptiveMetricIntensity
       building_size <- prescriptiveEUI.getBuildingSize
-    } yield prescriptiveTotalCarbon * building_size
+    } yield prescriptiveTotalEnergy*building_size
   }
+
 
   def getPrescriptiveTotalSourceIntensity: Future[Energy] = {
     for {
@@ -202,31 +216,6 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
     } yield prescriptiveTotalEnergy*building_size
   }
 
-  def getPrescriptiveTotalSiteIntensity: Future[Energy] = {
-    for {
-      prescriptiveTotalEUI <- prescriptiveEUI.lookupPrescriptiveTotalMetricIntensity(Some("site"))
-    } yield prescriptiveTotalEUI
-  }
-
-  def getPrescriptiveTotalSite: Future[Energy] = {
-    for {
-      prescriptiveTotalEnergy <- getPrescriptiveTotalSiteIntensity
-      building_size <- prescriptiveEUI.getBuildingSize
-    } yield prescriptiveTotalEnergy*building_size
-  }
-
-
-  def getTotalActualMetric(metric_type: Option[String]): Future[Double] = {
-    //this returns in the output reporting metric
-    for {
-      energyList <- submittedEnergy.getValidateSiteEnergyList
-      conversionMetrics <- metricConversion.getConversionMetrics(metric_type)
-      metricList:List[ValidatedEnergy] <- Future.sequence(energyList.map {
-        case a: ValidatedEnergy => metricConversion.convertMetrics(a, Some(a.energyType), conversionMetrics, metric_type)
-      })
-      sum <- Future(metricList.map(_.energyValue.value).sum )
-    } yield sum
-  }
 
 
   //default reporting units are IMPERIAL (kbtu, square feet, ...)
@@ -313,6 +302,177 @@ case class ReportingUnits(reporting_units:String)
         case _ => distribution.asInstanceOf[T]
       }
     }
+  }
+
+  def getPrescriptiveType:Future[String] = {
+    for {
+      prescriptiveParams <- prescriptiveEUI.getPrescriptiveParams
+      prescriptiveType <- Future {
+        prescriptiveParams.prescriptive_resource match {
+          case 0 => "site"
+          case 1 => "source"
+          case 2 => "TDV"
+          case 3 => "carbon"
+        }
+      }
+    } yield prescriptiveType
+  }
+
+  def getSolarConversionConstant(conversionType:String, generationType:String): Future[Double] = {
+    for {
+      prescriptiveParams <- prescriptiveEUI.getPrescriptiveParams
+      constant <- solarConversions(prescriptiveParams.climate_zone, generationType, conversionType)
+    } yield constant
+  }
+
+  def solarConversions(cz:String, resource:String, conversionType:String): Future[Double] = Future{
+    conversionType match {
+      case "site" => 1.0
+      case "source" => { // source-site multiplier
+        resource match {
+          case "solar" => {
+            cz match {
+              case "1" => 2501.0 / 3412
+              case "2" =>	2526.0 / 3412
+              case "3" =>	2527.0 / 3412
+              case "4" =>	2537.0 / 3412
+              case "5" =>	2512.0 / 3412
+              case "6" =>	2491.0 / 3412
+              case "7" =>	2509.0 / 3412
+              case "8" =>	2537.0 / 3412
+              case "9" =>	2551.0 / 3412
+              case "10" =>	2525.0 / 3412
+              case "11" =>	2530.0 / 3412
+              case "12" =>	2486.0 / 3412
+              case "13" =>	2472.0 / 3412
+              case "14" =>	2526.0 / 3412
+              case "15" =>	2542.0 / 3412
+              case "16" =>	2588.0 / 3412
+              case _ =>  throw new Exception ("Could not identify climate zone!")
+            }
+          }
+          case "wind" => {
+            cz match {
+              case "1" => 4768.0 / 3412
+              case "2" =>	4768.0 / 3412
+              case "3" =>	4768.0 / 3412
+              case "4" =>	4768.0 / 3412
+              case "5" =>	4768.0 / 3412
+              case "6" =>	4703.0 / 3412
+              case "7" =>	4703.0 / 3412
+              case "8" =>	4703.0 / 3412
+              case "9" =>	4703.0 / 3412
+              case "10" =>	4703.0 / 3412
+              case "11" =>	4768.0 / 3412
+              case "12" =>	4768.0 / 3412
+              case "13" =>	4768.0 / 3412
+              case "14" =>	4703.0 / 3412
+              case "15" =>	4703.0 / 3412
+              case "16" =>	4703.0 / 3412
+              case _ =>  throw new Exception ("Could not identify climate zone!")
+            }
+          }
+          case _ =>  throw new Exception ("Could not identify resource type (wind/solar)!")
+        }
+      }
+      case "TDV" => { // source-site multiplier
+        resource match {
+          case "solar" => {
+            cz match {
+              case "1" => 24.10 / 3.412
+              case "2" =>	25.79 / 3.412
+              case "3" =>	24.39 / 3.412
+              case "4" =>	25.12 / 3.412
+              case "5" =>	24.17 / 3.412
+              case "6" =>	25.55 / 3.412
+              case "7" =>	28.02 / 3.412
+              case "8" =>	26.93 / 3.412
+              case "9" =>	26.04 / 3.412
+              case "10" =>	24.94 / 3.412
+              case "11" =>	26.04 / 3.412
+              case "12" =>	25.77 / 3.412
+              case "13" =>	25.20 / 3.412
+              case "14" =>	26.53 / 3.412
+              case "15" =>	25.44 / 3.412
+              case "16" =>	24.13 / 3.412
+              case _ =>  throw new Exception ("Could not identify climate zone!")
+            }
+          }
+          case "wind" => {
+            cz match {
+              case "1" => 27.44 / 3.412
+              case "2" =>	29.11 / 3.412
+              case "3" =>	28.9 / 3.412
+              case "4" =>	28.64 / 3.412
+              case "5" =>	28.21 / 3.412
+              case "6" =>	27.37 / 3.412
+              case "7" =>	27.11 / 3.412
+              case "8" =>	26.81 / 3.412
+              case "9" =>	26.73 / 3.412
+              case "10" =>	26.78 / 3.412
+              case "11" =>	29.23 / 3.412
+              case "12" =>	29.22 / 3.412
+              case "13" =>	29.58 / 3.412
+              case "14" =>	27.43 / 3.412
+              case "15" =>	28.02 / 3.412
+              case "16" =>	28.33 / 3.412
+              case _ =>  throw new Exception ("Could not identify climate zone!")
+            }
+          }
+          case _ =>  throw new Exception ("Could not identify resource type (wind/solar)!")
+        }
+      }
+      case "carbon" => { // lb / Kbtu
+        resource match {
+          case "solar" => {
+            cz match {
+              case "1" => 323.0 / 3412
+              case "2" =>	326.0 / 3412
+              case "3" =>	326.0 / 3412
+              case "4" =>	327.0 / 3412
+              case "5" =>	324.0 / 3412
+              case "6" =>	321.0 / 3412
+              case "7" =>	324.0 / 3412
+              case "8" =>	327.0 / 3412
+              case "9" =>	329.0 / 3412
+              case "10" =>	326.0 / 3412
+              case "11" =>	326.0 / 3412
+              case "12" =>	321.0 / 3412
+              case "13" =>	319.0 / 3412
+              case "14" =>	326.0 / 3412
+              case "15" =>	328.0 / 3412
+              case "16" =>	334.0 / 3412
+              case _ =>  throw new Exception ("Could not identify climate zone!")
+            }
+          }
+          case "wind" => {
+            cz match {
+              case "1" => 623.0 / 3412
+              case "2" =>	623.0 / 3412
+              case "3" =>	623.0 / 3412
+              case "4" =>	623.0 / 3412
+              case "5" =>	623.0 / 3412
+              case "6" =>	607.0 / 3412
+              case "7" =>	607.0 / 3412
+              case "8" =>	607.0 / 3412
+              case "9" =>	607.0 / 3412
+              case "10" =>	607.0 / 3412
+              case "11" =>	623.0 / 3412
+              case "12" =>	623.0 / 3412
+              case "13" =>	623.0 / 3412
+              case "14" =>	607.0 / 3412
+              case "15" =>	607.0 / 3412
+              case "16" =>	607.0 / 3412
+              case _ =>  throw new Exception ("Could not identify climate zone!")
+            }
+          }
+          case _ =>  throw new Exception ("Could not identify resource type (wind/solar)!")
+        }
+      }
+
+      case _ =>  throw new Exception ("Could not identify conversion type (TDV/carbon/source)!")
+    }
+
   }
 
 
