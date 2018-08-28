@@ -7,11 +7,7 @@ name := "znc"
 organization in ThisBuild := "com.maalka"
 
 // TODO Set your version here
-<<<<<<< HEAD
-version := "1.0.10.0"
-=======
 version := "1.1.0.2_california"
->>>>>>> california
 
 scalaVersion in ThisBuild := "2.11.6"
 
@@ -129,9 +125,9 @@ pipelineStages := Seq(rjs, digest, gzip)
 // RequireJS with sbt-rjs (https://github.com/sbt/sbt-rjs#sbt-rjs)
 // ~~~
 RjsKeys.paths := Map("jsRoutes" -> ("/jsroutes" -> "empty:"),
-                  "filesaver" -> ("../lib/filesaver/" -> "empty:"),
-                  "angular" -> ("../lib/angularjs/" -> "empty:"),
-                  "jquery" -> ("../lib/jquery/" -> "empty:"))
+  "filesaver" -> ("../lib/filesaver/" -> "empty:"),
+  "angular" -> ("../lib/angularjs/" -> "empty:"),
+  "jquery" -> ("../lib/jquery/" -> "empty:"))
 
 //RjsKeys.mainModule := "main"
 
@@ -140,13 +136,13 @@ RjsKeys.webJarCdns := Map.empty // disable cdn
 
 excludeFilter in (Assets, LessKeys.less) := {
   val public = (baseDirectory.value / "public").getCanonicalPath
-    new SimpleFileFilter({ f =>
-        println("%s - %s".format(f.getCanonicalPath, (webJarsDirectory in Assets).value.getCanonicalPath))
-        (f.getCanonicalPath startsWith public) ||
-            (f.getCanonicalPath startsWith (webModuleDirectory in Assets).value.getCanonicalPath) ||
-	    (f.getCanonicalPath startsWith (webJarsDirectory in Assets).value.getCanonicalPath) ||
-            f.isHidden
-    })
+  new SimpleFileFilter({ f =>
+    println("%s - %s".format(f.getCanonicalPath, (webJarsDirectory in Assets).value.getCanonicalPath))
+    (f.getCanonicalPath startsWith public) ||
+      (f.getCanonicalPath startsWith (webModuleDirectory in Assets).value.getCanonicalPath) ||
+      (f.getCanonicalPath startsWith (webJarsDirectory in Assets).value.getCanonicalPath) ||
+      f.isHidden
+  })
 }
 
 includeFilter in rjs := GlobFilter("*.json") | GlobFilter("*.js") | GlobFilter("*.css") | GlobFilter("*.map")

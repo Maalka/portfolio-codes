@@ -516,52 +516,29 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
             conversionConstant <- Baseline.getSolarConversionConstant(conversionType,"solar")
             totalPrescriptive <- Baseline.getPrescriptiveTotalMetric
             pvTotal <- solarTotal
-<<<<<<< HEAD
-            requirementsMap <- Future {
-              Map(
-                "re_rec_onsite_pv" -> pvTotal / 1000 * cc_energy,
-                "building_energy" -> MegawattHours(totalSite to MegawattHours).value * cc_energy,
-                "re_total_needed" -> MegawattHours(totalSite to MegawattHours).value * cc_energy,
-                "re_procured" -> Math.max(MegawattHours(totalSite to MegawattHours).value - (pvTotal / 1000), 0.0) * cc_energy
-=======
             requirementsMap <- Future{
               Map(
                 "re_rec_onsite_pv" -> pvTotal * conversionConstant / 1000 * cc_energy,
                 "prescriptive_building_energy" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
                 "prescriptive_re_total_needed" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
                 "prescriptive_re_procured" -> Math.max(MegawattHours(totalPrescriptive to MegawattHours).value - (pvTotal*conversionConstant/1000),0.0) * cc_energy
->>>>>>> california
               )
             }
           } yield requirementsMap
         }
 
-<<<<<<< HEAD
-
-    val prescriptiveRequirements: Future[Map[String,Any]] = {
-=======
         val sourceRequirements: Future[Map[String,Any]] = {
->>>>>>> california
           for {
             conversionConstant <- Baseline.getSolarConversionConstant("source","solar")
             cc_energy <- Baseline.solarConversionEnergy
             totalPrescriptive <- Baseline.getPrescriptiveTotalSource
             pvTotal <- solarTotal
-<<<<<<< HEAD
-            requirementsMap <- Future {
-              Map(
-                "re_rec_onsite_pv" -> pvTotal / 1000 * cc_energy,
-                "prescriptive_building_energy" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
-                "prescriptive_re_total_needed" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
-                "prescriptive_re_procured" -> Math.max(MegawattHours(totalPrescriptive to MegawattHours).value - (pvTotal/1000),0.0) * cc_energy
-=======
             requirementsMap <- Future{
               Map(
                 "re_rec_onsite_pv" -> pvTotal * conversionConstant / 1000 * cc_energy,
                 "prescriptive_building_energy" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
                 "prescriptive_re_total_needed" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
                 "prescriptive_re_procured" -> Math.max(MegawattHours(totalPrescriptive to MegawattHours).value - (pvTotal * conversionConstant /1000),0.0) * cc_energy
->>>>>>> california
               )
             }
           } yield requirementsMap

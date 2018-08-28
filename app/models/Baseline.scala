@@ -67,18 +67,6 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
         totalSite <- getPrescriptiveTotalMetric
         convertedTotalSite <- convertEnergy(totalSite)
 
-<<<<<<< HEAD
-      energyList <- submittedEnergy.getSiteEnergyList
-        metricsMap <- Future {
-          Map(
-            "site_energy"->convertedTotalSite,
-            "source_energy"->convertedTotalSource,
-            "carbon_tonnes"->totalCarbon,
-            "site_eui"->convertedTotalSite / convertedBuildingSize,
-            "source_eui"->totalSource / convertedBuildingSize,
-            "carbon_intensity"->totalCarbon / convertedBuildingSize,
-            "building_energy_list"-> energyList.energies
-=======
 
         prescriptiveEndUses <- getPrescriptiveEndUses
         prescriptiveElectricity <- getPrescriptiveElectricity
@@ -92,58 +80,13 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
             "prescriptive_electricity_metric_data"->prescriptiveElectricity,
             "prescriptive_natural_gas_metric_data"->prescriptiveNG,
             "prescriptive_end_use_metric_percents"->prescriptiveEndUsePercents
->>>>>>> california
           )
         }
       } yield metricsMap
   }
 
 
-<<<<<<< HEAD
-    for {
-      buildingSize <- prescriptiveEUI.getBuildingSize
-      convertedBuildingSize <- convertSize(buildingSize, "imperial")
-
-      totalCarbon <- getPrescriptiveTotalCarbon
-      totalSource <- getPrescriptiveTotalSource
-      totalSite <- getPrescriptiveTotalSite
-
-      convertedTotalSource <- convertEnergy(totalSource)
-      convertedTotalSite <- convertEnergy(totalSite)
-
-
-      prescriptiveEndUses <- getPrescriptiveEndUses
-      prescriptiveElectricity <- getPrescriptiveElectricity
-      prescriptiveNG <- getPrescriptiveNG
-      prescriptiveEndUsePercents <- getPrescriptiveEndUsePercents
-      metricsMap <- Future {
-        Map(
-          "site_energy" -> convertedTotalSite,
-          "source_energy" -> convertedTotalSource,
-          "carbon_tonnes" -> totalCarbon,
-          "site_eui" -> convertedTotalSite / convertedBuildingSize,
-          "source_eui" -> convertedTotalSource / convertedBuildingSize,
-          "carbon_intensity" -> totalCarbon / convertedBuildingSize,
-          "prescriptive_end_use_metric_data" -> prescriptiveEndUses,
-          "prescriptive_electricity_metric_data" -> prescriptiveElectricity,
-          "prescriptive_natural_gas_metric_data" -> prescriptiveNG,
-          "prescriptive_end_use_metric_percents" -> prescriptiveEndUsePercents
-        )
-      }
-
-    } yield metricsMap
-  }
-
-
-  def getTotalSiteEnergy: Future[Energy] = {
-    for {
-      totalSite <- submittedEnergy.getTotalSiteEnergy
-      convertedTotalSite <- convertEnergy(totalSite)
-    } yield convertedTotalSite
-  }
-=======
   def getPrescriptiveSourceMetrics:Future[Map[String,Any]] = {
->>>>>>> california
 
       for {
         buildingSize <- prescriptiveEUI.getBuildingSize
