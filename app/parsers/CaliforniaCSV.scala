@@ -45,13 +45,16 @@ class CaliforniaCSV @Inject() (implicit val actorSystem: ActorSystem,
   def toAnnualResults(is:InputStream) = {
     implicit val materializer = ActorMaterializer()
 
-    source(toStream(is)).via(annualResultsSegmentFlow())
-      .groupBy(1000, _.head)
-      .fold(("", Vector[Vector[String]]())) {
-        case (a, b) => b.head -> (a._2 :+ b)
-      }
-      .mergeSubstreams
-      .runWith(Sink.seq)
+
+    val test1 = {
+      source(toStream(is)).via(annualResultsSegmentFlow())
+        .filter(_.contains("Total"))
+        .groupBy(1000, _(2))
+        .mergeSubstreams
+        .runWith(Sink.seq)
+    }
+
+      test1
   }
 
   def toHourlylResults(is:InputStream) = {
@@ -65,8 +68,8 @@ class CaliforniaCSV @Inject() (implicit val actorSystem: ActorSystem,
   private def parameterSegmentFlow() = Flow[Seq[Option[String]]]
     .statefulMapConcat { () =>
       var rowNumber = -1
-      val startRowNumber = 1
-      val endRowNumber = 7
+      val startRowNumber = 3
+      val endRowNumber = 8
       row =>
         rowNumber += 1
         if (rowNumber >= 1 && rowNumber <= endRowNumber && row(1).isDefined && row(3).isDefined) {
@@ -82,8 +85,8 @@ class CaliforniaCSV @Inject() (implicit val actorSystem: ActorSystem,
   private def projectSegmentFlow() = Flow[Seq[Option[String]]]
     .statefulMapConcat { () =>
       var rowNumber = -1
-      val startRowNumber = 9
-      val endRowNumber = 29
+      val startRowNumber = 10
+      val endRowNumber = 30
       row =>
         rowNumber += 1
         if (rowNumber >= startRowNumber && rowNumber <= endRowNumber && row(1).isDefined && row(5).isDefined) {
@@ -186,13 +189,13 @@ class CaliforniaCSV @Inject() (implicit val actorSystem: ActorSystem,
       var rowNumber = -1
 
       val options = MapMayColumnOption(
-        startRowNumber = 30,
+        startRowNumber = 31,
 
-        endRowNumber = 51,
-        yHeaderRow = 30,
+        endRowNumber = 52,
+        yHeaderRow = 31,
 
-        ysubHeaderRow = 31,
-        dataRow = 32,
+        ysubHeaderRow = 32,
+        dataRow = 33,
 
         dataColumnHeader = 2,
 
@@ -215,13 +218,13 @@ class CaliforniaCSV @Inject() (implicit val actorSystem: ActorSystem,
       var rowNumber = -1
 
       val options = MapMayColumnOption(
-        startRowNumber = 53,
+        startRowNumber = 54,
 
         endRowNumber = 99999999,
-        yHeaderRow = 53,
+        yHeaderRow = 54,
 
-        ysubHeaderRow = 54,
-        dataRow = 56,
+        ysubHeaderRow = 55,
+        dataRow = 57,
 
         dataColumnHeader = 0,
 
