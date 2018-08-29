@@ -3,7 +3,7 @@
  * for uploading
  * CSV files
  */
-define(['angular', 'filesaver', './main', 'angular-file-upload'], function(angular) {
+define(['angular', './main', 'angular-file-upload'], function(angular) {
     'use strict';
     var mod = angular.module('common.directives');
 
@@ -19,14 +19,20 @@ define(['angular', 'filesaver', './main', 'angular-file-upload'], function(angul
                 $scope.submitFile = function() {
                     $scope.error = undefined;
                     if ($scope.attachment) {
-                        $scope.upload($scope.attachment);
+                        $scope.futures = $scope.upload($scope.attachment);
+
+                    $q.resolve($scope.futures).then(function (results) {
+                          console.log(results);
+                      });
+
                     }
                 };
+
+
                 $scope.loadingFileFiller = {};
                 $scope.loading = false;
 
                 $scope.upload = function (file) {
-                    // https://github.com/eligrey/FileSaver.js/issues/156
                     $scope.loading = true;
                     Upload.upload({
                         responseType: "arraybuffer",
@@ -35,6 +41,7 @@ define(['angular', 'filesaver', './main', 'angular-file-upload'], function(angul
                         headers: {
                             'Content-Type': 'application/zip; charset=utf-8'
                         },
+                        //headers: [{name:'Accept', value:'application/json'}],
                         transformResponse: function (data) {
                             //The data argument over here is arraybuffer but $http returns response
                             // as object, thus returning the response as an object with a property holding the
@@ -50,14 +57,8 @@ define(['angular', 'filesaver', './main', 'angular-file-upload'], function(angul
                         }
                     }).then(function (resp) {
 
-                        $q.resolve(resp).then(function (results) {
-                             console.log(results);
-                         });
 
-
-
-
-                        console.log(resp);
+                        console.log(resp.data);
                         $scope.loading = false;
 
                         $timeout(function () {
@@ -81,6 +82,9 @@ define(['angular', 'filesaver', './main', 'angular-file-upload'], function(angul
                         }
                     });
                  };
+
+
+
 
 
             }]
