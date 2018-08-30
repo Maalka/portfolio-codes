@@ -28,7 +28,7 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
 
                 $scope.getPropResponseField = function(propResponse,key){
                     var returnValue;
-                    console.log(propResponse);
+
                     for (var i =0; i < propResponse.values.length; i ++) {
                         if (propResponse.values[i][key] !== undefined) {
                           returnValue = propResponse.values[i][key];
@@ -66,8 +66,8 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                     }).then(function (data) {
 
 
-                        console.log(data);
-                        $scope.data.siteMetrics = $scope.getPropResponseField(data,"siteMetrics");
+                        var parsedData = JSON.parse(data.data);
+                        $scope.data.siteMetrics = $scope.getPropResponseField(parsedData,"siteMetrics");
 //                        $scope.data.sourceMetrics = $scope.getPropResponseField(data.data,"sourceMetrics");
 //                        $scope.data.tdvMetrics = $scope.getPropResponseField(data.data,"tdvMetrics");
 //                        $scope.data.carbonMetrics = $scope.getPropResponseField(data.data,"carbonMetrics");
