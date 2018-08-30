@@ -7,10 +7,12 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
     'use strict';
     var mod = angular.module('common.directives');
 
-    mod.directive('files', ['$log', 'errorPopoverService', 'playRoutes', 'Upload', '$q', function ($log, errorPopover, playRoutes, Upload, $q) {
+    mod.directive('files', ['$log', 'errorPopoverService', 'playRoutes', 'Upload', function ($log, errorPopover, playRoutes, Upload) {
         return {
             restrict: 'E',
-            scope: {},
+            scope: {
+                csvData: '=data'
+            },
             templateUrl: "javascripts/common/partials/files.html",
             controller: ["$scope", "$element", "$timeout", "playRoutes",
                 function ($scope, $element, $timeout, playRoutes) {
@@ -21,11 +23,19 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                     if ($scope.attachment) {
                         $scope.futures = $scope.upload($scope.attachment);
 
-                    $q.resolve($scope.futures).then(function (results) {
-                          console.log(results);
-                      });
-
                     }
+                };
+
+                $scope.getPropResponseField = function(propResponse,key){
+                    var returnValue;
+                    console.log(propResponse);
+                    for (var i =0; i < propResponse.values.length; i ++) {
+                        if (propResponse.values[i][key] !== undefined) {
+                          returnValue = propResponse.values[i][key];
+                          break;
+                        }
+                    }
+                    return returnValue;
                 };
 
 
@@ -35,31 +45,43 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                 $scope.upload = function (file) {
                     $scope.loading = true;
                     Upload.upload({
-                        responseType: "arraybuffer",
+                        //responseType: "arraybuffer",
+                        //headers: {
+                        //  'Content-Type': 'application/zip; charset=utf-8'
+                        //},
                         url: playRoutes.controllers.CSVController.upload().url,
                         cache: false,
-                        headers: {
-                            'Content-Type': 'application/zip; charset=utf-8'
-                        },
-                        //headers: [{name:'Accept', value:'application/json'}],
+
+                        headers: [{name:'Accept', value:'application/json'}],
                         transformResponse: function (data) {
                             //The data argument over here is arraybuffer but $http returns response
                             // as object, thus returning the response as an object with a property holding the
                             // binary file arraybuffer data
 
-
-                            var response = {};
-                            response.arrayBuffer = data;
-                            return response;
+                            return data;
                         },
                         data: {
                             attachment: file
                         }
-                    }).then(function (resp) {
+                    }).then(function (data) {
 
 
-                        console.log(resp.data);
+                        console.log(data);
+                        $scope.data.siteMetrics = $scope.getPropResponseField(data,"siteMetrics");
+//                        $scope.data.sourceMetrics = $scope.getPropResponseField(data.data,"sourceMetrics");
+//                        $scope.data.tdvMetrics = $scope.getPropResponseField(data.data,"tdvMetrics");
+//                        $scope.data.carbonMetrics = $scope.getPropResponseField(data.data,"carbonMetrics");
+
+
+
+//                        console.log($scope.data.sourceMetrics);
+//                        console.log($scope.data.tdvMetrics);
+//                        console.log($scope.data.carbonMetrics);
+
+
                         $scope.loading = false;
+
+                        $scope.csvData = data.data;
 
                         $timeout(function () {
                             $scope.loadingFileFiller = {};

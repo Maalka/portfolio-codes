@@ -15,7 +15,7 @@ import akka.stream.{ActorMaterializer, _}
 import akka.util.Timeout
 import com.github.tototoshi.csv.{CSVReader, CSVWriter, DefaultCSVFormat, QUOTE_NONE, Quoting}
 import com.google.inject.Inject
-import models.{ElectricityDistribution, EndUseDistribution, NaturalGasDistribution}
+import models._
 import parsers.CaliforniaCSV
 import play.api.{Configuration, Environment}
 import play.api.cache.AsyncCacheApi
@@ -47,8 +47,10 @@ class CSVController @Inject()(val cache: AsyncCacheApi, cc: ControllerComponents
 
 
   def api[T](response: T): Either[String, JsValue] = {
+
     response match {
-      case v: Vector[(String, Any)] => Right(
+
+      case v: Map[String, Any] => Right(
         JsObject(v.map {
           case (a, b) => {
             val ret: (String, JsValue) = b match {
@@ -92,45 +94,93 @@ class CSVController @Inject()(val cache: AsyncCacheApi, cc: ControllerComponents
         val annual = Await.result(californiaCSV.toAnnualResults(fileStream3), Duration.Inf)
 
 
+        def mapEndUses(metrics:Seq[(String,String)]):Map[String,Any] = {
+
+
+          var metricsMap:Seq[Map[String,Any]] = metrics.map {
+
+            _ match {
+
+              case (a, b) if a == "Space Heating" => Map("htg" -> b.toDouble)
+              case (a, b) if a == "Space Cooling" => Map("clg" -> b.toDouble)
+              case (a, b) if a == "Indoor Lighting" => Map("intLgt" -> b.toDouble)
+              case (a, b) if a == "Other Lighting" => Map("extLgt" -> b.toDouble)
+              case (a, b) if a == "Indoor Fans" => Map("fans" -> b.toDouble)
+              case (a, b) if a == "Pumps & Misc." => Map("pumps" -> b.toDouble)
+              case (a, b) if a == "Heat Rejection" => Map("heatRej" -> b.toDouble)
+              case (a, b) if a == "Domestic Hot Water" => Map("swh" -> b.toDouble)
+              case (a, b) if a == "TOTAL" => Map("net" -> b.toDouble)
+
+              case (a, b) if a == "Batteries Discharge" => Map("discharge" -> b.toDouble)
+              case (a, b) if a == "Batteries Charge" => Map("charge" -> b.toDouble)
+              case (a, b) if a == "On-Site PV"=> Map("solar" -> b.toDouble)
+              case (a, b) if a == "Net Energy" => Map("netenergy" -> b.toDouble)
+
+              case (a, b) if a == "Receptacle" => Map("receptacle" -> b.toDouble)
+              case (a, b) if a == "Process" => Map("process" -> b.toDouble)
+
+              case (a, b) if a == "Interior" => Map("intEqp" -> b.toDouble) //interior Equipment
+              case (a, b) if a == "Exterior" => Map("extEqp" -> b.toDouble) //exterior Equipment
+              case (a, b) if a == "Heat Recovery" => Map("heatRec" -> b.toDouble) //heat recovery
+              case (a, b) if a == "Refrigeration" => Map("refrg" -> b.toDouble) //refrigeration
+              case (a, b) if a == "generator" => Map("gentor" -> b.toDouble) //generator
+
+              case (a, b) if a == "COMPLIANCE TOTAL" => Map("compliance" -> b.toDouble)
+              case (a, b) if a == "Energy Component" => Map("units" -> b)
+              case (a, b)  => null
+
+            }
+          }
+
+          metricsMap.flatten.toMap
+
+        }
+
+
+
 
         val futures = Future.sequence(Seq(
 
+          Future{
+            annual.filter(_.contains("Proposed Design Site EUI"))
+              .flatMap{
+                case Vector(a,b,c,d,e) => Map(a->e)
+              }
+            }.map(mapEndUses(_)).map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
 
-        Future{
-          annual.filter(_.contains("Proposed Design Site EUI"))
-            .flatMap{
-              case Vector(a,b,c,d,e) => Map(a->e)
-            }
-        }.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
+          Future{
+            annual.filter(_.contains("Proposed Design Source Energy"))
+              .flatMap{
+                case Vector(a,b,c,d,e) => Map(a->e)
+              }
+            }.map(mapEndUses(_)).map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
 
-        Future{
-          annual.filter(_.contains("Proposed Design Source Energy"))
-            .flatMap{
-              case Vector(a,b,c,d,e) => Map(a->e)
-            }
-        }.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
+          Future{
+            annual.filter(_.contains("Proposed Design TDV"))
+              .flatMap{
+                case Vector(a,b,c,d,e) => Map(a->e)
+              }
+            }.map(mapEndUses(_)).map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
 
-        Future{
-          annual.filter(_.contains("Proposed Design TDV"))
-            .flatMap{
-              case Vector(a,b,c,d,e) => Map(a->e)
-            }
-        }.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-
-        Future{
-          annual.filter(_.contains("Proposed Design Emissions"))
-            .flatMap{
-              case Vector(a,b,c,d,e) => Map(a->e)
-            }}.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
+          Future{
+            annual.filter(_.contains("Proposed Design Emissions"))
+              .flatMap {
+                case Vector(a, b, c, d, e) => Map(a -> e)
+              }
+            }.map(mapEndUses(_)).map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
 
         ))
+
+
 
         val fieldNames = Seq(
           "siteMetrics",
           "sourceMetrics",
           "tdvMetrics",
-          "emissionsMetrics"
+          "carbonMetrics"
         )
+
+
 
         futures.map(fieldNames.zip(_)).map { r =>
           val errors = r.collect {
@@ -140,10 +190,10 @@ class CSVController @Inject()(val cache: AsyncCacheApi, cc: ControllerComponents
             case (n, Right(s)) => Json.obj(n -> s)
           }
 
-          println(Json.obj(
-            "values" -> results,
-            "errors" -> errors
-          ))
+//          println(Json.obj(
+//            "values" -> results,
+//            "errors" -> errors
+//          ))
 
           Ok(Json.obj(
             "values" -> results,
@@ -153,11 +203,7 @@ class CSVController @Inject()(val cache: AsyncCacheApi, cc: ControllerComponents
 
 
       }
-    }
-
-          Future {
-            Ok("File is missing")
-          }
+    }.getOrElse(Future{Ok("File is Missing")})
 
   }
 }

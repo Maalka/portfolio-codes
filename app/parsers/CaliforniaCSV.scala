@@ -136,7 +136,7 @@ class CaliforniaCSV @Inject() (implicit val actorSystem: ActorSystem,
           case (Some(k), i) => k -> i
         }
 
-        Console.println("ddd: %s".format(options.headers))
+        //Console.println("ddd: %s".format(options.headers))
         scala.collection.immutable.Iterable.empty[Option[Vector[String]]]
 
       } else if (rowNumber == options.ysubHeaderRow) {

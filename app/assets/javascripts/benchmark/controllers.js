@@ -46,6 +46,8 @@ define(['angular'], function() {
     $scope.mainColumnWidth = "";
     $scope.propText = "Primary Building Use";
 
+    $scope.csvData = {};
+
     $scope.showEnergy = true;
     $scope.showBar = false;
     $scope.showSolar = false;
@@ -406,6 +408,8 @@ define(['angular'], function() {
         }
     };
 
+
+
     $scope.$watch("auxModel.reporting_units", function (value) {
         if (value === undefined) {
             return;
@@ -515,7 +519,7 @@ define(['angular'], function() {
 
             $scope.submitArray = [];
 
-            if($scope.auxModel.approach === 'performance' && $scope.auxModel.energies!==null || $scope.auxModel.approach === 'prescriptive'){
+            if($scope.auxModel.approach === 'prescriptive'){
                 $scope.auxModel.prop_types = getPropTypes();
                 $scope.auxModel.pv_data = getPVData();
 
