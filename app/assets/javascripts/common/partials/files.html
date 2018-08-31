@@ -26,14 +26,11 @@
         </div>
         <div clasas = "ui row">
         <div class="field" ng-if="attachment !== undefined && loadingFileFiller.attachmentName === undefined">
-            <p style="color:black;">
-                {{attachment.name}}
-            </p>
         </div>
 
-        <div class="field" ng-if="csvData !== undefined">
+        <div class="field" ng-if="csvData.siteMetrics !== undefined">
             <p style="color:black;">
-                OK
+
             </p>
         </div>
     </div>

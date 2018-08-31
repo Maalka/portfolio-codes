@@ -13,11 +13,17 @@ define(['angular','highcharts', './main'], function(angular) {
       return {
           restrict: 'A',
           scope: {
+            approach: '=approach',
             endUses: '=endUses',
             units: '=units',
             prescriptiveRequirements: '=prescriptiveRequirements'
           },
           controller: ["$scope", "$element","$timeout", function ($scope, $element, $timeout) {
+
+
+            console.log($scope.endUses);
+            console.log($scope.prescriptiveRequirements);
+            console.log($scope.units);
 
             var chart;
 
@@ -32,17 +38,40 @@ define(['angular','highcharts', './main'], function(angular) {
 
             };
 
+            $scope.getTotalMetric = function(){
+                var maxY;
+                for(var i = 0; i < $scope.endUses.endUses.length; i++ ) {
+                    if($scope.endUses.endUses[i][0] === 'Total'){
+                        maxY = $scope.endUses.endUses[i][1] + 10;
+                    }
+                }
+
+                return (maxY === 'undefined') ? 60 : maxY;
+
+            };
+
+
+
             $scope.getEndUse = function(key){
                 for(var i = 0; i < $scope.endUses.endUses.length; i++ ) {
                     if($scope.endUses.endUses[i][0] === key) {
-                        if($scope.endUses.endUses[i][3] === null){
-                            return 0.0;
-                        }else {
-                            return $scope.endUses.endUses[i][3];
+                        if($scope.approach === 'prescriptive'){
+                            if($scope.endUses.endUses[i][3] === null){
+                                return 0.0;
+                            }else {
+                                return $scope.endUses.endUses[i][3];
+                            }
+                        } else   if($scope.approach === 'performance'){
+                           if($scope.endUses.endUses[i][1] === null){
+                               return 0.0;
+                           }else {
+                               return $scope.endUses.endUses[i][1];
                         }
                     }
                 }
+            }
             };
+
 
 
             $scope.showRenewable = function(attr){
@@ -61,9 +90,17 @@ define(['angular','highcharts', './main'], function(angular) {
             $scope.getOtherEndUses = function(){
                 var sumOther = 0;
                 for(var j = 0; j < $scope.endUses.endUsesOther.length; j++ ) {
-                    if($scope.endUses.endUsesOther[j][3] !== null){
-                        sumOther = sumOther + $scope.endUses.endUsesOther[j][3];
+                    if($scope.approach === 'prescriptive'){
+                        if($scope.endUses.endUsesOther[j][3] !== null){
+                            sumOther = sumOther + $scope.endUses.endUsesOther[j][3];
+                        }
+                    } else if($scope.approach === 'performance'){
+                        console.log('performance');
+                       if($scope.endUses.endUsesOther[j][1] !== null){
+                           sumOther = sumOther + $scope.endUses.endUsesOther[j][1];
+                       }
                     }
+
                 }
                 return sumOther;
             };
@@ -129,7 +166,7 @@ define(['angular','highcharts', './main'], function(angular) {
                   },
                   yAxis: {
                       min: 0,
-                      max: $scope.prescriptiveRequirements.building_energy_norm + 20,
+                      max: $scope.getTotalMetric(), //$scope.prescriptiveRequirements.building_energy_norm + 60,
                       title: {
                           text: $scope.units
                       },
@@ -215,7 +252,6 @@ define(['angular','highcharts', './main'], function(angular) {
               }, 0);
             };
             if ($scope.endUses !== undefined) {
-                console.log($scope.endUses);
               plot();
             }
 

@@ -131,6 +131,19 @@ define(['angular'], function() {
         $scope.clearGeography();
     });
 
+    $scope.$watch("auxModel.approach", function () {
+        $scope.solarResults = null;
+        $scope.solarMonthly = null;
+        $scope.buildingRequirements = null;
+        $scope.prescriptiveRequirements = null;
+        $scope.pv_capacity = null;
+        $scope.endUses = null;
+        $scope.showSolar = false;
+
+        $scope.benchmarkResult = null;
+        $scope.clearGeography();
+    });
+
 
     $scope.getFile = function(item){
             $scope.auxModel.climate_zone = item.id;
@@ -243,6 +256,155 @@ define(['angular'], function() {
                 $scope.showSolar = false;
             }
     };
+
+
+    $scope.getTotalMetric = function(arr){
+        var total;
+        for(var i = 0; i < arr.endUses.length; i++ ) {
+            if(arr.endUses[i][0] === 'Total'){
+                total = arr.endUses[i][1];
+            }
+        }
+
+        return (total === 'undefined') ? null : total;
+
+    };
+
+     $scope.getSolarMetric = function(arr,key){
+            var onsite;
+            for(var i = 0; i < arr.renewables.length; i++ ) {
+                if(arr.renewables[i][0] === key){
+                    onsite = arr.renewables[i][1];
+                }
+            }
+
+            return (onsite === 'undefined') ? null : Math.abs(onsite);
+
+        };
+
+    $scope.testsubmit = function () {
+
+
+        if ($scope.csvData.siteMetrics) {
+
+            $scope.solarResults = null;
+            $scope.endUses = null;
+            $scope.buildingRequirements = null;
+            $scope.benchmarkResult = null;
+            $scope.prescriptiveRequirements = null;
+
+            if($scope.auxModel.prescriptive_resource === 0){
+                 $scope.endUses = $scope.computeCSVEndUses($scope.csvData.siteMetrics);
+                 $scope.barPlotUnits=$scope.csvData.siteMetrics.units;
+            } else if($scope.auxModel.prescriptive_resource === 1){
+                 $scope.endUses = $scope.computeCSVEndUses($scope.csvData.sourceMetrics);
+                 $scope.barPlotUnits=$scope.csvData.sourceMetrics.units;
+            } else if($scope.auxModel.prescriptive_resource === 2){
+                 $scope.endUses = $scope.computeCSVEndUses($scope.csvData.tdvMetrics);
+                 $scope.barPlotUnits=$scope.csvData.tdvMetrics.units;
+            } else if($scope.auxModel.prescriptive_resource === 3){
+                 $scope.endUses = $scope.computeCSVEndUses($scope.csvData.carbonMetrics);
+                 $scope.barPlotUnits=$scope.csvData.carbonMetrics.units;
+            }
+
+            $scope.carbonTotals = $scope.computeCSVEndUses($scope.csvData.carbonMetrics);
+
+
+            //calculate carbon table metrics
+            var building_carbon = $scope.getTotalMetric($scope.carbonTotals);
+            var pv_potential = $scope.getSolarMetric($scope.carbonTotals,'On-site PV');
+            var battery_potential = $scope.getSolarMetric($scope.carbonTotals,'Batteries Discharge');
+            var carbon_procured = Math.max(building_carbon - pv_potential - battery_potential,0);
+
+            var sourceTable = {
+                  "building_carbon": building_carbon * 1000,
+                  "required": building_carbon *1000,
+                  "pv_potential": pv_potential*1000,
+                  "battery_potential": battery_potential*1000,
+                  "procured": carbon_procured*1000,
+
+                  "building_carbon_norm": building_carbon,
+                  "required_norm": building_carbon,
+                  "pv_potential_norm": pv_potential,
+                  "battery_potential_norm": battery_potential,
+                  "procured_norm": carbon_procured,
+
+                  "prescriptive_resource": $scope.auxModel.prescriptive_resource
+            };
+
+
+            var pv_potential_prescriptive = $scope.getSolarMetric($scope.endUses,'On-site PV');
+            var battery_potential_prescriptive = $scope.getSolarMetric($scope.endUses,'Batteries Discharge');
+            var total_prescriptive = $scope.getTotalMetric($scope.endUses);
+
+            $scope.prescriptiveRequirements = {
+                "building_energy_norm": total_prescriptive,
+                "pv_potential_norm": pv_potential_prescriptive + battery_potential_prescriptive,
+                "procured_norm": total_prescriptive - pv_potential_prescriptive - battery_potential_prescriptive
+
+            };
+            $scope.buildingRequirements = sourceTable;
+
+
+            $scope.showSolar = false;
+            $scope.showBar = false;
+
+        }
+    };
+
+    $scope.computeCSVEndUses = function(results){
+
+            function nullZero(a) {
+                if(a===0 || a===undefined){
+                    return null;
+                } else {
+                return a;
+                }
+            }
+
+
+            //still have net here
+            var mainEndUses = ["htg", "clg", "intLgt", "intEqp", "swh", "fans", "net"];
+            var endUseNames = ["Heating", "Cooling", "Interior Lighting", "Plug Loads", "Service Hot Water", "Fans", "Total"];
+            var othersEndUses = ["extLgt","heatRej","process","pumps","receptacle"];
+            var othersEndUseNames = ["Exterior Equipment","Heat Rejection","Process","Pumps","Receptacle"];
+
+            var renewables = ["charge","discharge","netenergy","solar"];
+            var renewablesNames = ["Batteries Charge","Batteries Discharge","Net Energy","On-site PV"];
+
+
+            var endUsesTable = {} ;
+            endUsesTable.endUses = [] ;
+            endUsesTable.endUsesOther = [] ;
+            endUsesTable.renewables = [] ;
+
+            for (var i =0; i < mainEndUses.length; i ++) {
+
+                endUsesTable.endUses.push([
+                    endUseNames[i],
+                    nullZero(results[mainEndUses[i]]),
+                ]);
+            }
+
+            for (var j =0; j < othersEndUses.length; j ++) {
+
+                endUsesTable.endUsesOther.push([
+                    othersEndUseNames[j],
+                    nullZero(results[othersEndUses[j]]),
+                ]);
+            }
+
+            for (var k =0; k < renewables.length; k ++) {
+
+                endUsesTable.renewables.push([
+                    renewablesNames[k],
+                    nullZero(results[renewables[k]]),
+                ]);
+            }
+
+            return endUsesTable;
+
+        };
 
 
     $scope.computeBenchmarkResult = function(){
@@ -421,12 +583,19 @@ define(['angular'], function() {
     });
 
     $scope.$watch("auxModel.prescriptive_resource", function (value) {
+
+
         if (value === undefined) {
             return;
         }
-        // only submit if the user has already CLICK on the submit button
-        if($scope.forms.hasValidated) {
-            $scope.submit();
+
+        if($scope.auxModel.approach === 'prescriptive'){
+            // only submit if the user has already CLICK on the submit button
+            if($scope.forms.hasValidated) {
+                $scope.submit();
+            }
+        }else {
+            $scope.testsubmit();
         }
     });
 
@@ -435,9 +604,6 @@ define(['angular'], function() {
         $scope.solarResults = null;
         $scope.endUses = null;
         $scope.buildingRequirements = null;
-
-
-
 
         if($scope.forms.baselineForm === undefined) {
             return;

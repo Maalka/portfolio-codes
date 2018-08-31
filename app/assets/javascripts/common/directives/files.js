@@ -9,7 +9,7 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
 
     mod.directive('files', ['$log', 'errorPopoverService', 'playRoutes', 'Upload', function ($log, errorPopover, playRoutes, Upload) {
         return {
-            restrict: 'E',
+            restrict: 'A',
             scope: {
                 csvData: '=data'
             },
@@ -22,7 +22,6 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                     $scope.error = undefined;
                     if ($scope.attachment) {
                         $scope.futures = $scope.upload($scope.attachment);
-
                     }
                 };
 
@@ -38,6 +37,24 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                     return returnValue;
                 };
 
+                $scope.computeMetrics = function () {
+
+                    var parsedData = JSON.parse($scope.dataTemp.data);
+
+                    $scope.csvData.siteMetrics = $scope.getPropResponseField(parsedData,"siteMetrics");
+                    $scope.csvData.sourceMetrics = $scope.getPropResponseField(parsedData,"sourceMetrics");
+                    $scope.csvData.tdvMetrics = $scope.getPropResponseField(parsedData,"tdvMetrics");
+                    $scope.csvData.carbonMetrics = $scope.getPropResponseField(parsedData,"carbonMetrics");
+
+
+                    $scope.loading = false;
+
+
+                    $timeout(function () {
+                        $scope.loadingFileFiller = {};
+                    }, 1000);
+
+                };
 
                 $scope.loadingFileFiller = {};
                 $scope.loading = false;
@@ -45,10 +62,7 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                 $scope.upload = function (file) {
                     $scope.loading = true;
                     Upload.upload({
-                        //responseType: "arraybuffer",
-                        //headers: {
-                        //  'Content-Type': 'application/zip; charset=utf-8'
-                        //},
+
                         url: playRoutes.controllers.CSVController.upload().url,
                         cache: false,
 
@@ -65,27 +79,8 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                         }
                     }).then(function (data) {
 
-
-                        var parsedData = JSON.parse(data.data);
-                        $scope.data.siteMetrics = $scope.getPropResponseField(parsedData,"siteMetrics");
-//                        $scope.data.sourceMetrics = $scope.getPropResponseField(data.data,"sourceMetrics");
-//                        $scope.data.tdvMetrics = $scope.getPropResponseField(data.data,"tdvMetrics");
-//                        $scope.data.carbonMetrics = $scope.getPropResponseField(data.data,"carbonMetrics");
-
-
-
-//                        console.log($scope.data.sourceMetrics);
-//                        console.log($scope.data.tdvMetrics);
-//                        console.log($scope.data.carbonMetrics);
-
-
-                        $scope.loading = false;
-
-                        $scope.csvData = data.data;
-
-                        $timeout(function () {
-                            $scope.loadingFileFiller = {};
-                        }, 1000);
+                        $scope.dataTemp = data;
+                        $scope.computeMetrics(data);
 
                     }).catch(function (resp) {
                         $scope.loading = false;
