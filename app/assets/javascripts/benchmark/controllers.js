@@ -257,6 +257,16 @@ define(['angular'], function() {
             }
     };
 
+    $scope.getEndUsePercents = function(total){
+        for(var i = 0; i < $scope.endUses.endUses.length; i++ ) {
+            $scope.endUses.endUses[i].push(100*$scope.endUses.endUses[i][1]/total);
+        }
+        for(var j = 0; j < $scope.endUses.endUsesOther.length; j++ ) {
+            $scope.endUses.endUsesOther[j].push(100*$scope.endUses.endUsesOther[j][1]/total);
+        }
+    };
+
+
 
     $scope.getTotalMetric = function(arr){
         var total;
@@ -327,23 +337,26 @@ define(['angular'], function() {
                   "required_norm": building_carbon,
                   "pv_potential_norm": pv_potential,
                   "battery_potential_norm": battery_potential,
-                  "procured_norm": carbon_procured,
-
-                  "prescriptive_resource": $scope.auxModel.prescriptive_resource
+                  "procured_norm": carbon_procured
             };
 
+            $scope.buildingRequirements = sourceTable;
+
+            $scope.setPrescriptiveTable();
 
             var pv_potential_prescriptive = $scope.getSolarMetric($scope.endUses,'On-site PV');
             var battery_potential_prescriptive = $scope.getSolarMetric($scope.endUses,'Batteries Discharge');
             var total_prescriptive = $scope.getTotalMetric($scope.endUses);
+            $scope.endUses.eui = total_prescriptive;
+            $scope.getEndUsePercents(total_prescriptive);
 
             $scope.prescriptiveRequirements = {
                 "building_energy_norm": total_prescriptive,
                 "pv_potential_norm": pv_potential_prescriptive + battery_potential_prescriptive,
-                "procured_norm": total_prescriptive - pv_potential_prescriptive - battery_potential_prescriptive
+                "procured_norm": total_prescriptive - pv_potential_prescriptive - battery_potential_prescriptive,
+                "prescriptive_resource": $scope.auxModel.prescriptive_resource
 
             };
-            $scope.buildingRequirements = sourceTable;
 
 
             $scope.showSolar = false;
@@ -405,6 +418,34 @@ define(['angular'], function() {
             return endUsesTable;
 
         };
+
+        $scope.setPrescriptiveTable = function(){
+
+
+                 if ($scope.auxModel.prescriptive_resource === 0) {
+                    $scope.prescriptiveTableIntensityText="Estimated Site EUI:";
+                    $scope.prescriptiveTableResourceText="Estimated Site Energy Consumption:";
+                    $scope.prescriptiveTableUnits="MBtu/yr";
+                    $scope.prescriptiveTableIntensityUnits="kBtu/ft²-yr";
+                } else if ($scope.auxModel.prescriptive_resource === 1) {
+                    $scope.prescriptiveTableIntensityText="Estimated Source EUI:";
+                    $scope.prescriptiveTableResourceText="Estimated Source Energy Consumption:";
+                    $scope.prescriptiveTableUnits="MBtu/yr";
+                    $scope.prescriptiveTableIntensityUnits="kBtu/ft²-yr";
+                } else if ($scope.auxModel.prescriptive_resource === 2) {
+                    $scope.prescriptiveTableIntensityText="Estimated TDV Intensity:";
+                    $scope.prescriptiveTableResourceText="Estimated TDV Total:";
+                    $scope.prescriptiveTableUnits="MBtu/yr";
+                    $scope.prescriptiveTableIntensityUnits="kBtu/ft²-yr";
+                } else if ($scope.auxModel.prescriptive_resource === 3) {
+                    $scope.prescriptiveTableIntensityText="Estimated Carbon Intensity:";
+                    $scope.prescriptiveTableResourceText="Estimated Total Carbon Emissions:";
+                    $scope.prescriptiveTableUnits="Tons CO₂/yr";
+                    $scope.prescriptiveTableIntensityUnits="lb CO₂/ft²-yr";
+                }
+
+        };
+
 
 
     $scope.computeBenchmarkResult = function(){

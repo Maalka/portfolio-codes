@@ -102,8 +102,13 @@
 			<div ng-include src="'javascripts/benchmark/prescriptive_result.html'">Not Defined</div>
 		</div>
 
+		<div class=" teal sixteen wide column" ng-if="prescriptiveRequirements && endUses && showBar===true && auxModel.approach === 'performance'">
+			<div ng-include src="'javascripts/benchmark/performance_result.html'">Not Defined</div>
+		</div>
 
-        <div class="ui basic sixteen wide column" ng-if="buildingRequirements && solarMonthly">
+
+
+		<div class="ui basic sixteen wide column" ng-if="buildingRequirements && solarMonthly">
             <div class="ui sixteen wide grid">
                 <div class="sixteen wide column left aligned">
                     <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;" ng-if="showSolar">
