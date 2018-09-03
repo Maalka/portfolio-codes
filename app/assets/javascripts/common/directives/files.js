@@ -3,64 +3,86 @@
  * for uploading
  * CSV files
  */
-define(['angular', 'filesaver', './main', 'angular-file-upload'], function(angular, saveAs) {
+define(['angular', './main', 'angular-file-upload'], function(angular) {
     'use strict';
     var mod = angular.module('common.directives');
 
     mod.directive('files', ['$log', 'errorPopoverService', 'playRoutes', 'Upload', function ($log, errorPopover, playRoutes, Upload) {
         return {
-            restrict: 'E',
-            scope: {},
+            restrict: 'A',
+            scope: {
+                csvData: '=data'
+            },
             templateUrl: "javascripts/common/partials/files.html",
             controller: ["$scope", "$element", "$timeout", "playRoutes",
                 function ($scope, $element, $timeout, playRoutes) {
                 $scope.searchInput = "";
-                // function str2bytes (str) {
-                //     var bytes = new Uint8Array(str.length);
-                //     for (var i=0; i<str.length; i++) {
-                //         bytes[i] = str.charCodeAt(i);
-                //     }
-                //     return bytes;
-                // }
 
                 $scope.submitFile = function() {
                     $scope.error = undefined;
                     if ($scope.attachment) {
-                        $scope.upload($scope.attachment);
+                        $scope.futures = $scope.upload($scope.attachment);
                     }
                 };
+
+                $scope.getPropResponseField = function(propResponse,key){
+                    var returnValue;
+
+                    for (var i =0; i < propResponse.values.length; i ++) {
+                        if (propResponse.values[i][key] !== undefined) {
+                          returnValue = propResponse.values[i][key];
+                          break;
+                        }
+                    }
+                    return returnValue;
+                };
+
+                $scope.computeMetrics = function () {
+
+                    var parsedData = JSON.parse($scope.dataTemp.data);
+
+                    $scope.csvData.siteMetrics = $scope.getPropResponseField(parsedData,"siteMetrics");
+                    $scope.csvData.sourceMetrics = $scope.getPropResponseField(parsedData,"sourceMetrics");
+                    $scope.csvData.tdvMetrics = $scope.getPropResponseField(parsedData,"tdvMetrics");
+                    $scope.csvData.carbonMetrics = $scope.getPropResponseField(parsedData,"carbonMetrics");
+
+
+                    $scope.loading = false;
+
+
+                    $timeout(function () {
+                        $scope.loadingFileFiller = {};
+                    }, 1000);
+
+                };
+
                 $scope.loadingFileFiller = {};
                 $scope.loading = false;
 
                 $scope.upload = function (file) {
-                    // https://github.com/eligrey/FileSaver.js/issues/156
                     $scope.loading = true;
                     Upload.upload({
-                        responseType: "arraybuffer",
+
                         url: playRoutes.controllers.CSVController.upload().url,
                         cache: false,
-                        headers: {
-                            'Content-Type': 'application/zip; charset=utf-8'
-                        },
+
+                        headers: [{name:'Accept', value:'application/json'}],
                         transformResponse: function (data) {
                             //The data argument over here is arraybuffer but $http returns response
                             // as object, thus returning the response as an object with a property holding the
                             // binary file arraybuffer data
-                            var response = {};
-                            response.arrayBuffer = data;
-                            return response;
+
+                            return data;
                         },
                         data: {
                             attachment: file
                         }
-                    }).then(function (resp) {
-                        var blob = new Blob([resp.data.arrayBuffer], {type: "application/zip;charset=utf-8"});
-                        saveAs(blob, "Results.zip");
-                        $scope.loading = false;
+                    }).then(function (data) {
 
-                        $timeout(function () {
-                            $scope.loadingFileFiller = {};
-                        }, 1000);
+                        $scope.dataTemp = data;
+                        $scope.computeMetrics(data);
+
+
 
                     }).catch(function (resp) {
                         $scope.loading = false;
@@ -79,6 +101,11 @@ define(['angular', 'filesaver', './main', 'angular-file-upload'], function(angul
                         }
                     });
                  };
+
+
+
+
+
             }]
         };
     }]);

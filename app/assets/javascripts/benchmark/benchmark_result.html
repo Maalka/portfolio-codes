@@ -42,15 +42,15 @@
 		</div>
 
 		<div class=" teal sixteen wide column"  style="padding-bottom:10px;"
-			 ng-if="buildingRequirements && auxModel.approach === 'performance' && showEnergy===true">
-			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
+			 ng-if="buildingRequirements && auxModel.approach === 'performance'">
+			<div ng-include src="'javascripts/benchmark/carbon_result.html'">Not Defined</div>
 		</div>
 		<div class=" teal sixteen wide column" style="padding-bottom:10px;"
 			 ng-if="buildingRequirements && auxModel.approach === 'prescriptive' && showEnergy===true">
 			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
 		</div>
 
-        <div class="ui basic sixteen wide column" ng-if="endUses && prescriptiveRequirements && auxModel.approach === 'prescriptive'">
+        <div class="ui basic sixteen wide column" ng-if="endUses && prescriptiveRequirements">
             <div class="ui sixteen wide grid">
                 <div class="sixteen wide column left aligned">
                     <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;" ng-if="showBar">
@@ -64,7 +64,7 @@
         </div>
 
 
-        <div class="sixteen wide column" style="padding-left:20px; padding-right:20px; padding-bottom:10px; background-color:white;" ng-if="prescriptiveRequirements && endUses && showBar===true  && auxModel.approach === 'prescriptive'">
+        <div class="sixteen wide column" style="padding-left:20px; padding-right:20px; padding-bottom:10px; background-color:white;" ng-if="prescriptiveRequirements && endUses && showBar===true">
 
 
 			<div class="ui sixteen wide grid">
@@ -93,7 +93,7 @@
 			</div>
 
 
-			<div bar prescriptive-requirements="prescriptiveRequirements" end-uses="endUses" units="barPlotUnits" style="width: 100%;"></div>
+			<div bar prescriptive-requirements="prescriptiveRequirements" approach="auxModel.approach" end-uses="endUses" units="barPlotUnits" style="width: 100%;"></div>
 			<p style="font-size:10px;">Building Energy Impacts and End Uses are based on <b>code compliant prototype buildings</b>
 				modeled by NORESCO in their Impact Analysis. Actual building energy consumption will vary from modeled results.</p>
 		</div>
@@ -102,8 +102,13 @@
 			<div ng-include src="'javascripts/benchmark/prescriptive_result.html'">Not Defined</div>
 		</div>
 
+		<div class=" teal sixteen wide column" ng-if="prescriptiveRequirements && endUses && showBar===true && auxModel.approach === 'performance'">
+			<div ng-include src="'javascripts/benchmark/performance_result.html'">Not Defined</div>
+		</div>
 
-        <div class="ui basic sixteen wide column" ng-if="buildingRequirements && solarMonthly">
+
+
+		<div class="ui basic sixteen wide column" ng-if="buildingRequirements && solarMonthly">
             <div class="ui sixteen wide grid">
                 <div class="sixteen wide column left aligned">
                     <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;" ng-if="showSolar">

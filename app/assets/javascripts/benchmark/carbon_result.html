@@ -9,7 +9,7 @@
     </tr>
 
     <tr>
-        <td colspan="2"><b style="font-size: 15px">Energy Consumption & Generation</b></td>
+        <td colspan="2"><b style="font-size: 15px">Carbon Emissions Metrics</b></td>
 
     </tr>
     </tbody>
@@ -20,19 +20,19 @@
     <tbody>
     <tr>
         <td class="onespace" style="width:60%"></td>
-        <td class = "center" style="width:15%;">{{tableEUIUnits}}</td>
-        <td class = "center" style="width:15%;">{{tableBigEnergyUnits}}</td>
+        <td class = "center" style="width:15%;">lb CO2</td>
+        <td class = "center" style="width:15%;">Tons CO2</td>
         <td style="width:2%"></td>
     </tr>
 
     <tr class="top aligned">
-        <td class="onespace"><b>  Estimated Building Source Energy Consumption  </b></td>
-        <td class = "center"><b> {{buildingRequirements.building_energy_norm | number: 1}} </b></td>
-        <td class = "center "><b>{{buildingRequirements.building_energy | number: 1}}</b></td>
+        <td class="onespace"><b>  Estimated Carbon Emissions from Building Energy Consumption  </b></td>
+        <td class = "center"><b> {{buildingRequirements.building_carbon_norm | number: 1}} </b></td>
+        <td class = "center "><b>{{buildingRequirements.building_carbon | number: 1}}</b></td>
     </tr>
 
     <tr class="top aligned">
-        <td class="onespace"><b>Total Renewable Energy Required </b> </td>
+        <td class="onespace"><b>Avoided Carbon Emissions from Renewable Energy</b> </td>
         <td class = "center "><b> {{buildingRequirements.required_norm | number: 1}}</b> </td>
         <td class = "center "><b>{{buildingRequirements.required | number: 1}}</b></td>
     </tr>
@@ -42,7 +42,12 @@
         <td class = "center" style="font-size:13px;">{{buildingRequirements.pv_potential | number: 1}}</td>
     </tr>
     <tr class="top aligned">
-        <td class="twospace" style="font-size:13px;">  Remaining Off-Site Procured Renewable Energy  </td>
+        <td class="twospace" style="font-size:13px;">  Battery Storage System Potential  </td>
+        <td class = "center" style="font-size:13px;"> {{buildingRequirements.battery_potential_norm | number: 1}} </td>
+        <td class = "center" style="font-size:13px;">{{buildingRequirements.battery_potential | number: 1}}</td>
+    </tr>
+    <tr class="top aligned">
+        <td class="twospace" style="font-size:13px;">  Remaining Off-Site Avoided Carbon Emissions  </td>
         <td class = "center " style="font-size:13px;"> {{buildingRequirements.procured_norm | number: 1}} </td>
         <td class = "center " style="font-size:13px;">{{buildingRequirements.procured | number: 1}}</td>
     </tr>

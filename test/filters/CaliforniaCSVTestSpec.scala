@@ -16,8 +16,8 @@ class CaliforniaCSVTestSpec extends PlaySpec with GuiceOneServerPerSuite {
 
   "CaliforniaCSV.parseCSV " must {
     "parse correctly" in {
-      var resource = env.resourceAsStream("california.csv").get
 
+      var resource = env.resourceAsStream("california.csv").get
       val parameters = Await.result(californiaCSV.toParameter(resource), Duration.Inf)
 
       resource = env.resourceAsStream("california.csv").get
@@ -33,9 +33,30 @@ class CaliforniaCSVTestSpec extends PlaySpec with GuiceOneServerPerSuite {
 
       project.size mustBe 19
 
-      annual.foreach(println)
+      val siteMetric = annual.filter(_.contains("Proposed Design Site EUI"))
+        .flatMap{
+          case Vector(a,b,c,d,e) => Map(a->e)
+        }
 
-      hourly.size mustBe 1764
+      val sourceMetric = annual.filter(_.contains("Proposed Design Source Energy"))
+        .map{
+          case Vector(a,b,c,d,e) => Map(a->e)
+        }
+
+      val tdvMetric = annual.filter(_.contains("Proposed Design TDV"))
+        .map{
+          case Vector(a,b,c,d,e) => Map(a->e)
+        }
+
+      val emissionsMetric = annual.filter(_.contains("Proposed Design Emissions"))
+        .map{
+          case Vector(a,b,c,d,e) => Map(a->e)
+        }
+
+
+      siteMetric.foreach(println)
+
+      //hourly.size mustBe 1764
 
     }
   }
