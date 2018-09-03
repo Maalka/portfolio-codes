@@ -292,7 +292,7 @@ define(['angular'], function() {
 
         };
 
-    $scope.testsubmit = function () {
+    $scope.submitCSV = function () {
 
 
         if ($scope.csvData.siteMetrics) {
@@ -641,6 +641,15 @@ define(['angular'], function() {
     });
 
     $scope.submit = function () {
+
+        if($scope.auxModel.approach === "prescriptive"){
+            $scope.submitForm();
+        } else {
+            $scope.submitCSV();
+        }
+    };
+
+    $scope.submitForm = function () {
 
         $scope.solarResults = null;
         $scope.endUses = null;
