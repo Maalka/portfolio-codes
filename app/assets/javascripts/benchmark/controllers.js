@@ -238,17 +238,17 @@ define(['angular'], function() {
     };
     $scope.showEnergyRequirement = function(){
         if($scope.showEnergy===false){
-                $scope.showEnergy = true;
-            } else {
-                $scope.showEnergy = false;
-            }
+            $scope.showEnergy = true;
+        } else {
+            $scope.showEnergy = false;
+        }
     };
     $scope.showSolarPlot = function(){
         if($scope.showSolar===false){
-                $scope.showSolar = true;
-            } else {
-                $scope.showSolar = false;
-            }
+            $scope.showSolar = true;
+        } else {
+            $scope.showSolar = false;
+        }
     };
 
     $scope.getEndUsePercents = function(total){
@@ -259,8 +259,6 @@ define(['angular'], function() {
             $scope.endUses.endUsesOther[j].push(100*$scope.endUses.endUsesOther[j][1]/total);
         }
     };
-
-
 
     $scope.getTotalMetric = function(arr){
         var total;
@@ -357,8 +355,6 @@ define(['angular'], function() {
 
             };
 
-
-            $scope.showSolar = false;
             $scope.showBar = false;
 
         } else {
@@ -469,8 +465,6 @@ define(['angular'], function() {
 
             $scope.endUses = $scope.computeEndUses(results);
 
-            $scope.showSolar = false;
-            //$scope.showBar = false;
 
         });
     };
@@ -612,7 +606,14 @@ define(['angular'], function() {
         }
     };
 
+    $scope.$watch("csvData.siteMetrics", function (value) {
 
+            if (value === undefined) {
+                return;
+            } else {
+                $scope.submit();
+            }
+    });
 
     $scope.$watch("auxModel.reporting_units", function (value) {
         if (value === undefined) {
@@ -631,11 +632,15 @@ define(['angular'], function() {
         if (value === undefined) {
             return;
         } else {
+
             $scope.submit();
         }
     });
 
     $scope.submit = function () {
+
+        $scope.showSolar = false;
+        $scope.showBar = false;
 
         if($scope.auxModel.approach === "prescriptive"){
             $scope.submitForm();

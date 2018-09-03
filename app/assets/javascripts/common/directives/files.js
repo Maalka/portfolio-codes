@@ -82,6 +82,8 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                         $scope.dataTemp = data;
                         $scope.computeMetrics(data);
 
+
+
                     }).catch(function (resp) {
                         $scope.loading = false;
                         if (resp.status === 400) {
