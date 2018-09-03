@@ -126,22 +126,20 @@ define(['angular'], function() {
         };
     };
 
-    $scope.$watch("auxModel.country", function () {
-        $scope.benchmarkResult = null;
-        $scope.clearGeography();
-    });
 
     $scope.$watch("auxModel.approach", function () {
-        $scope.solarResults = null;
-        $scope.solarMonthly = null;
-        $scope.buildingRequirements = null;
-        $scope.prescriptiveRequirements = null;
-        $scope.pv_capacity = null;
+
+        $scope.forms.hasValidated = false;
+
+
         $scope.endUses = null;
+        $scope.buildingRequirements = null;
+        $scope.benchmarkResult = null;
+        $scope.prescriptiveRequirements = null;
+
+        $scope.solarResults = null;
         $scope.showSolar = false;
 
-        $scope.benchmarkResult = null;
-        $scope.clearGeography();
     });
 
 
@@ -150,10 +148,6 @@ define(['angular'], function() {
             $scope.auxModel.file_id = item.file_id;
         };
 
-    $scope.clearGeography = function () {
-        $scope.temp.city = undefined;
-        //$scope.auxModel.state = undefined;
-    };
 
 
     //populate user-input energy information table to calculate site/source EUI and Energy Star metrics
@@ -297,6 +291,11 @@ define(['angular'], function() {
 
         if ($scope.csvData.siteMetrics) {
 
+
+            $scope.solarMonthly = null;
+            $scope.pv_capacity = null;
+
+
             $scope.solarResults = null;
             $scope.endUses = null;
             $scope.buildingRequirements = null;
@@ -362,6 +361,8 @@ define(['angular'], function() {
             $scope.showSolar = false;
             $scope.showBar = false;
 
+        } else {
+            console.log("No CSV Uploaded.");
         }
     };
 
@@ -618,25 +619,19 @@ define(['angular'], function() {
             return;
         }
         // only submit if the user has already CLICK on the submit button
-        if($scope.forms.hasValidated) {
-            $scope.submit();
+        if ($scope.forms){
+            if($scope.forms.hasValidated) {
+                $scope.submit();
+            }
         }
     });
 
     $scope.$watch("auxModel.prescriptive_resource", function (value) {
 
-
         if (value === undefined) {
             return;
-        }
-
-        if($scope.auxModel.approach === 'prescriptive'){
-            // only submit if the user has already CLICK on the submit button
-            if($scope.forms.hasValidated) {
-                $scope.submit();
-            }
-        }else {
-            $scope.testsubmit();
+        } else {
+            $scope.submit();
         }
     });
 
