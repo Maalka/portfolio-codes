@@ -1,13 +1,13 @@
 import WebKeys._
 
 // TODO Replace with your project's/module's name
-name := "znc"
+name := "california_znc"
 
 // TODO Set your organization here; ThisBuild means it will apply to all sub-modules
 organization in ThisBuild := "com.maalka"
 
 // TODO Set your version here
-version := "1.1.0.2_california"
+version := "1.1.1.0""
 
 scalaVersion in ThisBuild := "2.11.6"
 
@@ -20,27 +20,6 @@ packageDescription := "ZNC Tool"
 dockerRepository := Some("maalka")
 dockerBaseImage := "maalka/oracle8"
 dockerUpdateLatest := true
-
-/*
-linuxPackageMappings += packageTemplateMapping(s"/var/run/${name.value}/")() withUser name.value withGroup name.value
-
-javaOptions in Universal ++= Seq(
-  // JVM memory tuning
-  "-J-Xmx1024m",
-  "-J-Xms512m",
-
-  // Since play uses separate pidfile we have to provide it with a proper path
-  // name of the pid file must be play.pid
-  s"-Dpidfile.path=/var/run/${name.value}/play.pid",
-
-  // alternative, you can remove the PID file
-  // s"-Dpidfile.path=/dev/null",
-
-  // Use separate configuration file for production environment
-  s"-Dconfig.file=/etc/${name.value}/prod.conf"
-)
-
-*/
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala, JavaAppPackaging)
 
@@ -82,12 +61,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-iteratees-reactive-streams" % "2.6.1"
 
 )
-/*
-dependencyOverrides := Set(
-
-  "com.typesafe.play" %% "play-json" % "2.4.6",
-  "com.typesafe.play" %% "play-specs2" % "2.4.6" % "test"
-)*/
 
 // Scala Compiler Options
 scalacOptions in ThisBuild ++= Seq(
