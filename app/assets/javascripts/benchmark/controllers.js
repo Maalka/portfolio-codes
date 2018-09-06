@@ -282,85 +282,106 @@ define(['angular'], function() {
 
             return (onsite === 'undefined') ? null : Math.abs(onsite);
 
-        };
+    };
+
 
     $scope.submitCSV = function () {
 
+        $scope.showBar = false;
 
-        if ($scope.csvData.siteMetrics) {
-
-
-            $scope.solarMonthly = null;
-            $scope.pv_capacity = null;
+        $timeout(function(){
 
 
-            $scope.solarResults = null;
-            $scope.endUses = null;
-            $scope.buildingRequirements = null;
-            $scope.benchmarkResult = null;
-            $scope.prescriptiveRequirements = null;
+            if ($scope.csvData.sourceMetrics) {
 
-            if($scope.auxModel.prescriptive_resource === 0){
-                 $scope.endUses = $scope.computeCSVEndUses($scope.csvData.siteMetrics);
-                 $scope.barPlotUnits=$scope.csvData.siteMetrics.units;
-            } else if($scope.auxModel.prescriptive_resource === 1){
-                 $scope.endUses = $scope.computeCSVEndUses($scope.csvData.sourceMetrics);
-                 $scope.barPlotUnits=$scope.csvData.sourceMetrics.units;
-            } else if($scope.auxModel.prescriptive_resource === 2){
-                 $scope.endUses = $scope.computeCSVEndUses($scope.csvData.tdvMetrics);
-                 $scope.barPlotUnits=$scope.csvData.tdvMetrics.units;
-            } else if($scope.auxModel.prescriptive_resource === 3){
-                 $scope.endUses = $scope.computeCSVEndUses($scope.csvData.carbonMetrics);
-                 $scope.barPlotUnits=$scope.csvData.carbonMetrics.units;
+
+                $scope.solarMonthly = null;
+                $scope.pv_capacity = null;
+
+
+                $scope.solarResults = null;
+                $scope.endUses = null;
+                $scope.buildingRequirements = null;
+                $scope.benchmarkResult = null;
+                $scope.prescriptiveRequirements = null;
+
+                if($scope.auxModel.prescriptive_resource === 0){
+                     $scope.endUses = $scope.computeCSVEndUses($scope.csvData.siteMetrics);
+                     $scope.barPlotUnits=$scope.csvData.siteMetrics.units;
+                } else if($scope.auxModel.prescriptive_resource === 1){
+                     $scope.endUses = $scope.computeCSVEndUses($scope.csvData.sourceMetrics);
+                     $scope.barPlotUnits=$scope.csvData.sourceMetrics.units;
+                } else if($scope.auxModel.prescriptive_resource === 2){
+                     $scope.endUses = $scope.computeCSVEndUses($scope.csvData.tdvMetrics);
+                     $scope.barPlotUnits=$scope.csvData.tdvMetrics.units;
+                } else if($scope.auxModel.prescriptive_resource === 3){
+                     $scope.endUses = $scope.computeCSVEndUses($scope.csvData.carbonMetrics);
+                     $scope.barPlotUnits=$scope.csvData.carbonMetrics.units;
+                }
+
+                $scope.sourceTotals = $scope.computeCSVEndUses($scope.csvData.sourceMetrics);
+
+                $scope.totalFloorAreaCSV = parseFloat($scope.csvData.projectMetrics.TotalConditionedFloorAreainScope.replace (/,/g, "")) + parseFloat($scope.csvData.projectMetrics.TotalUnconditionedFloorArea.replace (/,/g, ""));
+
+
+
+                //calculate source table metrics
+                var building_source = $scope.getTotalMetric($scope.sourceTotals);
+                var pv_potential = $scope.getSolarMetric($scope.sourceTotals,'On-site PV');
+                var battery_potential = $scope.getSolarMetric($scope.sourceTotals,'Batteries Discharge');
+                var source_procured = Math.max(building_source - pv_potential - battery_potential,0);
+
+                var sourceTable = {
+                      "building_source": building_source * $scope.totalFloorAreaCSV / 1000,
+                      "required": building_source * $scope.totalFloorAreaCSV / 1000,
+                      "pv_potential": pv_potential* $scope.totalFloorAreaCSV / 1000,
+                      "battery_potential": battery_potential* $scope.totalFloorAreaCSV / 1000,
+                      "procured": source_procured* $scope.totalFloorAreaCSV / 1000,
+
+                      "building_source_norm": building_source,
+                      "required_norm": building_source,
+                      "pv_potential_norm": pv_potential,
+                      "battery_potential_norm": battery_potential,
+                      "procured_norm": source_procured
+                };
+
+                $scope.buildingRequirements = sourceTable;
+
+                $scope.setPrescriptiveTable();
+
+                var pv_potential_prescriptive = $scope.getSolarMetric($scope.endUses,'On-site PV');
+                var battery_potential_prescriptive = $scope.getSolarMetric($scope.endUses,'Batteries Discharge');
+                var total_prescriptive = $scope.getTotalMetric($scope.endUses);
+                $scope.endUses.eui = total_prescriptive;
+                $scope.endUses.energy = total_prescriptive * $scope.totalFloorAreaCSV / 1000;
+
+                $scope.getEndUsePercents(total_prescriptive);
+
+                $scope.prescriptiveRequirements = {
+                    "building_energy_norm": total_prescriptive,
+                    "pv_potential_norm": pv_potential_prescriptive + battery_potential_prescriptive,
+                    "procured_norm": total_prescriptive - pv_potential_prescriptive - battery_potential_prescriptive,
+                    "prescriptive_resource": $scope.auxModel.prescriptive_resource
+
+                };
+
+                $scope.tableEnergyUnits="(kBtu)";
+                $scope.graphEnergyUnits="kBtu";
+                $scope.tableBigEnergyUnits="MBtu/yr";
+                $scope.tableEUIUnits="kBtu/ft²-yr";
+                $scope.tableAreaUnits="(ft²)";
+
+
+
+                $scope.showBar = true;
+
+            } else {
+                console.log("No CSV Processed.");
             }
-
-            $scope.carbonTotals = $scope.computeCSVEndUses($scope.csvData.carbonMetrics);
-
-
-            //calculate carbon table metrics
-            var building_carbon = $scope.getTotalMetric($scope.carbonTotals);
-            var pv_potential = $scope.getSolarMetric($scope.carbonTotals,'On-site PV');
-            var battery_potential = $scope.getSolarMetric($scope.carbonTotals,'Batteries Discharge');
-            var carbon_procured = Math.max(building_carbon - pv_potential - battery_potential,0);
-
-            var sourceTable = {
-                  "building_carbon": building_carbon * 1000,
-                  "required": building_carbon *1000,
-                  "pv_potential": pv_potential*1000,
-                  "battery_potential": battery_potential*1000,
-                  "procured": carbon_procured*1000,
-
-                  "building_carbon_norm": building_carbon,
-                  "required_norm": building_carbon,
-                  "pv_potential_norm": pv_potential,
-                  "battery_potential_norm": battery_potential,
-                  "procured_norm": carbon_procured
-            };
-
-            $scope.buildingRequirements = sourceTable;
-
-            $scope.setPrescriptiveTable();
-
-            var pv_potential_prescriptive = $scope.getSolarMetric($scope.endUses,'On-site PV');
-            var battery_potential_prescriptive = $scope.getSolarMetric($scope.endUses,'Batteries Discharge');
-            var total_prescriptive = $scope.getTotalMetric($scope.endUses);
-            $scope.endUses.eui = total_prescriptive;
-            $scope.getEndUsePercents(total_prescriptive);
-
-            $scope.prescriptiveRequirements = {
-                "building_energy_norm": total_prescriptive,
-                "pv_potential_norm": pv_potential_prescriptive + battery_potential_prescriptive,
-                "procured_norm": total_prescriptive - pv_potential_prescriptive - battery_potential_prescriptive,
-                "prescriptive_resource": $scope.auxModel.prescriptive_resource
-
-            };
-
-            $scope.showBar = false;
-
-        } else {
-            console.log("No CSV Uploaded.");
-        }
+        },0);
     };
+
+
 
     $scope.computeCSVEndUses = function(results){
 
@@ -414,7 +435,7 @@ define(['angular'], function() {
 
             return endUsesTable;
 
-        };
+    };
 
         $scope.setPrescriptiveTable = function(){
 
@@ -508,6 +529,7 @@ define(['angular'], function() {
 
             var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
             var building_size = $scope.getPropSize(building_sub_types);
+
 
             var sourceTable = {
                   "pv_area": ($scope.getPropResponseField(results,"pv_area")),
@@ -750,6 +772,7 @@ define(['angular'], function() {
             $scope.displayErrors();
         }
 
+        $scope.showBar = true;
     };
 
         $scope.displayErrors = function () {

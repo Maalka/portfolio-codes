@@ -43,7 +43,7 @@
 
 		<div class=" teal sixteen wide column"  style="padding-bottom:10px;"
 			 ng-if="buildingRequirements && auxModel.approach === 'performance'">
-			<div ng-include src="'javascripts/benchmark/carbon_result.html'">Not Defined</div>
+			<div ng-include src="'javascripts/benchmark/performance_source_result.html'">Not Defined</div>
 		</div>
 		<div class=" teal sixteen wide column" style="padding-bottom:10px;"
 			 ng-if="buildingRequirements && auxModel.approach === 'prescriptive' && showEnergy===true">
@@ -93,7 +93,7 @@
 			</div>
 
 
-			<div bar prescriptive-requirements="prescriptiveRequirements" approach="auxModel.approach" end-uses="endUses" units="barPlotUnits" style="width: 100%;"></div>
+			<div bar prescriptive-requirements="prescriptiveRequirements" approach="auxModel.approach" end-uses="endUses" units="barPlotUnits" ng-show="showBar===true" style="width: 100%;"></div>
 			<p style="font-size:10px;">Building Energy Impacts and End Uses are based on <b>code compliant prototype buildings</b>
 				modeled by NORESCO in their Impact Analysis. Actual building energy consumption will vary from modeled results.</p>
 		</div>
@@ -131,8 +131,12 @@
 	    <div class="one wide column" ng-if="!buildingRequirements && !solarResults">
 	    	<i class="arrow left icon" style="padding-top: 1px;"></i>
 	    </div>
-	    <div class="fifteen wide column" ng-if="!buildingRequirements && !solarResults">
+	    <div class="fifteen wide column" ng-if="!buildingRequirements && !solarResults && auxModel.approach==='prescriptive'">
     		<h3 class="ui header">ENTER BUILDING AND PV INFORMATION TO THE LEFT TO GENERATE
+				REQUIREMENTS FOR REACHING ZERO NET CARBON</h3>
+	    </div>
+	    <div class="fifteen wide column" ng-if="!buildingRequirements && !solarResults && auxModel.approach==='performance'">
+    		<h3 class="ui header">UPLOAD YOUR PERFORMANCE MODEL (.CSV) TO THE LEFT TO GENERATE
 				REQUIREMENTS FOR REACHING ZERO NET CARBON</h3>
 	    </div>
 	</div>

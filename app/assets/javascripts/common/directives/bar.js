@@ -21,9 +21,7 @@ define(['angular','highcharts', './main'], function(angular) {
           controller: ["$scope", "$element","$timeout", function ($scope, $element, $timeout) {
 
 
-            console.log($scope.endUses);
-            console.log($scope.prescriptiveRequirements);
-            console.log($scope.units);
+
 
             var chart;
 
@@ -33,7 +31,7 @@ define(['angular','highcharts', './main'], function(angular) {
                 chart.margin = 0;
                 chart.isDirtyBox = true;
 
-                chart.redraw();
+//                chart.redraw();
                 chart.reflow();
 
             };
@@ -262,7 +260,9 @@ define(['angular','highcharts', './main'], function(angular) {
                   loadSeries(chart);
                 }
               }
+
             });
+
 
             $scope.$watch("prescriptiveRequirements", function (br) {
 
