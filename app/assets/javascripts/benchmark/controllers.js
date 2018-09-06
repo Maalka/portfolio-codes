@@ -318,10 +318,6 @@ define(['angular'], function() {
 
             $scope.sourceTotals = $scope.computeCSVEndUses($scope.csvData.sourceMetrics);
 
-            console.log($scope.csvData.projectMetrics.TotalConditionedFloorAreainScope);
-            console.log($scope.csvData.projectMetrics.TotalUnconditionedFloorArea);
-            console.log($scope.csvData.projectMetrics);
-
             $scope.totalFloorAreaCSV = parseFloat($scope.csvData.projectMetrics.TotalConditionedFloorAreainScope.replace (/,/g, "")) + parseFloat($scope.csvData.projectMetrics.TotalUnconditionedFloorArea.replace (/,/g, ""));
 
 
