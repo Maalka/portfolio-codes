@@ -22,6 +22,7 @@ define(['angular','highcharts', './main'], function(angular) {
 
 
 
+
             var chart;
 
             var loadSeries = function(chart) {
@@ -30,7 +31,7 @@ define(['angular','highcharts', './main'], function(angular) {
                 chart.margin = 0;
                 chart.isDirtyBox = true;
 
-                chart.redraw();
+//                chart.redraw();
                 chart.reflow();
 
             };
@@ -256,39 +257,38 @@ define(['angular','highcharts', './main'], function(angular) {
 
               if (chart !== undefined) {
                 if (br !== undefined) {
-                  //loadSeries(chart);
-                  $timeout(loadSeries(chart), 1000);
+                  loadSeries(chart);
                 }
               }
 
             });
-//
-//
-//            $scope.$watch("prescriptiveRequirements", function (br) {
-//
-//              if (chart !== undefined) {
-//                if (br !== undefined) {
-//                  loadSeries(chart);
-//                }
-//              }
-//            });
-//            $scope.$watch("auxModel.reportingUnits", function (br) {
-//
-//              if (chart !== undefined) {
-//                if (br !== undefined) {
-//                  loadSeries(chart);
-//                }
-//              }
-//            });
-//
-//            $scope.$watch("barPlotUnits", function (br) {
-//
-//              if (chart !== undefined) {
-//                if (br !== undefined) {
-//                  loadSeries(chart);
-//                }
-//              }
-//            });
+
+
+            $scope.$watch("prescriptiveRequirements", function (br) {
+
+              if (chart !== undefined) {
+                if (br !== undefined) {
+                  loadSeries(chart);
+                }
+              }
+            });
+            $scope.$watch("auxModel.reportingUnits", function (br) {
+
+              if (chart !== undefined) {
+                if (br !== undefined) {
+                  loadSeries(chart);
+                }
+              }
+            });
+
+            $scope.$watch("barPlotUnits", function (br) {
+
+              if (chart !== undefined) {
+                if (br !== undefined) {
+                  loadSeries(chart);
+                }
+              }
+            });
 
           }]
         };
