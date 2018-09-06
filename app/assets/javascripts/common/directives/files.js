@@ -16,6 +16,9 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
             templateUrl: "javascripts/common/partials/files.html",
             controller: ["$scope", "$element", "$timeout", "playRoutes",
                 function ($scope, $element, $timeout, playRoutes) {
+
+                $scope.uploadText = "Upload your CA ZERO Code .CSV File exported from CBECC-Com";
+
                 $scope.searchInput = "";
 
                 $scope.submitFile = function() {
@@ -45,6 +48,7 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                     $scope.csvData.sourceMetrics = $scope.getPropResponseField(parsedData,"sourceMetrics");
                     $scope.csvData.tdvMetrics = $scope.getPropResponseField(parsedData,"tdvMetrics");
                     $scope.csvData.carbonMetrics = $scope.getPropResponseField(parsedData,"carbonMetrics");
+                    $scope.csvData.projectMetrics = $scope.getPropResponseField(parsedData,"projectMetrics");
 
 
                     $scope.loading = false;
@@ -60,6 +64,7 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                 $scope.loading = false;
 
                 $scope.upload = function (file) {
+                    $scope.uploadText = "File Uploaded Successfully";
                     $scope.loading = true;
                     Upload.upload({
 
@@ -80,7 +85,7 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                     }).then(function (data) {
 
                         $scope.dataTemp = data;
-                        $scope.computeMetrics(data);
+                        $scope.computeMetrics();
 
 
 

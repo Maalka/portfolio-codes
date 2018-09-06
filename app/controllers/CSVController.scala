@@ -94,6 +94,7 @@ class CSVController @Inject()(val cache: AsyncCacheApi, cc: ControllerComponents
         val annual = Await.result(californiaCSV.toAnnualResults(fileStream3), Duration.Inf)
 
 
+
         def mapEndUses(metrics:Seq[(String,String)]):Map[String,Any] = {
 
 
@@ -167,7 +168,14 @@ class CSVController @Inject()(val cache: AsyncCacheApi, cc: ControllerComponents
               .flatMap {
                 case Vector(a, b, c, d, e) => Map(a -> e)
               }
-            }.map(mapEndUses(_)).map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
+            }.map(mapEndUses(_)).map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
+
+          Future{
+            project
+              .flatMap{
+                case Vector(a:String,b:String,c:String) => Map(a.dropRight(1).replaceAll("\\s", "")->b)
+              }.toMap
+            }.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
 
         ))
 
@@ -177,8 +185,10 @@ class CSVController @Inject()(val cache: AsyncCacheApi, cc: ControllerComponents
           "siteMetrics",
           "sourceMetrics",
           "tdvMetrics",
-          "carbonMetrics"
+          "carbonMetrics",
+          "projectMetrics"
         )
+
 
 
 

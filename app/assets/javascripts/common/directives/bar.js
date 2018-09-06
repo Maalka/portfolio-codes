@@ -21,9 +21,6 @@ define(['angular','highcharts', './main'], function(angular) {
           controller: ["$scope", "$element","$timeout", function ($scope, $element, $timeout) {
 
 
-            console.log($scope.endUses);
-            console.log($scope.prescriptiveRequirements);
-            console.log($scope.units);
 
             var chart;
 
@@ -259,36 +256,39 @@ define(['angular','highcharts', './main'], function(angular) {
 
               if (chart !== undefined) {
                 if (br !== undefined) {
-                  loadSeries(chart);
+                  //loadSeries(chart);
+                  $timeout(loadSeries(chart), 1000);
                 }
               }
+
             });
-
-            $scope.$watch("prescriptiveRequirements", function (br) {
-
-              if (chart !== undefined) {
-                if (br !== undefined) {
-                  loadSeries(chart);
-                }
-              }
-            });
-            $scope.$watch("auxModel.reportingUnits", function (br) {
-
-              if (chart !== undefined) {
-                if (br !== undefined) {
-                  loadSeries(chart);
-                }
-              }
-            });
-
-            $scope.$watch("barPlotUnits", function (br) {
-
-              if (chart !== undefined) {
-                if (br !== undefined) {
-                  loadSeries(chart);
-                }
-              }
-            });
+//
+//
+//            $scope.$watch("prescriptiveRequirements", function (br) {
+//
+//              if (chart !== undefined) {
+//                if (br !== undefined) {
+//                  loadSeries(chart);
+//                }
+//              }
+//            });
+//            $scope.$watch("auxModel.reportingUnits", function (br) {
+//
+//              if (chart !== undefined) {
+//                if (br !== undefined) {
+//                  loadSeries(chart);
+//                }
+//              }
+//            });
+//
+//            $scope.$watch("barPlotUnits", function (br) {
+//
+//              if (chart !== undefined) {
+//                if (br !== undefined) {
+//                  loadSeries(chart);
+//                }
+//              }
+//            });
 
           }]
         };
