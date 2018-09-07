@@ -31,18 +31,16 @@
 		<div class="ui basic sixteen wide column" ng-if="buildingRequirements">
 			<div class="ui sixteen wide grid">
 				<div class="sixteen wide column left aligned">
-					<h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;"  ng-if="showEnergy">
+					<h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;">
 						<a href class="drop" ng-click="showEnergyRequirement()"><i class="caret down icon"></i>RENEWABLE ENERGY REQUIREMENTS</a>
 					</h3>
-					<h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;" ng-if="!showEnergy">
-						<a href class="drop" ng-click="showEnergyRequirement()"><i class="caret right icon"></i>RENEWABLE ENERGY REQUIREMENTS</a>
-					</h3>
+
 				</div>
 			</div>
 		</div>
 
 		<div class=" teal sixteen wide column"  style="padding-bottom:10px;"
-			 ng-if="buildingRequirements && auxModel.approach === 'performance'">
+			 ng-if="buildingRequirements && auxModel.approach === 'performance' && showEnergy===true">
 			<div ng-include src="'javascripts/benchmark/performance_source_result.html'">Not Defined</div>
 		</div>
 		<div class=" teal sixteen wide column" style="padding-bottom:10px;"

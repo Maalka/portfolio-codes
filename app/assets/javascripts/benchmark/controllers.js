@@ -287,21 +287,20 @@ define(['angular'], function() {
 
     $scope.submitCSV = function () {
 
-        $scope.showBar = false;
+
 
         $timeout(function(){
 
 
             if ($scope.csvData.sourceMetrics) {
 
-
+                $scope.solarResults = null;
+                $scope.endUses = null;
+                $scope.buildingRequirements = null;
                 $scope.solarMonthly = null;
                 $scope.pv_capacity = null;
 
 
-                $scope.solarResults = null;
-                $scope.endUses = null;
-                $scope.buildingRequirements = null;
                 $scope.benchmarkResult = null;
                 $scope.prescriptiveRequirements = null;
 
@@ -628,15 +627,6 @@ define(['angular'], function() {
         }
     };
 
-    $scope.$watch("csvData.siteMetrics", function (value) {
-
-            if (value === undefined) {
-                return;
-            } else {
-                $scope.submit();
-            }
-    });
-
     $scope.$watch("auxModel.reporting_units", function (value) {
         if (value === undefined) {
             return;
@@ -649,14 +639,16 @@ define(['angular'], function() {
         }
     });
 
-    $scope.$watch("auxModel.prescriptive_resource", function (value) {
+    $scope.$watch("auxModel.prescriptive_resource", function (newValue, oldValue) {
+      if (newValue !== oldValue) {
 
-        if (value === undefined) {
+        if (newValue === undefined) {
             return;
         } else {
-
-            $scope.submit();
+            $timeout(function(){$scope.submit();},0);
         }
+      }
+
     });
 
     $scope.submit = function () {
@@ -676,6 +668,7 @@ define(['angular'], function() {
         $scope.solarResults = null;
         $scope.endUses = null;
         $scope.buildingRequirements = null;
+
 
         if($scope.forms.baselineForm === undefined) {
             return;
