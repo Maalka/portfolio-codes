@@ -197,21 +197,21 @@ case class ReportingUnits(reporting_units:String)
           distribution match {
             case b:ElectricityDistribution => {
               ElectricityDistribution(
-                b.elec_htg * c,
-                b.elec_clg * c,
-                b.elec_intLgt * c,
-                b.elec_extLgt * c,
-                b.elec_intEqp * c,
-                b.elec_extEqp * c,
-                b.elec_fans * c,
-                b.elec_pumps * c,
-                b.elec_heatRej * c,
-                b.elec_humid * c,
-                b.elec_heatRec * c,
-                b.elec_swh * c,
-                b.elec_refrg * c,
-                b.elec_gentor * c,
-                b.elec_net * c
+                b.total_htg * c,
+                b.total_clg * c,
+                b.total_intLgt * c,
+                b.total_extLgt * c,
+                b.total_intEqp * c,
+                b.total_extEqp * c,
+                b.total_fans * c,
+                b.total_pumps * c,
+                b.total_heatRej * c,
+                b.total_humid * c,
+                b.total_heatRec * c,
+                b.total_swh * c,
+                b.total_refrg * c,
+                b.total_gentor * c,
+                b.total_net * c
               )
             }
             case b:NaturalGasDistribution => {

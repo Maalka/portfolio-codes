@@ -69,7 +69,7 @@ case class PrescriptiveValues {
 
 
 
-  def lookupPrescriptiveElectricity(propDesc:ValidatedPropTypes): Future[ElectricityDistribution] = {
+  def lookupEndUses(propDesc:ValidatedPropTypes): Future[ElectricityDistribution] = {
     for {
       euiDist <-
         Future {
@@ -83,21 +83,6 @@ case class PrescriptiveValues {
         }
     } yield euiDist
   }
-  def lookupPrescriptiveNG(propDesc:ValidatedPropTypes): Future[NaturalGasDistribution] = {
-    for {
-      euiDist <-
-        Future {
-          (lookupTable \ propDesc.building_type \ lookupParams.climate_zone).toOption match {
-            case Some(a) => a.head.validate[NaturalGasDistribution] match {
-              case JsSuccess(b: NaturalGasDistribution, _) => b
-              case JsError(err) => throw new Exception(JsError.toJson(err).value.toString())
-            }
-            case _ => throw new Exception("Could not retrieve Prescriptive EUI (NG) data!")
-          }
-        }
-    } yield euiDist
-  }
-
 
 
   def getPrescriptiveTotalEUI(EndUses:EndUseDistribution):Future[Double] = Future {
@@ -161,21 +146,21 @@ case class PrescriptiveValues {
   def getWeightedEndUSeDistList(elec:ElectricityDistribution, ng:NaturalGasDistribution):Future[EndUseDistribution] = Future {
 
         EndUseDistribution(
-          elec.elec_htg + ng.ng_htg,
-          elec.elec_clg + ng.ng_clg,
-          elec.elec_intLgt + ng.ng_intLgt,
-          elec.elec_extLgt + ng.ng_extLgt,
-          elec.elec_intEqp + ng.ng_intEqp,
-          elec.elec_extEqp + ng.ng_extEqp,
-          elec.elec_fans + ng.ng_fans,
-          elec.elec_pumps + ng.ng_pumps,
-          elec.elec_heatRej + ng.ng_heatRej,
-          elec.elec_humid + ng.ng_humid,
-          elec.elec_heatRec + ng.ng_heatRec,
-          elec.elec_swh + ng.ng_swh,
-          elec.elec_refrg + ng.ng_refrg,
-          elec.elec_gentor + ng.ng_gentor,
-          elec.elec_net + ng.ng_net
+          elec.total_htg + ng.ng_htg,
+          elec.total_clg + ng.ng_clg,
+          elec.total_intLgt + ng.ng_intLgt,
+          elec.total_extLgt + ng.ng_extLgt,
+          elec.total_intEqp + ng.ng_intEqp,
+          elec.total_extEqp + ng.ng_extEqp,
+          elec.total_fans + ng.ng_fans,
+          elec.total_pumps + ng.ng_pumps,
+          elec.total_heatRej + ng.ng_heatRej,
+          elec.total_humid + ng.ng_humid,
+          elec.total_heatRec + ng.ng_heatRec,
+          elec.total_swh + ng.ng_swh,
+          elec.total_refrg + ng.ng_refrg,
+          elec.total_gentor + ng.ng_gentor,
+          elec.total_net + ng.ng_net
         )
     }
 
@@ -249,10 +234,10 @@ case class EndUseDistribution(htg:Double,clg:Double,intLgt:Double = 0.0,extLgt:D
                                    gentor:Double = 0.0,net:Double = 0.0)
 
 
-case class ElectricityDistribution(elec_htg:Double,elec_clg:Double,elec_intLgt:Double = 0.0,elec_extLgt:Double = 0.0,elec_intEqp:Double = 0.0,
-                                   elec_extEqp:Double = 0.0, elec_fans:Double = 0.0,elec_pumps:Double = 0.0,elec_heatRej:Double = 0.0,
-                                   elec_humid:Double = 0.0, elec_heatRec:Double = 0.0,elec_swh:Double = 0.0,elec_refrg:Double = 0.0,
-                                   elec_gentor:Double = 0.0,elec_net:Double = 0.0)
+case class ElectricityDistribution(total_htg:Double,total_clg:Double,total_intLgt:Double = 0.0,total_extLgt:Double = 0.0,total_intEqp:Double = 0.0,
+                                   total_extEqp:Double = 0.0, total_fans:Double = 0.0,total_pumps:Double = 0.0,total_heatRej:Double = 0.0,
+                                   total_humid:Double = 0.0, total_heatRec:Double = 0.0,total_swh:Double = 0.0,total_refrg:Double = 0.0,
+                                   total_gentor:Double = 0.0,total_net:Double = 0.0)
 
 object ElectricityDistribution {
   implicit val ElectricityDistributionReads: Reads[ElectricityDistribution] = Json.reads[ElectricityDistribution]

@@ -35,21 +35,21 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
 
    def electricityDistributionToJSValue(a: ElectricityDistribution): JsValue = {
      JsObject(Seq(
-       "htg" -> JsNumber(a.elec_htg),
-       "clg" -> JsNumber(a.elec_clg),
-       "intLgt" -> JsNumber(a.elec_intLgt),
-       "extLgt" -> JsNumber(a.elec_extLgt),
-       "intEqp" -> JsNumber(a.elec_intEqp),
-       "extEqp" -> JsNumber(a.elec_extEqp),
-       "fans" -> JsNumber(a.elec_fans),
-       "pumps" -> JsNumber(a.elec_pumps),
-       "heatRej" -> JsNumber(a.elec_heatRej),
-       "humid" -> JsNumber(a.elec_humid),
-       "heatRec" -> JsNumber(a.elec_heatRec),
-       "swh" -> JsNumber(a.elec_swh),
-       "refrg" -> JsNumber(a.elec_refrg),
-       "gentor" -> JsNumber(a.elec_gentor),
-       "net" -> JsNumber(a.elec_net)
+       "htg" -> JsNumber(a.total_htg),
+       "clg" -> JsNumber(a.total_clg),
+       "intLgt" -> JsNumber(a.total_intLgt),
+       "extLgt" -> JsNumber(a.total_extLgt),
+       "intEqp" -> JsNumber(a.total_intEqp),
+       "extEqp" -> JsNumber(a.total_extEqp),
+       "fans" -> JsNumber(a.total_fans),
+       "pumps" -> JsNumber(a.total_pumps),
+       "heatRej" -> JsNumber(a.total_heatRej),
+       "humid" -> JsNumber(a.total_humid),
+       "heatRec" -> JsNumber(a.total_heatRec),
+       "swh" -> JsNumber(a.total_swh),
+       "refrg" -> JsNumber(a.total_refrg),
+       "gentor" -> JsNumber(a.total_gentor),
+       "net" -> JsNumber(a.total_net)
      ))
    }
 
