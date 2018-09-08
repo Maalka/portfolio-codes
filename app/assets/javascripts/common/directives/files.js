@@ -17,7 +17,7 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
             controller: ["$scope", "$element", "$timeout", "playRoutes",
                 function ($scope, $element, $timeout, playRoutes) {
 
-                $scope.uploadText = "Upload your CA ZERO Code .CSV File exported from CBECC-Com";
+                $scope.uploadText = "Upload CSV file with your list of buildings";
 
                 $scope.searchInput = "";
 

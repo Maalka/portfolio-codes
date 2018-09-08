@@ -18,94 +18,76 @@ import squants.space.{Area, SquareFeet, SquareMeters}
 
 
 
-case class PrescriptiveValues(parameters:JsValue) {
+case class PrescriptiveValues {
 
+  val lookupTable:Future[JsValue]={
+    for {
+      lookupTableName <- Future {
+        "prescriptive_site_0.json"
+      }
+      prescriptiveEUITable <- loadLookupTable(lookupTableName)
+    } yield prescriptiveEUITable
+
+  }
 
   def getBuildingSize:Future[Double] = {
     for {
       validatedPropList <- getValidatedPropList
-      building_size <- Future(validatedPropList.map(_.floor_area).sum)
+      building_size <- Future(validatedPropList.map(_.floor_area)
     } yield building_size
   }
 
-  def lookupPrescriptiveTotalMetricIntensity(sourceOption:Option[String]): Future[Energy] = {
+  def getBuildingSize:Future[Double] = {
     for {
-      weightedEndUseDistList <- lookupPrescriptiveEndUses(sourceOption)
-      totalEUI <- getPrescriptiveTotalEUI(weightedEndUseDistList)
+      validatedPropList <- getValidatedPropList
+      building_size <- Future(validatedPropList.map(_.floor_area)
+    } yield building_size
+  }
+
+  def lookupPrescriptiveTotalMetricIntensity(propDesc:ValidatedPropTypes): Future[Energy] = {
+    for {
+      endUseDistList <- lookupPrescriptiveEndUses(propDesc)
+      totalEUI <- getPrescriptiveTotalEUI(endUseDistList)
     } yield KBtus(totalEUI)
   }
 
 
-  def lookupPrescriptiveEndUsePercents(sourceOption:Option[String]): Future[EndUseDistribution] = {
+  def lookupPrescriptiveEndUsePercents(propDesc:ValidatedPropTypes): Future[EndUseDistribution] = {
     for {
-      weightedEndUseDistList <- lookupPrescriptiveEndUses(sourceOption)
-      endUsePercents <- getEndUseDistPercents(weightedEndUseDistList)
+      endUseDistList <- lookupPrescriptiveEndUses(propDesc)
+      endUsePercents <- getEndUseDistPercents(endUseDistList)
     } yield endUsePercents
   }
 
-  def lookupPrescriptiveEndUses(sourceOption:Option[String]): Future[EndUseDistribution] = {
+  def lookupPrescriptiveEndUses(propDesc:ValidatedPropTypes): Future[EndUseDistribution] = {
     for {
-      electric <- lookupPrescriptiveElectricityWeighted(sourceOption)
-      ng <- lookupPrescriptiveNGWeighted(sourceOption)
+      electric <- lookupPrescriptiveElectricity(propDesc)
+      ng <- lookupPrescriptiveNG(propDesc)
       weightedEndUseDistList <- getWeightedEndUSeDistList(electric,ng)
     } yield weightedEndUseDistList
   }
 
-  def lookupPrescriptiveElectricityWeighted(sourceOption:Option[String]): Future[ElectricityDistribution] = {
+
+
+  def lookupPrescriptiveElectricity(propDesc:ValidatedPropTypes): Future[ElectricityDistribution] = {
     for {
-      validatedPropList <- getValidatedPropList
-      areaWeights <- getAreaWeights(validatedPropList)
-      elecDistList:List[ElectricityDistribution] <- Future.sequence(validatedPropList.map(lookupPrescriptiveElectricity(_,sourceOption)))
-      weightedElecDistList <- getWeightedElecDistList(areaWeights,elecDistList)
-    } yield weightedElecDistList
-  }
-
-
-  def lookupPrescriptiveNGWeighted(sourceOption:Option[String]): Future[NaturalGasDistribution] = {
-    for {
-      validatedPropList <- getValidatedPropList
-      areaWeights <- getAreaWeights(validatedPropList)
-      ngDistList: List[NaturalGasDistribution] <- Future.sequence(validatedPropList.map(lookupPrescriptiveNG(_,sourceOption)))
-      weightedNGDistList <- getWeightedNGDistList(areaWeights,ngDistList)
-    } yield weightedNGDistList
-  }
-
-
-  def lookupPrescriptiveElectricity(propDesc:ValidatedPropTypes,sourceOption:Option[String]): Future[ElectricityDistribution] = {
-    for {
-      lookupParams <- getPrescriptiveParams
-      lookupTableName <- {
-        sourceOption match {
-          case Some("source") => Future{"prescriptive_source_0.json"}
-          case _ => chooseLookupTable(lookupParams)
-        }
-      }
-      prescriptiveEUITable <- loadLookupTable(lookupTableName)
       euiDist <-
         Future {
-          (prescriptiveEUITable \ propDesc.building_type \ lookupParams.climate_zone).toOption match {
+          (lookupTable \ propDesc.building_type \ lookupParams.climate_zone).toOption match {
             case Some(a) => a.head.validate[ElectricityDistribution] match {
               case JsSuccess(b: ElectricityDistribution, _) => b
               case JsError(err) => throw new Exception(JsError.toJson(err).value.toString())
             }
-            case _ => throw new Exception("Could not retrieve Prescriptive EUI (Electric) data!")
+            case _ => throw new Exception("Could nort retrieve Prescriptive EUI (Electric) data!")
           }
         }
     } yield euiDist
   }
-  def lookupPrescriptiveNG(propDesc:ValidatedPropTypes,sourceOption:Option[String]): Future[NaturalGasDistribution] = {
+  def lookupPrescriptiveNG(propDesc:ValidatedPropTypes): Future[NaturalGasDistribution] = {
     for {
-      lookupParams <- getPrescriptiveParams
-      lookupTableName <- {
-        sourceOption match {
-          case Some("source") => Future{"prescriptive_source_0.json"}
-          case _ => chooseLookupTable(lookupParams)
-        }
-      }
-      prescriptiveEUITable <- loadLookupTable(lookupTableName)
       euiDist <-
         Future {
-          (prescriptiveEUITable \ propDesc.building_type \ lookupParams.climate_zone).toOption match {
+          (lookupTable \ propDesc.building_type \ lookupParams.climate_zone).toOption match {
             case Some(a) => a.head.validate[NaturalGasDistribution] match {
               case JsSuccess(b: NaturalGasDistribution, _) => b
               case JsError(err) => throw new Exception(JsError.toJson(err).value.toString())
@@ -198,115 +180,6 @@ case class PrescriptiveValues(parameters:JsValue) {
     }
 
 
-  def getWeightedElecDistList(areaWeights:List[Double], distList:List[ElectricityDistribution]):Future[ElectricityDistribution] = Future {
-
-    val weightedList = (distList, areaWeights).zipped.map {
-      case (b: ElectricityDistribution, c: Double) => {
-        ElectricityDistribution(
-          b.elec_htg * c,
-          b.elec_clg * c,
-          b.elec_intLgt * c,
-          b.elec_extLgt * c,
-          b.elec_intEqp * c,
-          b.elec_extEqp * c,
-          b.elec_fans * c,
-          b.elec_pumps * c,
-          b.elec_heatRej * c,
-          b.elec_humid * c,
-          b.elec_heatRec * c,
-          b.elec_swh * c,
-          b.elec_refrg * c,
-          b.elec_gentor * c,
-          b.elec_net * c
-        )
-      }
-    }
-
-    val elec_htg = weightedList.map(_.elec_htg).sum
-    val elec_clg = weightedList.map(_.elec_clg).sum
-    val elec_intLgt = weightedList.map(_.elec_intLgt).sum
-    val elec_extLgt = weightedList.map(_.elec_extLgt).sum
-    val elec_intEqp = weightedList.map(_.elec_intEqp).sum
-    val elec_extEqp = weightedList.map(_.elec_extEqp).sum
-    val elec_fans = weightedList.map(_.elec_fans).sum
-    val elec_pumps = weightedList.map(_.elec_pumps).sum
-    val elec_heatRej = weightedList.map(_.elec_heatRej).sum
-    val elec_humid = weightedList.map(_.elec_humid).sum
-    val elec_heatRec = weightedList.map(_.elec_heatRec).sum
-    val elec_swh = weightedList.map(_.elec_swh).sum
-    val elec_refrg = weightedList.map(_.elec_refrg).sum
-    val elec_gentor = weightedList.map(_.elec_gentor).sum
-    val elec_net = weightedList.map(_.elec_net).sum
-
-    ElectricityDistribution(elec_htg, elec_clg,elec_intLgt, elec_extLgt, elec_intEqp, elec_extEqp, elec_fans, elec_pumps, elec_heatRej, elec_humid, elec_heatRec, elec_swh, elec_refrg, elec_gentor, elec_net)
-
-    }
-
-
-  def getWeightedNGDistList(areaWeights:List[Double], distList:List[NaturalGasDistribution]):Future[NaturalGasDistribution] = Future {
-
-    val weightedList = (distList, areaWeights).zipped.map {
-      case (b: NaturalGasDistribution, c: Double) => {
-        NaturalGasDistribution(
-          b.ng_htg * c,
-          b.ng_clg * c,
-          b.ng_intLgt * c,
-          b.ng_extLgt * c,
-          b.ng_intEqp * c,
-          b.ng_extEqp * c,
-          b.ng_fans * c,
-          b.ng_pumps * c,
-          b.ng_heatRej * c,
-          b.ng_humid * c,
-          b.ng_heatRec * c,
-          b.ng_swh * c,
-          b.ng_refrg * c,
-          b.ng_gentor * c,
-          b.ng_net * c
-        )
-      }
-    }
-
-    val ng_htg = weightedList.map(_.ng_htg).sum
-    val ng_clg = weightedList.map(_.ng_clg).sum
-    val ng_intLgt = weightedList.map(_.ng_intLgt).sum
-    val ng_extLgt = weightedList.map(_.ng_extLgt).sum
-    val ng_intEqp = weightedList.map(_.ng_intEqp).sum
-    val ng_extEqp = weightedList.map(_.ng_extEqp).sum
-    val ng_fans = weightedList.map(_.ng_fans).sum
-    val ng_pumps = weightedList.map(_.ng_pumps).sum
-    val ng_heatRej = weightedList.map(_.ng_heatRej).sum
-    val ng_humid = weightedList.map(_.ng_humid).sum
-    val ng_heatRec = weightedList.map(_.ng_heatRec).sum
-    val ng_swh = weightedList.map(_.ng_swh).sum
-    val ng_refrg = weightedList.map(_.ng_refrg).sum
-    val ng_gentor = weightedList.map(_.ng_gentor).sum
-    val ng_net = weightedList.map(_.ng_net).sum
-
-    NaturalGasDistribution(ng_htg, ng_clg,ng_intLgt, ng_extLgt, ng_intEqp,ng_extEqp, ng_fans, ng_pumps, ng_heatRej, ng_humid, ng_heatRec, ng_swh, ng_refrg, ng_gentor, ng_net)
-
-  }
-
-
-  def getAreaWeights(validatedPropList: List[ValidatedPropTypes]):Future[List[Double]] = {
-    for {
-      propSizeList <- Future(validatedPropList.map(_.floor_area))
-      propsizeSum:Double <- Future(propSizeList.sum)
-      propSizeRatios <- Future(propSizeList.map{_/propsizeSum})
-    } yield propSizeRatios
-  }
-
-  def chooseLookupTable(validatedPrescriptiveParams: ValidatedPrescriptiveParams): Future[String] =  Future{
-    validatedPrescriptiveParams.prescriptive_resource match {
-          case 0 => "prescriptive_site_0.json"
-          case 1 => "prescriptive_source_0.json"
-          case 2 => "prescriptive_tdv_0.json"
-          case 3 => "prescriptive_carbon_0.json"
-          case _ => throw new Exception("Cannot Identify Appropriate Lookup Table: Check prescriptive_resource value!")
-        }
-  }
-
-
   def loadLookupTable(filename:String): Future[JsValue] = {
     for {
       is <- Future(play.api.Environment.simple().resourceAsStream(filename))
@@ -321,24 +194,6 @@ case class PrescriptiveValues(parameters:JsValue) {
     } yield json
   }
 
-  def validatePrescriptiveParams(buildingParams: PrescriptiveParams): Future[ValidatedPrescriptiveParams] = Future {
-    val climateZone = buildingParams.climate_zone match {
-      case Some(b: String) => b
-      case _ => throw new Exception("Could not Identify Climate Zone")
-    }
-    val prescriptive_resource = buildingParams.prescriptive_resource match {
-      case Some(a: Int) => a
-      case _ => 0
-    }
-    ValidatedPrescriptiveParams(climateZone, prescriptive_resource)
-  }
-
-  def getPrescriptiveParams: Future[ValidatedPrescriptiveParams] = {
-    parameters.validate[PrescriptiveParams] match {
-      case JsSuccess(a: PrescriptiveParams, _) => validatePrescriptiveParams(a)
-      case _ => throw new Exception("Prescriptive Resource or Climate Zone Incorrect!")
-    }
-  }
 
   def getValidatedPropParams(propDesc: PropDesc): Future[ValidatedPropTypes] = Future {
     val propType:String = propDesc.building_type match {
@@ -365,7 +220,7 @@ case class PrescriptiveValues(parameters:JsValue) {
   }
 
 
-  def getValidatedPropList: Future[List[ValidatedPropTypes]] =  {
+  def getValidatedPropList(parameters:JsValue): Future[List[ValidatedPropTypes]] =  {
 
     for {
       props:PropList <-
@@ -412,19 +267,6 @@ object NaturalGasDistribution {
 }
 
 
-
-
-case class PrescriptiveParams(climate_zone: Option[String], prescriptive_resource: Option[Int])
-
-object PrescriptiveParams {
-  implicit val PrescriptiveParamsReads: Reads[PrescriptiveParams] = Json.reads[PrescriptiveParams]
-}
-
-case class ValidatedPrescriptiveParams(climate_zone: String, prescriptive_resource:Int)
-
-object ValidatedPrescriptiveParams {
-  implicit val ValidatedPrescriptiveParamsReads: Reads[ValidatedPrescriptiveParams] = Json.reads[ValidatedPrescriptiveParams]
-}
 
 
 

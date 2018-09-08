@@ -13,8 +13,8 @@ import scala.collection.immutable
 import scala.concurrent.{ExecutionContext, Future}
 
 
-class CaliforniaCSV @Inject() (implicit val actorSystem: ActorSystem,
-                               executionContext: ExecutionContext) {
+class CodesCSV @Inject()(implicit val actorSystem: ActorSystem,
+                         executionContext: ExecutionContext) {
 
   private def source(stream: Stream[Seq[String]]) = Source
     .fromIterator(() => stream.toIterator)

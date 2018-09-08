@@ -16,7 +16,7 @@ import akka.util.Timeout
 import com.github.tototoshi.csv.{CSVReader, CSVWriter, DefaultCSVFormat, QUOTE_NONE, Quoting}
 import com.google.inject.Inject
 import models._
-import parsers.CaliforniaCSV
+import parsers.CodesCSV
 import play.api.{Configuration, Environment}
 import play.api.cache.AsyncCacheApi
 import play.api.libs.json._
@@ -82,7 +82,7 @@ class CSVController @Inject()(val cache: AsyncCacheApi, cc: ControllerComponents
         val uploadedFile = new File(tempDir + File.separator + filename)
         upload.ref.moveTo(uploadedFile)
 
-        val californiaCSV = new CaliforniaCSV
+        val californiaCSV = new CodesCSV
 
         val fileStream1 = new FileInputStream(uploadedFile)
         val parameters = Await.result(californiaCSV.toParameter(fileStream1), Duration.Inf)
