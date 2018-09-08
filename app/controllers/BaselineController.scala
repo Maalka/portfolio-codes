@@ -33,7 +33,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
     case e: Energy => e.value
   })
 
-   def electricityDistributionToJSValue(a: ElectricityDistribution): JsValue = {
+   def totalDistributionToJSValue(a: TotalDistribution): JsValue = {
      JsObject(Seq(
        "htg" -> JsNumber(a.total_htg),
        "clg" -> JsNumber(a.total_clg),
@@ -53,45 +53,6 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
      ))
    }
 
-   def ngDistributionToJSValue(a: NaturalGasDistribution): JsValue = {
-     JsObject(Seq(
-       "htg" -> JsNumber(a.ng_htg),
-       "clg" -> JsNumber(a.ng_clg),
-       "intLgt" -> JsNumber(a.ng_intLgt),
-       "extLgt" -> JsNumber(a.ng_extLgt),
-       "intEqp" -> JsNumber(a.ng_intEqp),
-       "extEqp" -> JsNumber(a.ng_extEqp),
-       "fans" -> JsNumber(a.ng_fans),
-       "pumps" -> JsNumber(a.ng_pumps),
-       "heatRej" -> JsNumber(a.ng_heatRej),
-       "humid" -> JsNumber(a.ng_humid),
-       "heatRec" -> JsNumber(a.ng_heatRec),
-       "swh" -> JsNumber(a.ng_swh),
-       "refrg" -> JsNumber(a.ng_refrg),
-       "gentor" -> JsNumber(a.ng_gentor),
-       "net" -> JsNumber(a.ng_net)
-     ))
-   }
-
-   def endUseDistributionToJSValue(a: EndUseDistribution): JsValue = {
-     JsObject(Seq(
-       "htg" -> JsNumber(a.htg),
-       "clg" -> JsNumber(a.clg),
-       "intLgt" -> JsNumber(a.intLgt),
-       "extLgt" -> JsNumber(a.extLgt),
-       "intEqp" -> JsNumber(a.intEqp),
-       "extEqp" -> JsNumber(a.extEqp),
-       "fans" -> JsNumber(a.fans),
-       "pumps" -> JsNumber(a.pumps),
-       "heatRej" -> JsNumber(a.heatRej),
-       "humid" -> JsNumber(a.humid),
-       "heatRec" -> JsNumber(a.heatRec),
-       "swh" -> JsNumber(a.swh),
-       "refrg" -> JsNumber(a.refrg),
-       "gentor" -> JsNumber(a.gentor),
-       "net" -> JsNumber(a.net)
-     ))
-   }
 
 
   def roundAt(p: Int)(n: Double): Double = {
@@ -118,9 +79,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
               case _: String => a.toString -> JsString(b.asInstanceOf[String])
               case _: Double => a.toString -> JsNumber(b.asInstanceOf[Double])
               case _: Energy => a.toString -> energyToJSValue(b.asInstanceOf[Energy])
-              case _: ElectricityDistribution => a.toString -> electricityDistributionToJSValue(b.asInstanceOf[ElectricityDistribution])
-              case _: NaturalGasDistribution => a.toString -> ngDistributionToJSValue(b.asInstanceOf[NaturalGasDistribution])
-              case _: EndUseDistribution => a.toString -> endUseDistributionToJSValue(b.asInstanceOf[EndUseDistribution])
+              case _: TotalDistribution => a.toString -> totalDistributionToJSValue(b.asInstanceOf[TotalDistribution])
             }
             ret
           }
@@ -129,11 +88,19 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
       case v: List[Any] => Right {
         Json.toJson(v.map {
           case a: Energy => energyToJSValue(a)
-          case a: ValidatedPropTypes => JsObject(Seq(
-            "prop_types" -> JsString(a.building_type),
-            "floor_area" -> JsNumber(a.floor_area),
-            "floor_area_units" -> JsString(a.floor_area_units)
-          ))
+          case a: TotalDistribution => totalDistributionToJSValue(a)
+          case v: Map[String,Any] =>
+            JsObject(v.map {
+              case (a,b) => {
+                val ret: (String, JsValue) = b match {
+                  case _: String => a.toString -> JsString(b.asInstanceOf[String])
+                  case _: Double => a.toString -> JsNumber(b.asInstanceOf[Double])
+                  case _: Energy => a.toString -> energyToJSValue(b.asInstanceOf[Energy])
+                  case _: TotalDistribution => a.toString -> totalDistributionToJSValue(b.asInstanceOf[TotalDistribution])
+                }
+                ret
+              }
+            })
         })
         }
       case v: String => Right(Json.toJson(v))
@@ -223,16 +190,20 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
 
         val futures = Future.sequence(Seq(
 
-          Baseline.getPrescriptiveMetrics.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-          Baseline.getBuildingData.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
+          Baseline.getTotalEUIList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
+          Baseline.getTotalEnergyList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
+          Baseline.getTotalEUIBreakdownList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
+          Baseline.getTotalEUIPercentsList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
+
 
         ))
 
         val fieldNames = Seq(
 
-
-          "prescriptive_metrics",
-          "buildings"
+          "total_eui_list",
+          "total_energy_list",
+          "end_use_list",
+          "end_use_percent_list"
 
         )
 

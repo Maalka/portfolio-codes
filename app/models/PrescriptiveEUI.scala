@@ -2,6 +2,7 @@ package models
 
 import java.io.InputStream
 
+import akka.actor.Status.Success
 import play.{Environment, api}
 import play.api.{Environment, Play}
 import play.api.libs.json._
@@ -18,151 +19,95 @@ import squants.space.{Area, SquareFeet, SquareMeters}
 
 
 
-case class PrescriptiveValues {
+case class ModelValues(parameters:JsValue) {
 
   val lookupTable:Future[JsValue]={
     for {
-      lookupTableName <- Future {
-        "prescriptive_site_0.json"
-      }
-      prescriptiveEUITable <- loadLookupTable(lookupTableName)
-    } yield prescriptiveEUITable
+      modelEUITable <- loadLookupTable("prescriptive_site_0.json")
+    } yield modelEUITable
 
   }
 
-  def getBuildingSize:Future[Double] = {
-    for {
-      validatedPropList <- getValidatedPropList
-      building_size <- Future(validatedPropList.map(_.floor_area)
-    } yield building_size
-  }
 
-  def getBuildingSize:Future[Double] = {
-    for {
-      validatedPropList <- getValidatedPropList
-      building_size <- Future(validatedPropList.map(_.floor_area)
-    } yield building_size
-  }
 
-  def lookupPrescriptiveTotalMetricIntensity(propDesc:ValidatedPropTypes): Future[Energy] = {
+  def lookupModelTotalMetricIntensity(propDesc:ValidatedPropTypes): Future[Energy] = {
     for {
-      endUseDistList <- lookupPrescriptiveEndUses(propDesc)
-      totalEUI <- getPrescriptiveTotalEUI(endUseDistList)
+      endUseDistList <- lookupEndUses(propDesc)
+      totalEUI <- getModelTotalEUI(endUseDistList)
     } yield KBtus(totalEUI)
   }
 
 
-  def lookupPrescriptiveEndUsePercents(propDesc:ValidatedPropTypes): Future[EndUseDistribution] = {
+  def lookupModelEndUsePercents(propDesc:ValidatedPropTypes): Future[TotalDistribution] = {
     for {
-      endUseDistList <- lookupPrescriptiveEndUses(propDesc)
-      endUsePercents <- getEndUseDistPercents(endUseDistList)
+      endUseDistList <- lookupEndUses(propDesc)
+      sum <- getModelTotalEUI(endUseDistList)
+      endUsePercents <- getEndUseDistPercents(sum,endUseDistList)
     } yield endUsePercents
   }
 
-  def lookupPrescriptiveEndUses(propDesc:ValidatedPropTypes): Future[EndUseDistribution] = {
+  def lookupEndUses(propDesc:ValidatedPropTypes): Future[TotalDistribution] = {
     for {
-      electric <- lookupPrescriptiveElectricity(propDesc)
-      ng <- lookupPrescriptiveNG(propDesc)
-      weightedEndUseDistList <- getWeightedEndUSeDistList(electric,ng)
-    } yield weightedEndUseDistList
-  }
-
-
-
-  def lookupEndUses(propDesc:ValidatedPropTypes): Future[ElectricityDistribution] = {
-    for {
+      table <- lookupTable
       euiDist <-
         Future {
-          (lookupTable \ propDesc.building_type \ lookupParams.climate_zone).toOption match {
-            case Some(a) => a.head.validate[ElectricityDistribution] match {
-              case JsSuccess(b: ElectricityDistribution, _) => b
-              case JsError(err) => throw new Exception(JsError.toJson(err).value.toString())
+          (table \ propDesc.building_type \ propDesc.climate_zone.toString).head.toOption match {
+            case Some(a) => {
+              a.validate[TotalDistribution] match {
+                case JsSuccess(b: TotalDistribution, _) => b
+                case JsError(err) => throw new Exception(JsError.toJson(err).value.toString())
+              }
             }
-            case _ => throw new Exception("Could nort retrieve Prescriptive EUI (Electric) data!")
+            case _ => throw new Exception("Could not retrieve Model EUI (Electric) data!")
           }
         }
     } yield euiDist
+
   }
 
 
-  def getPrescriptiveTotalEUI(EndUses:EndUseDistribution):Future[Double] = Future {
-// End Uses are in KBtu and building size is in Square Feet
 
-          EndUses.htg +
-          EndUses.clg +
-          EndUses.intLgt +
-          EndUses.extLgt +
-          EndUses.intEqp +
-          EndUses.extEqp +
-          EndUses.fans +
-          EndUses.pumps +
-          EndUses.heatRej +
-          EndUses.humid +
-          EndUses.heatRec +
-          EndUses.swh +
-          EndUses.refrg +
-          EndUses.gentor
+  def getModelTotalEUI(Total:TotalDistribution):Future[Double] = Future {
+
+          Total.total_htg +
+          Total.total_clg +
+          Total.total_intLgt +
+          Total.total_extLgt +
+          Total.total_intEqp +
+          Total.total_extEqp +
+          Total.total_fans +
+          Total.total_pumps +
+          Total.total_heatRej +
+          Total.total_humid +
+          Total.total_heatRec +
+          Total.total_swh +
+          Total.total_refrg +
+          Total.total_gentor
 
     }
 
-  def getEndUseDistPercents(EndUses:EndUseDistribution):Future[EndUseDistribution] = Future {
+  def getEndUseDistPercents(sum:Double,Total:TotalDistribution):Future[TotalDistribution] = Future {
 
-        val sum = {
-          EndUses.htg +
-          EndUses.clg +
-          EndUses.intLgt +
-          EndUses.extLgt +
-          EndUses.intEqp +
-          EndUses.extEqp +
-          EndUses.fans +
-          EndUses.pumps +
-          EndUses.heatRej +
-          EndUses.humid +
-          EndUses.heatRec +
-          EndUses.swh +
-          EndUses.refrg +
-          EndUses.gentor
-        }
-
-       EndUseDistribution(
-          EndUses.htg/sum,
-          EndUses.clg/sum,
-          EndUses.intLgt/sum,
-          EndUses.extLgt/sum,
-          EndUses.intEqp/sum,
-          EndUses.extEqp/sum,
-          EndUses.fans/sum,
-          EndUses.pumps/sum,
-          EndUses.heatRej/sum,
-          EndUses.humid/sum,
-          EndUses.heatRec/sum,
-          EndUses.swh/sum,
-          EndUses.refrg/sum,
-          EndUses.gentor/sum,
-          EndUses.net/sum
+    TotalDistribution(
+          Total.total_htg/sum,
+          Total.total_clg/sum,
+          Total.total_intLgt/sum,
+          Total.total_extLgt/sum,
+          Total.total_intEqp/sum,
+          Total.total_extEqp/sum,
+          Total.total_fans/sum,
+          Total.total_pumps/sum,
+          Total.total_heatRej/sum,
+          Total.total_humid/sum,
+          Total.total_heatRec/sum,
+          Total.total_swh/sum,
+          Total.total_refrg/sum,
+          Total.total_gentor/sum,
+          Total.total_net/sum
         )
     }
 
-  def getWeightedEndUSeDistList(elec:ElectricityDistribution, ng:NaturalGasDistribution):Future[EndUseDistribution] = Future {
 
-        EndUseDistribution(
-          elec.total_htg + ng.ng_htg,
-          elec.total_clg + ng.ng_clg,
-          elec.total_intLgt + ng.ng_intLgt,
-          elec.total_extLgt + ng.ng_extLgt,
-          elec.total_intEqp + ng.ng_intEqp,
-          elec.total_extEqp + ng.ng_extEqp,
-          elec.total_fans + ng.ng_fans,
-          elec.total_pumps + ng.ng_pumps,
-          elec.total_heatRej + ng.ng_heatRej,
-          elec.total_humid + ng.ng_humid,
-          elec.total_heatRec + ng.ng_heatRec,
-          elec.total_swh + ng.ng_swh,
-          elec.total_refrg + ng.ng_refrg,
-          elec.total_gentor + ng.ng_gentor,
-          elec.total_net + ng.ng_net
-        )
-    }
 
 
   def loadLookupTable(filename:String): Future[JsValue] = {
@@ -173,7 +118,7 @@ case class PrescriptiveValues {
           case Some(is: InputStream) => {
             Json.parse(is)
           }
-          case i => throw new Exception("Prescriptive EUI Lookup - Could not open file: %s".format(i))
+          case i => throw new Exception("Model EUI Lookup - Could not open file: %s".format(i))
         }
       }
     } yield json
@@ -181,6 +126,17 @@ case class PrescriptiveValues {
 
 
   def getValidatedPropParams(propDesc: PropDesc): Future[ValidatedPropTypes] = Future {
+
+    val climate_zone:String =
+      (parameters \ "climate_zone").validate[String] match {
+        case b:JsSuccess[String] => b.get
+        case _ => throw new Exception("No Climate Zone")
+      }
+
+    val propName:String = propDesc.building_name match {
+      case Some(b: String) => b
+      case _ => throw new Exception("Not a Proper Building Type")
+    }
     val propType:String = propDesc.building_type match {
       case Some(b: String) => b
       case _ => throw new Exception("Not a Proper Building Type")
@@ -191,21 +147,21 @@ case class PrescriptiveValues {
       case _ => throw new Exception("Floor Area Units must be either ftSQ or mSQ")
     }
 
-    val floorArea:Double = propDesc.floor_area match {
+    val floorArea:Area = propDesc.floor_area match {
       case Some(a: Double) => {
         units match {
-          case "mSQ" => SquareMeters(a) to SquareFeet
-          case "ftSQ" => SquareFeet(a).value
+          case "mSQ" => SquareMeters(a) in SquareFeet
+          case "ftSQ" => SquareFeet(a)
           case _ => throw new Exception("Floor Area Units Must be mSQ or ftSQ! ")
         }
       }
       case _ => throw new Exception("No Floor Area Found! ")
     }
-    ValidatedPropTypes(propType,floorArea,"ftSQ")
+    ValidatedPropTypes(propType,propName, floorArea, climate_zone)
   }
 
 
-  def getValidatedPropList(parameters:JsValue): Future[List[ValidatedPropTypes]] =  {
+  def getValidatedPropList: Future[List[ValidatedPropTypes]] =  {
 
     for {
       props:PropList <-
@@ -228,46 +184,34 @@ case class PrescriptiveValues {
 
 
 
-case class EndUseDistribution(htg:Double,clg:Double,intLgt:Double = 0.0,extLgt:Double = 0.0,intEqp:Double = 0.0,
-                                   extEqp:Double = 0.0, fans:Double = 0.0,pumps:Double = 0.0,heatRej:Double = 0.0,
-                                   humid:Double = 0.0, heatRec:Double = 0.0,swh:Double = 0.0,refrg:Double = 0.0,
-                                   gentor:Double = 0.0,net:Double = 0.0)
 
+case class TotalDistribution(
+                              total_htg:Double,
+                              total_clg:Double,
+                              total_intLgt:Double = 0.0,
+                              total_extLgt:Double = 0.0,
+                              total_intEqp:Double = 0.0,
+                              total_extEqp:Double = 0.0,
+                              total_fans:Double = 0.0,
+                              total_pumps:Double = 0.0,
+                              total_heatRej:Double = 0.0,
+                              total_humid:Double = 0.0,
+                              total_heatRec:Double = 0.0,
+                              total_swh:Double = 0.0,
+                              total_refrg:Double = 0.0,
+                              total_gentor:Double = 0.0,
+                              total_net:Double = 0.0)
 
-case class ElectricityDistribution(total_htg:Double,total_clg:Double,total_intLgt:Double = 0.0,total_extLgt:Double = 0.0,total_intEqp:Double = 0.0,
-                                   total_extEqp:Double = 0.0, total_fans:Double = 0.0,total_pumps:Double = 0.0,total_heatRej:Double = 0.0,
-                                   total_humid:Double = 0.0, total_heatRec:Double = 0.0,total_swh:Double = 0.0,total_refrg:Double = 0.0,
-                                   total_gentor:Double = 0.0,total_net:Double = 0.0)
-
-object ElectricityDistribution {
-  implicit val ElectricityDistributionReads: Reads[ElectricityDistribution] = Json.reads[ElectricityDistribution]
+object TotalDistribution {
+  implicit val TotalDistributionReads: Reads[TotalDistribution] = Json.reads[TotalDistribution]
 }
-case class NaturalGasDistribution(ng_htg:Double = 0.0,ng_clg:Double = 0.0,ng_intLgt:Double = 0.0,ng_extLgt:Double = 0.0,
-                                  ng_intEqp:Double = 0.0,ng_extEqp:Double = 0.0,ng_fans:Double = 0.0,ng_pumps:Double = 0.0,
-                                  ng_heatRej:Double = 0.0,ng_humid:Double = 0.0,ng_heatRec:Double = 0.0, ng_swh:Double = 0.0,
-                                  ng_refrg:Double = 0.0,ng_gentor:Double = 0.0,ng_net:Double = 0.0)
-
-object NaturalGasDistribution {
-  implicit val NaturalGasDistributionReads: Reads[NaturalGasDistribution] = Json.reads[NaturalGasDistribution]
-}
-
-
-
 
 
 
 
 case class ValidatedPropList(prop_types: List[ValidatedPropTypes])
 
-object ValidatedPropList {
-  implicit val ValidatedPropListReads: Reads[ValidatedPropList] = Json.reads[ValidatedPropList]
-}
-
-case class ValidatedPropTypes(building_type: String,floor_area: Double, floor_area_units: String)
-
-object ValidatedPropTypes {
-  implicit val ValidatedPropTypesReads: Reads[ValidatedPropTypes] = Json.reads[ValidatedPropTypes]
-}
+case class ValidatedPropTypes(building_type: String, building_name:String, floor_area: Area, climate_zone:String)
 
 
 
@@ -278,7 +222,7 @@ object PropList {
   implicit val PropListReads: Reads[PropList] = Json.reads[PropList]
 }
 
-case class PropDesc(building_type: Option[String],floor_area: Option[Double], floor_area_units: Option[String])
+case class PropDesc(building_type: Option[String], building_name: Option[String],floor_area: Option[Double], floor_area_units: Option[String])
 
 object PropDesc {
   implicit val PropDescReads: Reads[PropDesc] = Json.reads[PropDesc]

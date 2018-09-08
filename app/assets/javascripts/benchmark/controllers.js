@@ -219,64 +219,66 @@ define(['angular'], function() {
 
     $scope.computeEndUses = function(results){
 
-        function nullZero(a) {
-            if(a===0){
-                return null;
-            } else {
-            return a;
-            }
-        }
-
-        var endUses = ["Heating", "Cooling", "Interior Lighting", "Plug Loads", "Service Hot Water", "Fans"];
-        var shortNames = ["htg", "clg", "intLgt", "intEqp", "swh", "fans"];
-        var othersEndUses = ["Exterior Equipment","Exterior Light","Generators","Heat Recovery","Heat Rejection","Humidity Control","Pumps","Refrigeration"];
-        var othersNames = ["extEqp","extLgt","gentor","heatRec","heatRej","humid","pumps","refrg"];
+        console.log(results);
+//        function nullZero(a) {
+//            if(a===0){
+//                return null;
+//            } else {
+//            return a;
+//            }
+//        }
 
 
-        var endUsesTable = {} ;
-        endUsesTable.endUses = [] ;
-        endUsesTable.endUsesOther = [] ;
-        endUsesTable.endUsesTotal = [] ;
-
-
-        var endUseResponse = $scope.getPropResponseField(results,"prescriptive_metrics");
-
-        endUsesTable.eui = endUseResponse.site_eui;
-        endUsesTable.energy = endUseResponse.site_energy / 1000; // this will be either MBtu or MWh
-
-
-
-        for (var i =0; i < endUses.length; i ++) {
-
-            endUsesTable.endUses.push([
-                endUses[i],
-                nullZero(endUseResponse.prescriptive_electricity_metric_data[shortNames[i]]),
-                nullZero(endUseResponse.prescriptive_natural_gas_metric_data[shortNames[i]]),
-                nullZero(endUseResponse.prescriptive_end_use_metric_data[shortNames[i]]),
-                endUseResponse.prescriptive_end_use_metric_percents[shortNames[i]]*100
-            ]);
-        }
-
-        for (var j =0; j < othersEndUses.length; j ++) {
-
-            endUsesTable.endUsesOther.push([
-                othersEndUses[j],
-                nullZero(endUseResponse.prescriptive_electricity_metric_data[othersNames[j]]),
-                nullZero(endUseResponse.prescriptive_natural_gas_metric_data[othersNames[j]]),
-                nullZero(endUseResponse.prescriptive_end_use_metric_data[othersNames[j]]),
-                endUseResponse.prescriptive_end_use_metric_percents[othersNames[j]]*100
-            ]);
-        }
-
-        endUsesTable.endUsesTotal.push([
-            "Total",
-            endUseResponse.prescriptive_electricity_metric_data.net,
-            endUseResponse.prescriptive_natural_gas_metric_data.net,
-            endUseResponse.prescriptive_end_use_metric_data.net,
-            100,
-        ]);
-
-        return endUsesTable;
+//        var endUses = ["Heating", "Cooling", "Interior Lighting", "Plug Loads", "Service Hot Water", "Fans"];
+//        var shortNames = ["htg", "clg", "intLgt", "intEqp", "swh", "fans"];
+//        var othersEndUses = ["Exterior Equipment","Exterior Light","Generators","Heat Recovery","Heat Rejection","Humidity Control","Pumps","Refrigeration"];
+//        var othersNames = ["extEqp","extLgt","gentor","heatRec","heatRej","humid","pumps","refrg"];
+//
+//
+//        var endUsesTable = {} ;
+//        endUsesTable.endUses = [] ;
+//        endUsesTable.endUsesOther = [] ;
+//        endUsesTable.endUsesTotal = [] ;
+//
+//
+//        var endUseResponse = $scope.getPropResponseField(results,"prescriptive_metrics");
+//
+//        endUsesTable.eui = endUseResponse.site_eui;
+//        endUsesTable.energy = endUseResponse.site_energy / 1000; // this will be either MBtu or MWh
+//
+//
+//
+//        for (var i =0; i < endUses.length; i ++) {
+//
+//            endUsesTable.endUses.push([
+//                endUses[i],
+//                nullZero(endUseResponse.prescriptive_electricity_metric_data[shortNames[i]]),
+//                nullZero(endUseResponse.prescriptive_natural_gas_metric_data[shortNames[i]]),
+//                nullZero(endUseResponse.prescriptive_end_use_metric_data[shortNames[i]]),
+//                endUseResponse.prescriptive_end_use_metric_percents[shortNames[i]]*100
+//            ]);
+//        }
+//
+//        for (var j =0; j < othersEndUses.length; j ++) {
+//
+//            endUsesTable.endUsesOther.push([
+//                othersEndUses[j],
+//                nullZero(endUseResponse.prescriptive_electricity_metric_data[othersNames[j]]),
+//                nullZero(endUseResponse.prescriptive_natural_gas_metric_data[othersNames[j]]),
+//                nullZero(endUseResponse.prescriptive_end_use_metric_data[othersNames[j]]),
+//                endUseResponse.prescriptive_end_use_metric_percents[othersNames[j]]*100
+//            ]);
+//        }
+//
+//        endUsesTable.endUsesTotal.push([
+//            "Total",
+//            endUseResponse.prescriptive_electricity_metric_data.net,
+//            endUseResponse.prescriptive_natural_gas_metric_data.net,
+//            endUseResponse.prescriptive_end_use_metric_data.net,
+//            100,
+//        ]);
+//
+//        return endUsesTable;
 
     };
 
