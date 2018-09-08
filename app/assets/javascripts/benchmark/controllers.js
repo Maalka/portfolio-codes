@@ -187,7 +187,7 @@ define(['angular'], function() {
 
             console.log(results);
 
-            $scope.endUses = $scope.computeEndUses(results);
+            $scope.endUses = results;
 
 
         });
@@ -217,9 +217,10 @@ define(['angular'], function() {
     };
 
 
-    $scope.computeEndUses = function(results){
+    $scope.computeEndUses = function(){
 
-        console.log(results);
+        console.log("Will compute here");
+
 //        function nullZero(a) {
 //            if(a===0){
 //                return null;
