@@ -61,6 +61,22 @@ class CSVController @Inject()(val cache: AsyncCacheApi, cc: ControllerComponents
           }
         })
       )
+      case v: Vector[Any] => Right {
+        Json.toJson(v.map {
+          case v: Map[String,Any] =>
+            JsObject(v.map {
+              case (a,b) => {
+                val ret: (String, JsValue) = b match {
+                  case _: String => a.toString -> JsString(b.asInstanceOf[String])
+                  case _: Double => a.toString -> JsNumber(b.asInstanceOf[Double])
+                }
+                ret
+              }
+            })
+        })
+      }
+      case v: String => Right(Json.toJson(v))
+      case None => Left("Could not recognize input type")
     }
   }
 
@@ -82,111 +98,42 @@ class CSVController @Inject()(val cache: AsyncCacheApi, cc: ControllerComponents
         val uploadedFile = new File(tempDir + File.separator + filename)
         upload.ref.moveTo(uploadedFile)
 
-        val californiaCSV = new CodesCSV
+        val codesCSV: CodesCSV = new CodesCSV
+
 
         val fileStream1 = new FileInputStream(uploadedFile)
-        val parameters = Await.result(californiaCSV.toParameter(fileStream1), Duration.Inf)
-
-        val fileStream2 = new FileInputStream(uploadedFile)
-        val project = Await.result(californiaCSV.toProject(fileStream2), Duration.Inf)
-
-        val fileStream3 = new FileInputStream(uploadedFile)
-        val annual = Await.result(californiaCSV.toAnnualResults(fileStream3), Duration.Inf)
-
-
-
-        def mapEndUses(metrics:Seq[(String,String)]):Map[String,Any] = {
-
-
-          var metricsMap:Seq[Map[String,Any]] = metrics.map {
-
-            _ match {
-
-              case (a, b) if a == "Space Heating" => Map("htg" -> b.toDouble)
-              case (a, b) if a == "Space Cooling" => Map("clg" -> b.toDouble)
-              case (a, b) if a == "Indoor Lighting" => Map("intLgt" -> b.toDouble)
-              case (a, b) if a == "Other Lighting" => Map("extLgt" -> b.toDouble)
-              case (a, b) if a == "Indoor Fans" => Map("fans" -> b.toDouble)
-              case (a, b) if a == "Pumps & Misc." => Map("pumps" -> b.toDouble)
-              case (a, b) if a == "Heat Rejection" => Map("heatRej" -> b.toDouble)
-              case (a, b) if a == "Domestic Hot Water" => Map("swh" -> b.toDouble)
-              case (a, b) if a == "TOTAL" => Map("net" -> b.toDouble)
-
-              case (a, b) if a == "Batteries Discharge" => Map("discharge" -> b.toDouble)
-              case (a, b) if a == "Batteries Charge" => Map("charge" -> b.toDouble)
-              case (a, b) if a == "On-Site PV"=> Map("solar" -> b.toDouble)
-              case (a, b) if a == "Net Energy" => Map("netenergy" -> b.toDouble)
-
-              case (a, b) if a == "Receptacle" => Map("receptacle" -> b.toDouble)
-              case (a, b) if a == "Process" => Map("process" -> b.toDouble)
-
-              case (a, b) if a == "Interior" => Map("intEqp" -> b.toDouble) //interior Equipment
-              case (a, b) if a == "Exterior" => Map("extEqp" -> b.toDouble) //exterior Equipment
-              case (a, b) if a == "Heat Recovery" => Map("heatRec" -> b.toDouble) //heat recovery
-              case (a, b) if a == "Refrigeration" => Map("refrg" -> b.toDouble) //refrigeration
-              case (a, b) if a == "generator" => Map("gentor" -> b.toDouble) //generator
-
-              case (a, b) if a == "COMPLIANCE TOTAL" => Map("compliance" -> b.toDouble)
-              case (a, b) if a == "Energy Component" => Map("units" -> b)
-              case (a, b)  => null
-
-            }
-          }
-
-          metricsMap.flatten.toMap
-
-        }
-
+        val prop_types = Await.result(codesCSV.toPortfolio(fileStream1), Duration.Inf)
 
 
 
         val futures = Future.sequence(Seq(
 
           Future{
-            annual.filter(_.contains("Proposed Design Site EUI"))
-              .flatMap{
-                case Vector(a,b,c,d,e) => Map(a->e)
+            prop_types
+              .map{
+                case Vector(a,b,c,d,e) => {
+                  Map(
+                    "building_name" -> a,
+                    "building_type" -> b,
+                    "floor_area" -> c,
+                    "floor_area_units" -> d
+                  )
+                }
               }
-            }.map(mapEndUses(_)).map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
+            }.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
 
           Future{
-            annual.filter(_.contains("Proposed Design Source Energy"))
-              .flatMap{
-                case Vector(a,b,c,d,e) => Map(a->e)
+            prop_types.headOption match {
+              case Some(a) => a match {
+                case Vector(a,b,c,d,e) => Map("climate_zone" -> e)
               }
-            }.map(mapEndUses(_)).map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-
-          Future{
-            annual.filter(_.contains("Proposed Design TDV"))
-              .flatMap{
-                case Vector(a,b,c,d,e) => Map(a->e)
-              }
-            }.map(mapEndUses(_)).map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-
-          Future{
-            annual.filter(_.contains("Proposed Design Emissions"))
-              .flatMap {
-                case Vector(a, b, c, d, e) => Map(a -> e)
-              }
-            }.map(mapEndUses(_)).map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-
-          Future{
-            project
-              .flatMap{
-                case Vector(a:String,b:String,c:String) => Map(a.dropRight(1).replaceAll("\\s", "")->b)
-              }.toMap
-            }.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
-
+            }
+          }.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
         ))
 
-
-
         val fieldNames = Seq(
-          "siteMetrics",
-          "sourceMetrics",
-          "tdvMetrics",
-          "carbonMetrics",
-          "projectMetrics"
+          "prop_types",
+          "climate_zone"
         )
 
 
@@ -199,11 +146,6 @@ class CSVController @Inject()(val cache: AsyncCacheApi, cc: ControllerComponents
           val results = r.collect {
             case (n, Right(s)) => Json.obj(n -> s)
           }
-
-//          println(Json.obj(
-//            "values" -> results,
-//            "errors" -> errors
-//          ))
 
           Ok(Json.obj(
             "values" -> results,

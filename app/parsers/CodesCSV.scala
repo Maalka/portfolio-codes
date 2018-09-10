@@ -28,69 +28,34 @@ class CodesCSV @Inject()(implicit val actorSystem: ActorSystem,
       .toStream()
   }
 
-  def toParameter(is: InputStream) = {
+
+  def toPortfolio(is:InputStream) = {
     implicit val materializer = ActorMaterializer()
 
-    source(toStream(is)).via(parameterSegmentFlow())
+    source(toStream(is)).via(portfolioSegmentFlow())
       .runWith(Sink.seq)
   }
 
-  def toProject(is:InputStream) = {
-    implicit val materializer = ActorMaterializer()
+  val typeList:Seq[String]=Seq("Office","Retail","School","Restaurant","Hotel","Warehouse","Apartment")
+  val unitList:Seq[String]=Seq("sq.ft.","sq.m.")
 
-    source(toStream(is)).via(projectSegmentFlow())
-      .runWith(Sink.seq)
-  }
-
-  def toAnnualResults(is:InputStream) = {
-    implicit val materializer = ActorMaterializer()
-
-
-    val test1 = {
-      source(toStream(is)).via(annualResultsSegmentFlow())
-        .filter(_.contains("Total"))
-        .groupBy(1000, _(2))
-        .mergeSubstreams
-        .runWith(Sink.seq)
+  def rowValid(row:Seq[Option[String]]):Boolean = {
+    if (row(0).isDefined && typeList.contains(row(1).getOrElse("")) && row(2).isDefined && unitList.contains(row(3).getOrElse("")) && row(4).isDefined) {
+      true
+    } else {
+      false
     }
-
-      test1
   }
 
-  def toHourlylResults(is:InputStream) = {
-    implicit val materializer = ActorMaterializer()
-
-    source(toStream(is))
-      .via(hourlyResultsSegmentFlow())
-      .runWith(Sink.seq)
-  }
-
-  private def parameterSegmentFlow() = Flow[Seq[Option[String]]]
+  private def portfolioSegmentFlow() = Flow[Seq[Option[String]]]
     .statefulMapConcat { () =>
       var rowNumber = -1
-      val startRowNumber = 3
-      val endRowNumber = 8
+      val startRowNumber = 1
+      val endRowNumber = 200
       row =>
         rowNumber += 1
-        if (rowNumber >= 1 && rowNumber <= endRowNumber && row(1).isDefined && row(3).isDefined) {
-          scala.collection.immutable.Iterable[Option[Vector[String]]](Some(Vector(row(1).get, row(3).get)))
-        } else {
-          scala.collection.immutable.Iterable.empty[Option[Vector[String]]]
-        }
-
-    }
-    .filter(_.isDefined)
-    .map(_.get)
-
-  private def projectSegmentFlow() = Flow[Seq[Option[String]]]
-    .statefulMapConcat { () =>
-      var rowNumber = -1
-      val startRowNumber = 10
-      val endRowNumber = 30
-      row =>
-        rowNumber += 1
-        if (rowNumber >= startRowNumber && rowNumber <= endRowNumber && row(1).isDefined && row(5).isDefined) {
-          scala.collection.immutable.Iterable[Option[Vector[String]]](Some(Vector(row(1).get, row(5).get, row(6).getOrElse(""))))
+        if (rowValid(row)) {
+          scala.collection.immutable.Iterable[Option[Vector[String]]](Some(Vector(row(0).get, row(1).get, row(2).get, row(3).get, row(4).get)))
         } else {
           scala.collection.immutable.Iterable.empty[Option[Vector[String]]]
         }
@@ -102,147 +67,7 @@ class CodesCSV @Inject()(implicit val actorSystem: ActorSystem,
     o :+ value
   }
 
-  private case class MapMayColumnOption(
-                                 startRowNumber: Int,
-
-                                 endRowNumber: Int,
-                                 yHeaderRow: Int,
-
-                                 ysubHeaderRow: Int,
-                                 dataRow: Int,
-
-                                 dataColumnHeader: Int,
-                                 headers: scala.collection.mutable.ListBuffer[(String, Int)],
-
-                                 headersGenerator: scala.collection.mutable.ListBuffer[(Int, String => Vector[String])],
-
-                                 mapKey: Seq[Option[String]] => Option[String]
 
 
-                               )
-
-  private def mapManyColumn(
-                     row: Seq[Option[String]],
-                     rowNumber: Int,
-                     options: MapMayColumnOption): immutable.Iterable[Option[Vector[String]]] = {
-
-    if (rowNumber >= options.startRowNumber && rowNumber <= options.endRowNumber) {
-      if (rowNumber == options.yHeaderRow) {
-
-        // grab all the headers
-        // this is a row like
-        // ,,,Proposed Design Site Energy,,,,Proposed Design Source Energy,,,,,Proposed Design TDV Energy,,,,
-        options.headers ++= row.zipWithIndex.filter(_._1.isDefined).map {
-          case (Some(k), i) => k -> i
-        }
-
-        //Console.println("ddd: %s".format(options.headers))
-        scala.collection.immutable.Iterable.empty[Option[Vector[String]]]
-
-      } else if (rowNumber == options.ysubHeaderRow) {
-        // grab all the header generators.
-        // this is a row like
-        // ,,,Electric,Gas,PV Systems,Battery,Electric,Gas,PV Systems,Battery,Total,Electric,Gas,PV Systems,Battery,Total
-        var curH: (String, Int) = null
-
-        options.headersGenerator ++= row.zipWithIndex.drop(options.headers.head._2).filter(_._1.isDefined).map {
-          case (v, col) =>
-            curH = options.headers.find(_._2 == col).getOrElse(curH)
-            col -> generate(Vector(curH._1, v.get))
-        }
-        scala.collection.immutable.Iterable.empty[Option[Vector[String]]]
-
-      } else if (rowNumber >= options.dataRow) {
-
-        // grab the data row
-
-        // take any values to the left of the row
-        // will compile Mo,Da,Hr
-        val rowH = row.zipWithIndex.takeWhile{
-          case (_, i) => !options.headersGenerator.exists(_._1 == i)
-        }.flatMap(_._1)
-
-        // emit the values
-        options.mapKey(row).map { h =>
-          row.zipWithIndex.drop(options.dataColumnHeader).filter(_._1.isDefined).map {
-            case (v, col) =>
-              options.headersGenerator.find(_._1 == col).flatMap { g =>
-                v.map{ r =>
-                  rowH.toVector ++ Vector(h) ++ g._2(r)
-                }
-              }
-          }.to[scala.collection.immutable.Iterable]
-        }.getOrElse(
-          // if this is out of bounds return nothing
-          scala.collection.immutable.Iterable.empty[Option[Vector[String]]])
-
-      } else {
-        scala.collection.immutable.Iterable.empty[Option[Vector[String]]]
-      }
-    } else {
-      scala.collection.immutable.Iterable.empty[Option[Vector[String]]]
-    }
-  }
-
-  private def annualResultsSegmentFlow() = Flow[Seq[Option[String]]]
-    .statefulMapConcat { () =>
-      var rowNumber = -1
-
-      val options = MapMayColumnOption(
-        startRowNumber = 31,
-
-        endRowNumber = 52,
-        yHeaderRow = 31,
-
-        ysubHeaderRow = 32,
-        dataRow = 33,
-
-        dataColumnHeader = 2,
-
-        headers = scala.collection.mutable.ListBuffer[(String, Int)](),
-
-        headersGenerator = scala.collection.mutable.ListBuffer[(Int, String => Vector[String])](),
-
-        mapKey = (row: Seq[Option[String]]) => row(2)
-      )
-
-      row =>
-        rowNumber += 1 // starts at -1
-        mapManyColumn(row, rowNumber, options)
-    }
-    .filter(_.isDefined)
-    .map(_.get)
-
-  private def hourlyResultsSegmentFlow() = Flow[Seq[Option[String]]]
-    .statefulMapConcat { () =>
-      var rowNumber = -1
-
-      val options = MapMayColumnOption(
-        startRowNumber = 54,
-
-        endRowNumber = 99999999,
-        yHeaderRow = 54,
-
-        ysubHeaderRow = 55,
-        dataRow = 57,
-
-        dataColumnHeader = 0,
-
-        headers = scala.collection.mutable.ListBuffer[(String, Int)](),
-
-        headersGenerator = scala.collection.mutable.ListBuffer[(Int, String => Vector[String])](),
-
-        mapKey = (row: Seq[Option[String]]) => row.slice(1, 2).reduce[Option[String]] {
-          case (Some(a:String), Some(b:String)) => Some(a + "-" + b)
-          case _ => None
-        }
-      )
-
-      row =>
-        rowNumber += 1 // starts at -1
-        mapManyColumn(row, rowNumber, options)
-    }
-    .filter(_.isDefined)
-    .map(_.get)
 }
 

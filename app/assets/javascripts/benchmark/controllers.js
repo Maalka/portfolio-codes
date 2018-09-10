@@ -24,8 +24,6 @@ define(['angular'], function() {
 
     $scope.auxModel = {};
 
-    $scope.auxModel.country = 'United States';
-    $scope.auxModel.state = "CA";
     $scope.auxModel.climate_zone = null;
     $scope.auxModel.reporting_units = "imperial";
     $scope.temp = {};
@@ -470,72 +468,6 @@ define(['angular'], function() {
                 {id:"14",file_id:"1-723820"},
                 {id:"15",file_id:"1-722868"},
                 {id:"16",file_id:"1-725845"}
-            ],
-            state: [
-                {id:"AL",name:"Alabama",filter_id:"United States"},
-                {id:"AK",name:"Alaska",filter_id:"United States"},
-                {id:"AZ",name:"Arizona",filter_id:"United States"},
-                {id:"AR",name:"Arkansas",filter_id:"United States"},
-                //{id:"CA",name:"California",filter_id:"United States"},
-                {id:"CO",name:"Colorado",filter_id:"United States"},
-                {id:"CT",name:"Connecticut",filter_id:"United States"},
-                {id:"DE",name:"Delaware",filter_id:"United States"},
-                //{id:"DC",name:"District Of Columbia",filter_id:"United States"},
-                {id:"FL",name:"Florida",filter_id:"United States"},
-                {id:"GA",name:"Georgia",filter_id:"United States"},
-                {id:"HI",name:"Hawaii",filter_id:"United States"},
-                {id:"ID",name:"Idaho",filter_id:"United States"},
-                {id:"IL",name:"Illinois",filter_id:"United States"},
-                {id:"IN",name:"Indiana",filter_id:"United States"},
-                {id:"IA",name:"Iowa",filter_id:"United States"},
-                {id:"KS",name:"Kansas",filter_id:"United States"},
-                {id:"KY",name:"Kentucky",filter_id:"United States"},
-                {id:"LA",name:"Louisiana",filter_id:"United States"},
-                {id:"ME",name:"Maine",filter_id:"United States"},
-                {id:"MD",name:"Maryland",filter_id:"United States"},
-                {id:"MA",name:"Massachusetts",filter_id:"United States"},
-                {id:"MI",name:"Michigan",filter_id:"United States"},
-                {id:"MN",name:"Minnesota",filter_id:"United States"},
-                {id:"MS",name:"Mississippi",filter_id:"United States"},
-                {id:"MO",name:"Missouri",filter_id:"United States"},
-                {id:"MT",name:"Montana",filter_id:"United States"},
-                {id:"NE",name:"Nebraska",filter_id:"United States"},
-                {id:"NV",name:"Nevada",filter_id:"United States"},
-                {id:"NH",name:"New Hampshire",filter_id:"United States"},
-                {id:"NJ",name:"New Jersey",filter_id:"United States"},
-                {id:"NM",name:"New Mexico",filter_id:"United States"},
-                {id:"NY",name:"New York",filter_id:"United States"},
-                {id:"NC",name:"North Carolina",filter_id:"United States"},
-                {id:"ND",name:"North Dakota",filter_id:"United States"},
-                {id:"OH",name:"Ohio",filter_id:"United States"},
-                {id:"OK",name:"Oklahoma",filter_id:"United States"},
-                {id:"OR",name:"Oregon",filter_id:"United States"},
-                {id:"PA",name:"Pennsylvania",filter_id:"United States"},
-                {id:"RI",name:"Rhode Island",filter_id:"United States"},
-                {id:"SC",name:"South Carolina",filter_id:"United States"},
-                {id:"SD",name:"South Dakota",filter_id:"United States"},
-                {id:"TN",name:"Tennessee",filter_id:"United States"},
-                {id:"TX",name:"Texas",filter_id:"United States"},
-                {id:"UT",name:"Utah",filter_id:"United States"},
-                {id:"VT",name:"Vermont",filter_id:"United States"},
-                {id:"VA",name:"Virginia",filter_id:"United States"},
-                {id:"WA",name:"Washington",filter_id:"United States"},
-                {id:"WV",name:"West Virginia",filter_id:"United States"},
-                {id:"WI",name:"Wisconsin",filter_id:"United States"},
-                {id:"WY",name:"Wyoming",filter_id:"United States"},
-                {id:"AB",name:"Alberta",filter_id:"Canada"},
-                {id:"BC",name:"British Columbia",filter_id:"Canada"},
-                {id:"MB",name:"Manitoba",filter_id:"Canada"},
-                {id:"NB",name:"New Brunswick",filter_id:"Canada"},
-                {id:"NL",name:"Newfoundland",filter_id:"Canada"},
-                {id:"NS",name:"Nova Scotia",filter_id:"Canada"},
-                {id:"NT",name:"Northwest Territories",filter_id:"Canada"},
-                {id:"NU",name:"Nunavut",filter_id:"Canada"},
-                {id:"ON",name:"Ontario",filter_id:"Canada"},
-                {id:"PE",name:"Prince Edward Island",filter_id:"Canada"},
-                {id:"QC",name:"Quebec",filter_id:"Canada"},
-                {id:"SK",name:"Saskatchewan",filter_id:"Canada"},
-                {id:"YT",name:"Yukon",filter_id:"Canada"}
             ]
         };
 
