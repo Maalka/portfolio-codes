@@ -1,117 +1,122 @@
 <div>
-    <form class="ui form" novalidate ng-class="{'error': !forms.baselineForm.$valid && forms.hasValidated}" name="forms.baselineForm" ng-cloak>
-        <div class="ui error message" ng-if="!forms.baselineForm.$valid && forms.hasValidated">
-            <div class="header">
-                There were some errors with your submission
-            </div>
-            <ul class="list">
-                <li>Make sure you have filled out all of the required fields</li>
-                <li>Please note that commas are not allowed in the numeric fields</li>
-            </ul>
-        </div>
-        <h3 class="ui header">
-            <i class="building icon"></i>YOUR BUILDING PORTFOLIO
-        </h3>
-
-        <div class="entry">
-            <div class="ui segment about">
-                <div class="ui grid">
-
-                    <div class="five wide column"></div>
-                    <div class="right aligned eleven wide column">
-                        <div class="ui radio checkbox">
-                            <input type="radio" id="manual" ng-model="auxModel.approach" ng-init="auxModel.approach='manual'"
-                                   value='manual'>
-                            <label for='manual'>Manual Entry</label>
-                        </div>
-                        <div class="ui radio checkbox">
-                            <input type="radio" id="csv" ng-model="auxModel.approach"
-                                   value='csv'>
-                            <label for='csv'>CSV Upload</label>
-                        </div>
-
-                    </div>
-
-                    <div class="sixteen wide column" style="margin-top:-10px;">
-                        <div class="ui divider"></div>
-                    </div>
-
-                    <div  class="sixteen wide column" ng-show="auxModel.approach === 'csv'">
-
-                        <div files data="csvData"></div>
-
-                    </div>
-
-
-                    <div class="five wide column" ng-show="auxModel.approach === 'manual'">
-                        <label class="design-label">Climate Zone
-                            <div class="tooltip">
-                                <sup><i class="blue circle info icon"></i></sup>
-                                    <span class="tooltipimage">
-                                        <img src="/assets/images/climate_zones.png" style="position:absolute;left: -10px;z-index:9999;width:400px;height:500px;">
-                                    </span>
-                            </div>
-
-                        </label>
-                    </div>
-
-                    <div class="eleven wide column" ng-show="auxModel.approach === 'manual'">
-                        <div class="inline fields required">
-                            <div class="sixteen wide field">
-                                <select class="ui dropdown search"
-                                        ng-model="auxModel.climate_zone"
-                                        ng-options="item.id as item.id for item in geographicProperties.climate_info"
-                                        name="climate_zone">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="five wide column" ng-show="auxModel.approach === 'manual'">
-                        <label>{{propText}}</label>
-                    </div>
-                    <div class="eleven wide column" ng-show="auxModel.approach === 'manual'">
-                        <div class="inline fields required">
-                            <div class="sixteen wide field">
-                                <select class="ui dropdown search"
-                                        dropdown
-                                        ng-required="propTypes.length===0"
-                                        reset = "tempModel.resetBuildingType"
-                                        ng-model="tempModel.buildingType"
-                                        ng-options="item as item.name for item in buildingProperties.buildingType['commercial'] | orderBy : 'name'"
-                                        name="buildingType">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+    <div class="ui basic segment">
+    <h1 class="ui center aligned block header">Municipal Codes Assessment Tool</h1>
+    </div>
+    <div class="ui basic segment">
+        <form class="ui large form" novalidate ng-class="{'error': !forms.baselineForm.$valid && forms.hasValidated}" name="forms.baselineForm" ng-cloak>
+            <div class="ui error message" ng-if="!forms.baselineForm.$valid && forms.hasValidated">
+                <div class="header">
+                    There were some errors with your submission
                 </div>
+                <ul class="list">
+                    <li>Make sure you have filled out all of the required fields</li>
+                    <li>Please note that commas are not allowed in the numeric fields</li>
+                </ul>
+            </div>
+            <h2 class="ui dividing header">
+                <i class="maalka-blue building icon"></i>Your Building Portfolio
+            </h2>
 
-                <!--<div ng-show="propTypes.length > 0 && auxModel.approach === 'manual'">-->
-                    <!--<div class="ui divider "></div>-->
-                    <!--<div class="field">-->
-                        <!--<label >Selected Use Type(s):</label>-->
+            <div class="entry">
+                <div class="ui segment about">
+                    <div class="ui grid">
+
+                        <div class="five wide column"></div>
+                        <div class="right aligned eleven wide column">
+                            <div class="ui radio checkbox">
+                                <input type="radio" id="manual" ng-model="auxModel.approach" ng-init="auxModel.approach='manual'"
+                                       value='manual'>
+                                <label for='manual'>Manual Entry</label>
+                            </div>
+                            <div class="ui radio checkbox">
+                                <input type="radio" id="csv" ng-model="auxModel.approach"
+                                       value='csv'>
+                                <label for='csv'>CSV Upload</label>
+                            </div>
+
+                        </div>
+
+                        <div class="sixteen wide column" style="margin-top:-10px;">
+                            <div class="ui divider"></div>
+                        </div>
+
+                        <div  class="sixteen wide column" ng-show="auxModel.approach === 'csv'">
+
+                            <div files data="csvData"></div>
+
+                        </div>
+
+
+                        <div class="five wide column" ng-show="auxModel.approach === 'manual'">
+                            <label class="design-label">Climate Zone
+                                <div class="tooltip">
+                                    <sup><i class="maalka-blue circle info icon"></i></sup>
+                                        <span class="tooltipimage">
+                                            <img src="/assets/images/climate_zones.png" style="position:absolute;left: -10px;z-index:9999;width:400px;height:500px;">
+                                        </span>
+                                </div>
+
+                            </label>
+                        </div>
+
+                        <div class="eleven wide column" ng-show="auxModel.approach === 'manual'">
+                            <div class="inline fields required">
+                                <div class="sixteen wide field">
+                                    <select class="ui dropdown search"
+                                            ng-model="auxModel.climate_zone"
+                                            ng-options="item.id as item.id for item in geographicProperties.climate_info"
+                                            name="climate_zone">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="five wide column" ng-show="auxModel.approach === 'manual'">
+                            <label>{{propText}}</label>
+                        </div>
+                        <div class="eleven wide column" ng-show="auxModel.approach === 'manual'">
+                            <div class="inline fields required">
+                                <div class="sixteen wide field">
+                                    <select class="ui dropdown search"
+                                            dropdown
+                                            ng-required="propTypes.length===0"
+                                            reset = "tempModel.resetBuildingType"
+                                            ng-model="tempModel.buildingType"
+                                            ng-options="item as item.name for item in buildingProperties.buildingType['commercial'] | orderBy : 'name'"
+                                            name="buildingType">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div ng-show="propTypes.length > 0 && auxModel.approach === 'manual'">-->
+                        <!--<div class="ui divider "></div>-->
+                        <!--<div class="field">-->
+                            <!--<label >Selected Use Type(s):</label>-->
+                        <!--</div>-->
                     <!--</div>-->
-                <!--</div>-->
-                <!--<div class="field" ng-show="auxModel.approach === 'manual'" ng-repeat="prop in propTypes">-->
-                    <!--<select class="ui dropdown search"-->
-                            <!--dropdown-->
-                            <!--ng-model="prop.changeTo"-->
-                            <!--ng-change="updatePropType($index)"-->
-                            <!--ng-options="item as item.name for item in buildingProperties.buildingType['commercial'] | orderBy : 'name' track by item.name ">-->
-                        <!--<option value="">Select</option>-->
-                    <!--</select>-->
-                <!--</div>-->
-            </div>
-
-            <div ng-repeat="prop in propTypes" ng-show="auxModel.approach === 'manual'" ng-class="{'page-break-after': ($index + 1) % 3 == 0}">
-                <div class="ui segment building">
-                    <div building-Info forms='forms' type='Generic' model="prop"></div>
+                    <!--<div class="field" ng-show="auxModel.approach === 'manual'" ng-repeat="prop in propTypes">-->
+                        <!--<select class="ui dropdown search"-->
+                                <!--dropdown-->
+                                <!--ng-model="prop.changeTo"-->
+                                <!--ng-change="updatePropType($index)"-->
+                                <!--ng-options="item as item.name for item in buildingProperties.buildingType['commercial'] | orderBy : 'name' track by item.name ">-->
+                            <!--<option value="">Select</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
                 </div>
-            </div>
 
-        </div>
-    </form>
+                <div ng-repeat="prop in propTypes" ng-show="auxModel.approach === 'manual'" ng-class="{'page-break-after': ($index + 1) % 3 == 0}">
+                    <div class="ui segment building">
+                        <div building-Info forms='forms' type='Generic' model="prop"></div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
 </div>
