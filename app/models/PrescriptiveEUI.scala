@@ -2,18 +2,11 @@ package models
 
 import java.io.InputStream
 
-import akka.actor.Status.Success
-import play.{Environment, api}
-import play.api.{Environment, Play}
-import play.api.libs.json._
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import play.api.libs.functional.syntax._
-import play.api.libs.functional.syntax._
+
 import play.api.libs.json.Reads._
 import play.api.libs.json._
-import squants.Energy
 import squants.energy.{Energy, KBtus}
 import squants.space.{Area, SquareFeet, SquareMeters}
 
@@ -25,9 +18,7 @@ case class ModelValues(parameters:JsValue) {
     for {
       modelEUITable <- loadLookupTable("prescriptive_site_0.json")
     } yield modelEUITable
-
   }
-
 
 
   def lookupModelTotalMetricIntensity(propDesc:ValidatedPropTypes): Future[Energy] = {
@@ -38,11 +29,18 @@ case class ModelValues(parameters:JsValue) {
   }
 
 
+  def lookupModelEndUseEnergies(propDesc:ValidatedPropTypes): Future[TotalDistribution] = {
+    for {
+      endUseDistList <- lookupEndUses(propDesc)
+      endUsePercents <- transformEndUses(1/propDesc.floor_area.value,endUseDistList)
+    } yield endUsePercents
+  }
+
   def lookupModelEndUsePercents(propDesc:ValidatedPropTypes): Future[TotalDistribution] = {
     for {
       endUseDistList <- lookupEndUses(propDesc)
       sum <- getModelTotalEUI(endUseDistList)
-      endUsePercents <- getEndUseDistPercents(sum,endUseDistList)
+      endUsePercents <- transformEndUses(sum,endUseDistList)
     } yield endUsePercents
   }
 
@@ -66,7 +64,6 @@ case class ModelValues(parameters:JsValue) {
   }
 
 
-
   def getModelTotalEUI(Total:TotalDistribution):Future[Double] = Future {
 
           Total.total_htg +
@@ -86,24 +83,24 @@ case class ModelValues(parameters:JsValue) {
 
     }
 
-  def getEndUseDistPercents(sum:Double,Total:TotalDistribution):Future[TotalDistribution] = Future {
+  def transformEndUses(factor:Double,Total:TotalDistribution):Future[TotalDistribution] = Future {
 
     TotalDistribution(
-          Total.total_htg/sum,
-          Total.total_clg/sum,
-          Total.total_intLgt/sum,
-          Total.total_extLgt/sum,
-          Total.total_intEqp/sum,
-          Total.total_extEqp/sum,
-          Total.total_fans/sum,
-          Total.total_pumps/sum,
-          Total.total_heatRej/sum,
-          Total.total_humid/sum,
-          Total.total_heatRec/sum,
-          Total.total_swh/sum,
-          Total.total_refrg/sum,
-          Total.total_gentor/sum,
-          Total.total_net/sum
+          Total.total_htg/factor,
+          Total.total_clg/factor,
+          Total.total_intLgt/factor,
+          Total.total_extLgt/factor,
+          Total.total_intEqp/factor,
+          Total.total_extEqp/factor,
+          Total.total_fans/factor,
+          Total.total_pumps/factor,
+          Total.total_heatRej/factor,
+          Total.total_humid/factor,
+          Total.total_heatRec/factor,
+          Total.total_swh/factor,
+          Total.total_refrg/factor,
+          Total.total_gentor/factor,
+          Total.total_net/factor
         )
     }
 
