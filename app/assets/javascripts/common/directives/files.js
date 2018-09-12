@@ -42,10 +42,8 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
 
                 $scope.computeMetrics = function (data) {
 
-                    var tempData = JSON.parse(data.data);
-                    $scope.csvData.sites = tempData.values;
 
-
+                    $scope.csvData.sites = JSON.parse(data.data);
                     $scope.loading = false;
 
 

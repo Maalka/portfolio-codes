@@ -39,47 +39,6 @@ class CSVController @Inject()(val cache: AsyncCacheApi, cc: ControllerComponents
   implicit val materializer = ActorMaterializer()
   implicit val timeout = Timeout(5 seconds)
 
-  def apiRecover(throwable: Throwable): Either[String, JsValue] = {
-    throwable match {
-      case NonFatal(th) => Left(th.getMessage)
-    }
-  }
-
-
-  def api[T](response: T): Either[String, JsValue] = {
-
-    response match {
-
-      case v: Map[String, Any] => Right(
-        JsObject(v.map {
-          case (a, b) => {
-            val ret: (String, JsValue) = b match {
-              case _: String => a.toString -> JsString(b.asInstanceOf[String])
-              case _: Double => a.toString -> JsNumber(b.asInstanceOf[Double])
-            }
-            ret
-          }
-        })
-      )
-      case v: Vector[Any] => Right {
-        Json.toJson(v.map {
-          case v: Map[String,Any] =>
-            JsObject(v.map {
-              case (a,b) => {
-                val ret: (String, JsValue) = b match {
-                  case _: String => a.toString -> JsString(b.asInstanceOf[String])
-                  case _: Double => a.toString -> JsNumber(b.asInstanceOf[Double])
-                }
-                ret
-              }
-            })
-        })
-      }
-      case v: String => Right(Json.toJson(v))
-      case None => Left("Could not recognize input type")
-    }
-  }
-
 
   def upload = Action.async(parse.multipartFormData) { implicit request =>
 
@@ -104,55 +63,26 @@ class CSVController @Inject()(val cache: AsyncCacheApi, cc: ControllerComponents
         val fileStream1 = new FileInputStream(uploadedFile)
         val prop_types = Await.result(codesCSV.toPortfolio(fileStream1), Duration.Inf)
 
-
-
-        val futures = Future.sequence(Seq(
-
-          Future{
-            prop_types
-              .map{
-                case Vector(a,b,c,d,e) => {
-                  Map(
-                    "building_name" -> a,
-                    "building_type" -> b,
-                    "floor_area" -> c,
-                    "floor_area_units" -> d
-                  )
-                }
-              }
-            }.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-
-          Future{
-            prop_types.headOption match {
-              case Some(a) => a match {
-                case Vector(a,b,c,d,e) => e
-              }
-            }
-          }.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
-        ))
-
-        val fieldNames = Seq(
-          "prop_types",
-          "climate_zone"
-        )
-
-
-
-
-        futures.map(fieldNames.zip(_)).map { r =>
-          val errors = r.collect {
-            case (n, Left(s)) => Json.obj(n -> s)
+        val cz = prop_types.headOption match {
+          case Some(a) => a match {
+            case Vector(a,b,c,d,e) => e
           }
-          val results = r.collect {
-            case (n, Right(s)) => Json.obj(n -> s)
-          }
-
-          Ok(Json.obj(
-            "values" -> results,
-            "errors" -> errors
-          ))
         }
 
+        var portfolio = Json.obj(
+          "prop_types" -> prop_types.map{
+            case Vector(a,b,c,d,e) =>
+              Json.obj(
+                "building_name" -> a,
+                "building_type" -> b,
+                "floor_area" -> JsNumber(c.toDouble),
+                "floor_area_units" -> d
+              )
+          },
+          "climate_zone" -> cz
+        )
+
+        Future{Ok(portfolio)}
 
       }
     }.getOrElse(Future{Ok("File is Missing")})

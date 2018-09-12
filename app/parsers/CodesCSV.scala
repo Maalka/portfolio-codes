@@ -11,6 +11,7 @@ import com.google.common.base.Charsets
 
 import scala.collection.immutable
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Success, Try}
 
 
 class CodesCSV @Inject()(implicit val actorSystem: ActorSystem,
@@ -37,10 +38,33 @@ class CodesCSV @Inject()(implicit val actorSystem: ActorSystem,
   }
 
   val typeList:Seq[String]=Seq("Office","Retail","School","Restaurant","Hotel","Warehouse","Apartment")
-  val unitList:Seq[String]=Seq("sq.ft.","sq.m.")
+  val unitList:Seq[String]=Seq("ftSQ","mSQ")
 
   def rowValid(row:Seq[Option[String]]):Boolean = {
-    if (row(0).isDefined && typeList.contains(row(1).getOrElse("")) && row(2).isDefined && unitList.contains(row(3).getOrElse("")) && row(4).isDefined) {
+
+
+    def tryFormat(CSVvalue:Option[String],checkType:String):Boolean = {
+      checkType match {
+        case "int" => {
+          Try {
+            CSVvalue.get.trim.toInt
+          } match {
+            case Success(a) => true
+            case _ => false
+          }
+        }
+        case "double" => {
+          Try {
+            CSVvalue.get.trim.toDouble
+          } match {
+            case Success(a) => true
+            case _ => false
+          }
+        }
+      }
+    }
+
+    if (row(0).isDefined && typeList.contains(row(1).getOrElse("")) && tryFormat(row(2),"double") && unitList.contains(row(3).getOrElse("")) && row(4).isDefined) {
       true
     } else {
       false
@@ -54,7 +78,7 @@ class CodesCSV @Inject()(implicit val actorSystem: ActorSystem,
       val endRowNumber = 200
       row =>
         rowNumber += 1
-        if (rowValid(row)) {
+        if (rowNumber >= startRowNumber && rowNumber <= endRowNumber && rowValid(row)) {
           scala.collection.immutable.Iterable[Option[Vector[String]]](Some(Vector(row(0).get, row(1).get, row(2).get, row(3).get, row(4).get)))
         } else {
           scala.collection.immutable.Iterable.empty[Option[Vector[String]]]
