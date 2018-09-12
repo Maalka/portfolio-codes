@@ -125,7 +125,7 @@ class CSVController @Inject()(val cache: AsyncCacheApi, cc: ControllerComponents
           Future{
             prop_types.headOption match {
               case Some(a) => a match {
-                case Vector(a,b,c,d,e) => Map("climate_zone" -> e)
+                case Vector(a,b,c,d,e) => e
               }
             }
           }.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }

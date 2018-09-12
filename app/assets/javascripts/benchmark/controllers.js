@@ -168,7 +168,7 @@ define(['angular'], function() {
     $scope.submitCSV = function () {
 
             if ($scope.csvData) {
-                console.log($scope.csvData);
+                console.log($scope.csvData.sites);
             } else {
                 console.log("No CSV Processed.");
             }
