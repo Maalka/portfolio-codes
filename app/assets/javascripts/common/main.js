@@ -3,8 +3,6 @@
  */
 define(['angular', './services/helper', './services/playRoutes', './filters', './semantic', './popover_service',
     'angular-file-upload',
-	'./directives/benchmark_result_row',
-	'./directives/energy_result',
 	'./directives/building_info',
 	'./directives/bar',
 	'./directives/required',

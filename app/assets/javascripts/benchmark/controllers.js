@@ -327,6 +327,13 @@ define(['angular'], function() {
         $scope.benchmarkResult = null;
     };
 
+    $scope.scenarios = [
+        {id:"EEM1(calibration)",name:"Low Cost"},
+        {id:"EEM2",name:"Medium Cost"},
+        {id:"EEM3",name:"High Cost"},
+        {id:"EEM4",name:"Extravagant"}
+    ];
+
     $scope.buildingProperties = {
 
         buildingType: {
