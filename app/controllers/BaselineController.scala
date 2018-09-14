@@ -85,7 +85,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
           }
         })
       )
-      case v: List[Any] => Right {
+      case v: Seq[Any] => Right {
         Json.toJson(v.map {
           case a: Energy => energyToJSValue(a)
           case a: TotalDistribution => totalDistributionToJSValue(a)
