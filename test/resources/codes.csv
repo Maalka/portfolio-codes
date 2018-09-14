@@ -1,0 +1,8 @@
+﻿building_name,building_type,floor_area,floor_area_units,climate_zone
+My Office,Office,100000,sq.ft.,2
+My Retail,Walmart,10000,sq.ft.,2
+My School,School,200000,sq.ft.,2
+MY Restaurant,Restaurant,300000,sq.ft.,2
+My Hotel,Hotel,15000,sq.ft.,2
+My Warehouse,Warehouse,1000,sq.ft.,2
+My Apartment,Apartment,1000,sq.ft.,2

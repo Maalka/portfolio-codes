@@ -40,17 +40,10 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                     return returnValue;
                 };
 
-                $scope.computeMetrics = function () {
-
-                    var parsedData = JSON.parse($scope.dataTemp.data);
-
-                    $scope.csvData.siteMetrics = $scope.getPropResponseField(parsedData,"siteMetrics");
-                    $scope.csvData.sourceMetrics = $scope.getPropResponseField(parsedData,"sourceMetrics");
-                    $scope.csvData.tdvMetrics = $scope.getPropResponseField(parsedData,"tdvMetrics");
-                    $scope.csvData.carbonMetrics = $scope.getPropResponseField(parsedData,"carbonMetrics");
-                    $scope.csvData.projectMetrics = $scope.getPropResponseField(parsedData,"projectMetrics");
+                $scope.computeMetrics = function (data) {
 
 
+                    $scope.csvData.sites = JSON.parse(data.data);
                     $scope.loading = false;
 
 
@@ -85,7 +78,7 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                     }).then(function (data) {
 
                         $scope.dataTemp = data;
-                        $scope.computeMetrics();
+                        $scope.computeMetrics(data);
 
 
 

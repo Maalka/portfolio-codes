@@ -4,7 +4,9 @@
 	<div class="ui grid" style="margin-bottom:7px;margin-top:5px;">
 		<div class="five wide column">
 			<div class="field">
-				<h3 class="ui header"><i class="bar chart icon"></i>RESULTS</h3>
+				<h2 class="ui dividing header">
+                <i class="maalka-blue signal icon" style="font-size:25px;"></i>Results
+            	</h2>
 			</div>
 		</div>
 	</div>
@@ -38,8 +40,8 @@
 					<div class="inline fields">
 						<div class="sixteen wide field">
 							<select class="ui dropdown"
-									ng-model="auxModel.prescriptive_resource"
-									ng-options="item.id as item.name for item in prescriptiveResource"
+									ng-model="scenario"
+									ng-options="item.id as item.name for item in scenarios"
 									name="resource">
 								<option value="">Select</option>
 							</select>
@@ -66,7 +68,7 @@
 	<div>
 		<div class="ui basic horizontal segments">
 			<div class="ui basic segment right aligned">
-				<a href ng-click="print()">print <i class="print icon"></i></a>
+				<a href ng-click="print()"><i>PRINT</i> <i class="maalka-blue print icon"></i></a>
 			</div>
 		</div>
 	</div>

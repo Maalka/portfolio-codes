@@ -36,8 +36,24 @@ case class EUIMetrics(parameters: JsValue) {
   def getTotalEUIPercentsList:Future[List[Map[String,TotalDistribution]]] = {
     for {
       propList <- modelEUI.getValidatedPropList
+      propNames <- Future {
+        propList.map(_.building_name)
+      }
+      modelBreakdowns <- Future.sequence(propList.map {
+        modelEUI.lookupModelEndUsePercents(_)
+      })
+    } yield {
+      (propNames, modelBreakdowns).zipped.map {
+        case (a, b) => Map(a -> b)
+      }
+    }
+  }
+
+  def getTotalEnergyBreakdownList:Future[List[Map[String,TotalDistribution]]] = {
+    for {
+      propList <- modelEUI.getValidatedPropList
       propNames <- Future{propList.map(_.building_name)}
-      modelBreakdowns <- Future.sequence(propList.map{modelEUI.lookupModelEndUsePercents(_)})
+      modelBreakdowns <- Future.sequence(propList.map{modelEUI.lookupModelEndUseEnergies(_)})
     } yield {
       (propNames,modelBreakdowns).zipped.map{
         case (a,b) => Map(a->b)
