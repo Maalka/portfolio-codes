@@ -1,229 +1,125 @@
 <div>
-    <form class="ui form" novalidate ng-class="{'error': !forms.baselineForm.$valid && forms.hasValidated}" name="forms.baselineForm" ng-cloak>
-        <div class="ui error message" ng-if="!forms.baselineForm.$valid && forms.hasValidated">
-            <div class="header">
-                There were some errors with your submission
+    <div class="ui basic segment">
+    <h1 class="ui center aligned block header">Municipal Codes Assessment Tool</h1>
+    </div>
+    <div class="ui basic segment">
+        <form class="ui large form" novalidate ng-class="{'error': !forms.baselineForm.$valid && forms.hasValidated}" name="forms.baselineForm" ng-cloak>
+            <div class="ui error message" ng-if="!forms.baselineForm.$valid && forms.hasValidated">
+                <div class="header">
+                    There were some errors with your submission
+                </div>
+                <ul class="list">
+                    <li>Make sure you have filled out all of the required fields</li>
+                    <li>Please note that commas are not allowed in the numeric fields</li>
+                </ul>
             </div>
-            <ul class="list">
-                <li>Make sure you have filled out all of the required fields</li>
-                <li>Please note that commas are not allowed in the numeric fields</li>
-            </ul>
-        </div>
-        <h3 class="ui header">
-            <i class="building icon"></i>ABOUT YOUR BUILDING
-        </h3>
+            <h2 class="ui dividing header">
+                <i class="maalka-blue folder open icon" style="font-size:25px;"></i>Your Building Portfolio
+            </h2>
 
-        <div class="entry">
-            <div class="ui segment about">
-                <div class="ui grid">
+            <div class="entry">
+                <div class="ui segment about">
+                    <div class="ui grid">
 
-                    <div class="five wide column">
+                        <div class="five wide column"></div>
+                        <div class="right aligned eleven wide column">
+                            <div class="ui radio checkbox">
+                                <input type="radio" id="manual" ng-model="auxModel.approach" ng-init="auxModel.approach='manual'"
+                                       value='manual'>
+                                <label for='manual'>Manual Entry</label>
+                            </div>
+                            <div class="ui radio checkbox">
+                                <input type="radio" id="csv" ng-model="auxModel.approach"
+                                       value='csv'>
+                                <label for='csv'>CSV Upload</label>
+                            </div>
+
+                        </div>
+
+                        <div class="sixteen wide column" style="margin-top:-10px;">
+                            <div class="ui divider"></div>
+                        </div>
+
+                        <div  class="sixteen wide column" ng-show="auxModel.approach === 'csv'">
+
+                            <div files data="csvData"></div>
+
+                        </div>
+
+
+                        <div class="five wide column" ng-show="auxModel.approach === 'manual'">
+                            <label class="design-label">Climate Zone
+                                <div class="tooltip">
+                                    <sup><i class="maalka-blue circle info icon"></i></sup>
+                                        <span class="tooltipimage">
+                                            <img src="/assets/images/climate_zones.jpeg" style="position:absolute;left: -10px;z-index:9999;width:700px;height:292px;">
+                                        </span>
+                                </div>
+
+                            </label>
+                        </div>
+
+                        <div class="eleven wide column" ng-show="auxModel.approach === 'manual'">
+                            <div class="inline fields required">
+                                <div class="sixteen wide field">
+                                    <select class="ui dropdown search"
+                                            ng-model="auxModel.climate_zone"
+                                            ng-options="item.id as item.id for item in geographicProperties.climate_info"
+                                            name="climate_zone">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="five wide column" ng-show="auxModel.approach === 'manual'">
+                            <label>{{propText}}</label>
+                        </div>
+                        <div class="eleven wide column" ng-show="auxModel.approach === 'manual'">
+                            <div class="inline fields required">
+                                <div class="sixteen wide field">
+                                    <select class="ui dropdown search"
+                                            dropdown
+                                            ng-required="propTypes.length===0"
+                                            reset = "tempModel.resetBuildingType"
+                                            ng-model="tempModel.buildingType"
+                                            ng-options="item as item.name for item in buildingProperties.buildingType['commercial'] | orderBy : 'name'"
+                                            name="buildingType">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <h2 class="ui header" ng-show="auxModel.approach === 'manual' && propTypes.length !== 0">
+                    <div class="inline fields">
                         <div class="field">
-                            Code Pathway:
+                            <i class="maalka-blue building icon" style="font-size:25px;"></i>Buildings
                         </div>
-                    </div>
-                    <div class="right aligned eleven wide column">
-                        <div class="ui radio checkbox">
-                            <input type="radio" id="prescriptive" ng-model="auxModel.approach" ng-init="auxModel.approach='prescriptive'"
-                                   value='prescriptive'>
-                            <label for='prescriptive'>Prescriptive</label>
-                        </div>
-                        <div class="ui radio checkbox">
-                            <input type="radio" id="performance" ng-model="auxModel.approach"
-                                   value='performance'>
-                            <label for='performance'>Performance</label>
+
+
+                        <div checkbox class="ui checkbox checked">
+                            <input type="checkbox" id="cb-default" ng-model="sizeDefault" ng-init="sizeDefault=false"
+                                   ng-true-value=true ng-false-value=false>
+                            <label for="cb-default">Use Default Values?</label>
                         </div>
 
                     </div>
 
-                    <div class="sixteen wide column" style="margin-top:-10px;">
-                        <div class="ui divider"></div>
-                    </div>
 
-                    <div  class="sixteen wide column" ng-show="auxModel.approach === 'performance'">
+                </h2>
 
-                        <div files data="csvData"></div>
-
-                    </div>
-
-
-                    <div class="five wide column" ng-show="auxModel.approach === 'prescriptive'">
-                        <label class="design-label">Climate Zone
-                            <div class="tooltip">
-                                <sup><i class="blue circle info icon"></i></sup>
-                                    <span class="tooltipimage">
-                                        <img src="/assets/images/climate_zones.png" style="position:absolute;left: -10px;z-index:9999;width:400px;height:500px;">
-                                    </span>
-                            </div>
-
-                        </label>
-                    </div>
-                    <div class="eleven wide column" ng-show="auxModel.approach === 'prescriptive'">
-                        <div class="inline fields required">
-                            <div class="sixteen wide field">
-                                <select class="ui dropdown search"
-                                        ng-model="climate_info"
-                                        ng-change="getFile(climate_info)"
-                                        ng-options="item as item.id for item in geographicProperties.climate_info"
-                                        name="climate_zone">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="five wide column" ng-show="auxModel.approach === 'prescriptive'">
-                        <label class="design-label">Number of Stories</label>
-                    </div>
-                    <div class="eleven wide column" ng-show="auxModel.approach === 'prescriptive'">
-                        <div class="inline fields">
-                            <div class="sixteen wide field required">
-                                <input type="number" ng-model="auxModel.stories"
-                                       required name="stories" placeholder="Enter Number">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="five wide column" ng-show="auxModel.approach === 'prescriptive'">
-                        <label>{{propText}}</label>
-                    </div>
-                    <div class="eleven wide column" ng-show="auxModel.approach === 'prescriptive'">
-                        <div class="inline fields required">
-                            <div class="sixteen wide field">
-                                <select class="ui dropdown search"
-                                        dropdown
-                                        ng-required="propTypes.length===0"
-                                        reset = "tempModel.resetBuildingType"
-                                        ng-model="tempModel.buildingType"
-                                        ng-options="item as item.name for item in buildingProperties.buildingType['commercial'] | orderBy : 'name'"
-                                        name="buildingType">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
+                <div ng-repeat="prop in propTypes" ng-show="auxModel.approach === 'manual'" ng-class="{'page-break-after': ($index + 1) % 3 == 0}">
+                    <div class="ui segment building">
+                        <div building-Info forms='forms' funner='sizeDefault' model="prop"></div>
                     </div>
                 </div>
 
-                <div ng-show="propTypes.length > 0 && auxModel.approach === 'prescriptive'">
-                    <div class="ui divider "></div>
-                    <div class="field">
-                        <label >Selected Use Type(s):</label>
-                    </div>
-                </div>
-                <div class="field" ng-show="auxModel.approach === 'prescriptive'" ng-repeat="prop in propTypes">
-                    <select class="ui dropdown search"
-                            dropdown
-                            ng-model="prop.changeTo"
-                            ng-change="updatePropType($index)"
-                            ng-options="item as item.name for item in buildingProperties.buildingType['commercial'] | orderBy : 'name' track by item.name ">
-                        <option value="">Select</option>
-                    </select>
-                </div>
             </div>
-
-            <div ng-repeat="prop in propTypes" ng-show="auxModel.approach === 'prescriptive'" ng-class="{'page-break-after': ($index + 1) % 3 == 0}">
-                <div class="ui segment building">
-                    <div building-Info forms='forms' type='Generic' model="prop"></div>
-                </div>
-            </div>
-
-
-
-
-            <!--<h3 class="ui header" ng-if="auxModel.approach === 'performance'"><i class="lightning icon"></i>MODELED ANNUAL ENERGY CONSUMPTION</h3>-->
-            <!--<div class="ui segment energy-entry" ng-if="auxModel.approach === 'performance'">-->
-                <!--<div class="field">-->
-                    <!--Enter the modeled total annual energy consumption, by fuel type, below.-->
-                <!--</div>-->
-                <!--</p>-->
-                <!--<div>-->
-                    <!--<div class="ui grid">-->
-                        <!--<div class="five wide column">-->
-                            <!--<br />Energy Type-->
-                        <!--</div>-->
-                        <!--<div class="five wide column">-->
-                            <!--<br />Units-->
-                        <!--</div>-->
-                        <!--<div class="six wide column">-->
-                            <!--Modeled Total Annual<br />-->
-                            <!--Energy Consumption-->
-                        <!--</div>-->
-                        <!--<div ng-repeat-start="energyEntry in energies" class="five wide column">-->
-                            <!--<div class="field">-->
-                                <!--<select class="ui dropdown"-->
-                                        <!--ng-model="energyEntry.energy_type"-->
-                                        <!--ng-options="item as item.name for item in energyProperties.energyType track by item.name">-->
-                                    <!--<option value="">Select</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="five wide column">-->
-                            <!--<div class="field">-->
-                                <!--<select class="ui dropdown"-->
-                                        <!--ng-model="energyEntry.energy_units"-->
-                                        <!--ng-options="item.id as item.name for item in energyProperties.energyUnits | filter: {filter_id: energyEntry.energy_type.id}">-->
-                                    <!--<option value="">Select</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="five wide column">-->
-                            <!--<div class="ui input">-->
-                                <!--<input type="number" ng-model="energyEntry.energy_use" value ="{{energyEntry.energyUse}}">-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div ng-repeat-end class="one wide column">-->
-                            <!--<div class="ui large labeled button"-->
-                                 <!--ng-click="removeRow($index)"-->
-                                 <!--style="margin-top:.4em;">-->
-                                <!--<i class="minus red circle icon"></i>-->
-                            <!--</div>-->
-                        <!--</div>-->
-
-                        <!--<div class="ui fifteen wide column right aligned">-->
-                            <!--<label class="design-label">Add another entry</label>-->
-                        <!--</div>-->
-                        <!--<div class="one wide column">-->
-                            <!--<div class="ui large labeled button" ng-click="addPV()" style="margin-top:.4em;">-->
-                                <!--<i class="add green circle icon"></i>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-
-            <h3 class="ui header" ng-show="auxModel.approach === 'prescriptive'"><i class="fa fa-sun-o icon" aria-hidden="true">
-            </i>ON-SITE PV SYSTEMS</h3>
-
-            <div class="ui segment" ng-show="auxModel.approach === 'prescriptive'">
-                <div class ="field">
-                    Default Values estimate on-site building PV system potential.
-                    Uncheck Use Default Values to enter custom inputs. If
-                    your building has multiple PV systems, add them below.
-                    <div class="tooltip">
-                        <sup><i class="blue circle info icon"></i></sup>
-                        <span class="tooltiptext">Acceptable PV parameter ranges:
-                            <br />          Losses (%): -5 to 99
-                            <br />      Tilt (Degrees):  0 to 90
-                            <br />   Azimuth (Degrees):  0 to 360
-                            <br /> Inverter Efficiency:  90 to 99.5
-                        </span>
-                    </div>
-                </div>
-                <div ng-repeat="pvSystem in pvList" ng-class="{'page-break-after': ($index + 1) % 3 == 0}">
-                    <div system-Info forms='forms' idx="$index" model="pvSystem"></div>
-
-                </div>
-                <div class="inline fields" style="margin-top:10px;">
-                    <div class="field">
-                        <div class="ui large labeled button" ng-click="addPV()">
-                            <i class="add green circle icon"></i>
-                        </div>
-                    </div>
-                    <div class="field" style="margin-left:-18px;">
-                        <label class="design-label">Add another PV System</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>

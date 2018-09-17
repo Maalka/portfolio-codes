@@ -1,7 +1,7 @@
 import WebKeys._
 
 // TODO Replace with your project's/module's name
-name := "california_znc"
+name := "portfolio_codes"
 
 // TODO Set your organization here; ThisBuild means it will apply to all sub-modules
 organization in ThisBuild := "com.maalka"

@@ -93,7 +93,6 @@ define(['angular','highcharts', './main'], function(angular) {
                             sumOther = sumOther + $scope.endUses.endUsesOther[j][3];
                         }
                     } else if($scope.approach === 'performance'){
-                        console.log('performance');
                        if($scope.endUses.endUsesOther[j][1] !== null){
                            sumOther = sumOther + $scope.endUses.endUsesOther[j][1];
                        }

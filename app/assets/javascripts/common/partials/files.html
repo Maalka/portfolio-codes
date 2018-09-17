@@ -9,7 +9,7 @@
         <div class = "ui center aligned row">
             <div class = "column">
                 <button class="ui blue button"
-                        style = "margin-bottom: 2em; padding: 1.1em 2em; background-color: #4061aa"
+                        style = "margin-bottom: 2em; padding: 1.1em 2em; background-color: #06a1f9"
                     ngf-select
                     ng-model="attachment"
                     name="attachment"
@@ -19,8 +19,8 @@
                 </button>
 
             <button ng-disabled="attachment === undefined"
-                class="ui green button"
-                    style = "margin-bottom: 2em; padding: 1.1em 2em; background-color: #5ba372"
+                class="ui grey button"
+                    style = "margin-bottom: 2em; padding: 1.1em 2em;"
                 ng-class="{loading: loading}"
                 type="submit" ng-click="submitFile()">Upload
             </button>

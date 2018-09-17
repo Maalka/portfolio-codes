@@ -1,0 +1,81 @@
+<div>
+
+	<div class="ui basic segment">
+		<form class="ui large form">
+
+			<h2 class="ui dividing header">
+				<i class="maalka-blue signal icon" style="font-size:25px;"></i>VIEW RESULTS BELOW
+			</h2>
+
+
+				<div class="ui segment about">
+					<div class="ui grid">
+
+						<div class="four wide column"></div>
+						<div class="one wide column">
+							<label class="row-label" style="margin-right:12px;">Metric:</label>
+						</div>
+						<div class="seven wide column">
+							<div class="inline fields">
+								<div class="sixteen wide field">
+									<select class="ui dropdown sixteen wide column"
+											ng-model="auxModel.scenario"
+											ng-options="item.id as item.name for item in scenarios"
+											name="scenario">
+										<option value="">Select</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+		</form>
+	</div>
+
+
+
+	</div>
+
+	<h2 class="ui dividing header"></h2>
+
+
+	<div class="ui padded sixteen column grid" style="margin-bottom:10px;">
+
+
+        <div class="ui basic sixteen wide column" ng-if="endUses">
+            <div class="ui sixteen wide grid">
+                <div class="sixteen wide column left aligned">
+                    <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;" ng-if="showBar">
+                        <a href class="drop" ng-click="showPrescriptive()"><i class="caret down icon"></i>ESTIMATED BUILDING ENERGY IMPACTS</a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="sixteen wide column" style="padding-left:20px; padding-right:20px; padding-bottom:10px; background-color:white;" ng-if="endUses">
+
+
+			<div class="ui sixteen wide grid">
+
+				{{endUses}}
+
+			</div>
+
+		</div>
+
+
+	</div>
+	<div>
+		<div class="ui basic horizontal segments">
+			<div class="ui basic segment right aligned">
+				<a href ng-click="print()"><i>PRINT</i> <i class="maalka-blue print icon"></i></a>
+			</div>
+		</div>
+	</div>
+</div>

@@ -19,22 +19,55 @@
 
     <div class="inline fields">
         <div class="sixteen wide field">
-            <label style="width: 200px">Gross Floor Area (sq.ft)</label>
-            <div class="ten wide field required" ng-class="{error: !propertyModel.floor_area && forms.hasValidated}">
+
+            <label>Name</label>
+
+            <div class="six wide field required" ng-class="{error: !propertyModel.building_name && forms.hasValidated}">
+                <input type="text" ng-model="propertyModel.building_name"
+                       required
+                       placeholder="Identifier: Name or Address">
+            </div>
+
+
+            <label style="padding-right:10px;padding-left:20px;" ng-if="sizeDefault === false">Gross Floor Area</label>
+
+            <div class="three wide field required"
+                 ng-class="{error: !propertyModel.floor_area && forms.hasValidated}"
+                 ng-if="sizeDefault === false">
               <input type="number" ng-model="propertyModel.floor_area"
                    required
                    min="0"
-                   placeholder="GFA in Square Feet">
+                   placeholder="GFA">
             </div>
-            <!--<div class="six wide field required" ng-class="{error: !propertyModel.floor_area_units && forms.hasValidated}">-->
-              <!--<select class="ui dropdown"-->
-                  <!--dropdown-->
-                  <!--ng-model="propertyModel.floor_area_units"-->
-                  <!--ng-options="item.id as item.name for item in buildingProperties.areaUnits"-->
-                  <!--required>-->
-                <!--<option value="">Select</option>-->
-              <!--</select>-->
-            <!--</div>-->
+
+            <div class="two wide field required" ng-class="{error: !propertyModel.floor_area_units && forms.hasValidated}"
+                 ng-if="sizeDefault === false">
+                <select class="ui dropdown"
+                        dropdown
+                        ng-model="propertyModel.floor_area_units"
+                        ng-options="item.id as item.name for item in buildingProperties.areaUnits"
+                        required>
+                    <option value="">Select</option>
+                </select>
+            </div>
+
+
+            <div class="one wide field" ng-if="sizeDefault === true"></div>
+
+            <label style="padding-right:10px;padding-left:20px;" ng-if="sizeDefault === true">Building Size</label>
+
+
+            <div class="four wide field required" ng-if="sizeDefault === true">
+                <select class="ui dropdown"
+                        dropdown
+                        ng-model="propertyModel.floor_area"
+                        ng-options="item.floor_area as item.name for item in buildingProperties.buildingSizes"
+                        required>
+                    <option value="">Select</option>
+                </select>
+            </div>
+
+
         </div>
     </div>
 

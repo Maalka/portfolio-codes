@@ -17,7 +17,7 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
             controller: ["$scope", "$element", "$timeout", "playRoutes",
                 function ($scope, $element, $timeout, playRoutes) {
 
-                $scope.uploadText = "Upload your CA ZERO Code .CSV File exported from CBECC-Com";
+                $scope.uploadText = "Upload CSV file with your list of buildings";
 
                 $scope.searchInput = "";
 
@@ -40,17 +40,10 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                     return returnValue;
                 };
 
-                $scope.computeMetrics = function () {
-
-                    var parsedData = JSON.parse($scope.dataTemp.data);
-
-                    $scope.csvData.siteMetrics = $scope.getPropResponseField(parsedData,"siteMetrics");
-                    $scope.csvData.sourceMetrics = $scope.getPropResponseField(parsedData,"sourceMetrics");
-                    $scope.csvData.tdvMetrics = $scope.getPropResponseField(parsedData,"tdvMetrics");
-                    $scope.csvData.carbonMetrics = $scope.getPropResponseField(parsedData,"carbonMetrics");
-                    $scope.csvData.projectMetrics = $scope.getPropResponseField(parsedData,"projectMetrics");
+                $scope.computeMetrics = function (data) {
 
 
+                    $scope.csvData.sites = JSON.parse(data.data);
                     $scope.loading = false;
 
 
@@ -85,7 +78,7 @@ define(['angular', './main', 'angular-file-upload'], function(angular) {
                     }).then(function (data) {
 
                         $scope.dataTemp = data;
-                        $scope.computeMetrics();
+                        $scope.computeMetrics(data);
 
 
 

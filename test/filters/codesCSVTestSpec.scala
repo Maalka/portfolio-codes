@@ -2,16 +2,16 @@ package filters
 
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneServerPerSuite
-import parsers.CaliforniaCSV
+import parsers.CodesCSV
 import play.Play
 import play.api.Environment
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
-class CaliforniaCSVTestSpec extends PlaySpec with GuiceOneServerPerSuite {
+class codesCSVTestSpec extends PlaySpec with GuiceOneServerPerSuite {
 
-  val californiaCSV = app.injector.instanceOf[CaliforniaCSV]
+  val californiaCSV = app.injector.instanceOf[CodesCSV]
   val env = app.injector.instanceOf[Environment]
 
   "CaliforniaCSV.parseCSV " must {
