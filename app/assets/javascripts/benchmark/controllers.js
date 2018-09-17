@@ -23,9 +23,12 @@ define(['angular'], function() {
 
 
     $scope.auxModel = {};
-
     $scope.auxModel.climate_zone = null;
+    $scope.auxModel.scenario = "base";
     $scope.auxModel.reporting_units = "imperial";
+
+
+    $scope.sizeDefault = false;
     $scope.temp = {};
     $scope.tempModel = {};
 
@@ -118,10 +121,21 @@ define(['angular'], function() {
     $scope.$watch("auxModel.approach", function () {
 
         $scope.forms.hasValidated = false;
-        $scope.benchmarkResult = null;
+        $scope.endUses = null;
 
     });
 
+    $scope.$watch("auxModel.scenario", function (newValue, oldValue) {
+
+        if (newValue !== oldValue) {
+            if (newValue === undefined) {
+                return;
+            } else {
+                $scope.submit();
+            }
+        }
+
+    });
 
 
     $scope.print = function () {
@@ -206,7 +220,14 @@ define(['angular'], function() {
 
             if ($scope.csvData) {
                 var csvJSON = [];
+
+                if ($scope.csvData.sites) {
+                    $scope.csvData.sites.scenario = $scope.auxModel.scenario;
+                }
+
+
                 csvJSON.push($scope.csvData.sites);
+
                 console.log(csvJSON);
                 $scope.computeBenchmarkResult(csvJSON);
 
@@ -217,6 +238,12 @@ define(['angular'], function() {
     };
 
     $scope.submitForm = function () {
+
+        if($scope.sizeDefault === true) {
+            for (var i =0; i < $scope.propTypes.length; i ++) {
+                $scope.propTypes[i].propertyModel.floor_area_units = "ftSQ";
+            }
+        }
 
         $scope.endUses = null;
 
@@ -328,6 +355,7 @@ define(['angular'], function() {
     };
 
     $scope.scenarios = [
+        {id:"base",name:"Base"},
         {id:"EEM1(calibration)",name:"Low Cost"},
         {id:"EEM2",name:"Medium Cost"},
         {id:"EEM3",name:"High Cost"},
@@ -338,13 +366,9 @@ define(['angular'], function() {
 
         buildingType: {
             commercial: [
-                {id:"Office",name:"Office"},
-                {id:"Retail",name:"Retail"},
-                {id:"School",name:"School"},
-                {id:"Restaurant",name:"Restaurant"},
-                {id:"Hotel",name:"Hotel"},
-                {id:"Warehouse",name:"Warehouse"},
-                {id:"Apartment",name:"Apartment"}
+                {name:"K-12 School",id:"SecSchl"},
+                {name:"City Hall/Administration",id:"Admin"},
+                {name:"Public Library",id:"Lib"}
             ]
         }
     };
@@ -353,24 +377,25 @@ define(['angular'], function() {
         country : [],
         city : [],
         climate_info : [
-            {id:"1",file_id:"0-24283"},
-            {id:"2",file_id:"1-724957"},
-            {id:"3",file_id:"1-724930"},
-            {id:"4",file_id:"1-724945"},
-            {id:"5",file_id:"1-723940"},
-            {id:"6",file_id:"1-722956"},
-            {id:"7",file_id:"1-722900"},
-            {id:"8",file_id:"1-722976"},
-            {id:"9",file_id:"1-722880"},
-            {id:"10",file_id:"1-722869"},
-            {id:"11",file_id:"1-725910"},
-            {id:"12",file_id:"1-724839"},
-            {id:"13",file_id:"0-93193"},
-            {id:"14",file_id:"1-723820"},
-            {id:"15",file_id:"1-722868"},
-            {id:"16",file_id:"1-725845"}
+            {id:"1A"},
+            {id:"2A"},
+            {id:"2B"},
+            {id:"3A"},
+            {id:"3B"},
+            {id:"3C"},
+            {id:"4A"},
+            {id:"4B"},
+            {id:"4C"},
+            {id:"5A"},
+            {id:"5B"},
+            {id:"6A"},
+            {id:"6B"},
+            {id:"7"},
+            {id:"8"}
         ]
     };
+
+
 
 
 

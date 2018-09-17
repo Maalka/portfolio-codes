@@ -28,16 +28,20 @@
                        placeholder="Identifier: Name or Address">
             </div>
 
-            <label style="padding-right:10px;padding-left:20px;">Gross Floor Area</label>
 
-            <div class="three wide field required" ng-class="{error: !propertyModel.floor_area && forms.hasValidated}">
+            <label style="padding-right:10px;padding-left:20px;" ng-if="sizeDefault === false">Gross Floor Area</label>
+
+            <div class="three wide field required"
+                 ng-class="{error: !propertyModel.floor_area && forms.hasValidated}"
+                 ng-if="sizeDefault === false">
               <input type="number" ng-model="propertyModel.floor_area"
                    required
                    min="0"
                    placeholder="GFA">
             </div>
 
-            <div class="two wide field required" ng-class="{error: !propertyModel.floor_area_units && forms.hasValidated}">
+            <div class="two wide field required" ng-class="{error: !propertyModel.floor_area_units && forms.hasValidated}"
+                 ng-if="sizeDefault === false">
                 <select class="ui dropdown"
                         dropdown
                         ng-model="propertyModel.floor_area_units"
@@ -46,6 +50,23 @@
                     <option value="">Select</option>
                 </select>
             </div>
+
+
+            <div class="one wide field" ng-if="sizeDefault === true"></div>
+
+            <label style="padding-right:10px;padding-left:20px;" ng-if="sizeDefault === true">Building Size</label>
+
+
+            <div class="four wide field required" ng-if="sizeDefault === true">
+                <select class="ui dropdown"
+                        dropdown
+                        ng-model="propertyModel.floor_area"
+                        ng-options="item.floor_area as item.name for item in buildingProperties.buildingSizes"
+                        required>
+                    <option value="">Select</option>
+                </select>
+            </div>
+
 
         </div>
     </div>

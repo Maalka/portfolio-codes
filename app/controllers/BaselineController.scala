@@ -131,11 +131,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
                    "properties": {
                      "building_type": {
                      "type": "string",
-                     "enum": ["OfficeLarge", "OfficeMedium", "OfficeSmall", "RetailStandalone", "RetailStripmall",
-                             "SchoolPrimary", "SchoolSecondary", "Hospital", "OutPatientHealthCare",
-                             "RestaurantSitDown", "RestaurantFastFood", "HotelLarge", "HotelSmall",
-                             "Warehouse", "ApartmentHighRise", "ApartmentMidRise", "Office", "Retail", "School",
-                             "Healthcare", "Restaurant", "Hotel", "Apartment", "Warehouse", "AllOthers"]
+                     "enum": ["SecSchl", "Admin", "Lib"]
                      },
                      "building_name": {
                        "type": "string"
@@ -163,7 +159,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
             },
             "climate_zone": {
               "type": "string",
-              "enum": ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"],
+              "enum": ["1A","2A","2B","3A","3B","3C","4A","4B","4C","5A","5B","6A","6B","7","8"],
               "required": true
             }
           }

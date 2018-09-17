@@ -12,8 +12,10 @@ define(['angular','./main'], function(angular) {
         return {
             restrict: 'A',
             scope: {
+                sizeDefault: '=funner',
                 model: '=model',
                 forms: '=forms'
+
             },
 
             templateUrl: function(){
@@ -23,6 +25,7 @@ define(['angular','./main'], function(angular) {
             controller: ["$scope", function ($scope) {
 
                 $scope.buildingName =  ($scope.model.name) ? $scope.model.name : "Anonymous";
+                console.log($scope.sizeDefault);
 
                 $scope.benchmark = $scope.$parent;
                 $scope.propFieldsRequired = false;
@@ -36,6 +39,14 @@ define(['angular','./main'], function(angular) {
                     areaUnits: [
                             {id:"ftSQ",name:"sq.ft"},
                             {id:"mSQ",name:"sq.m"}
+                    ],
+                    buildingSizes: [
+                        {name:"Very Small", floor_area:5000, floor_area_units:"ftSQ"},
+                        {name:"Small", floor_area:15000, floor_area_units:"ftSQ"},
+                        {name:"Medium", floor_area:25000, floor_area_units:"ftSQ"},
+                        {name:"Medium-Large", floor_area:50000, floor_area_units:"ftSQ"},
+                        {name:"Large", floor_area:100000, floor_area_units:"ftSQ"},
+                        {name:"Very Large", floor_area:250000, floor_area_units:"ftSQ"}
                     ]
                 };
 
