@@ -179,7 +179,7 @@ define(['angular', 'highcharts', './main'], function(angular) {
         		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
         		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
 
-var index;
+        var index;
         function createSeries() {
           index=0;
 
@@ -208,7 +208,6 @@ var index;
                 color: colors[index++],
                 yAxis: 1
               };
-
               series.push(modelEnergyUse);
           }
           }
