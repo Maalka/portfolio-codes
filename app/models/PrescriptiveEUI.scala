@@ -4,11 +4,12 @@ import java.io.InputStream
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-
 import play.api.libs.json.Reads._
 import play.api.libs.json._
 import squants.energy.{Energy, KBtus}
 import squants.space.{Area, SquareFeet, SquareMeters}
+
+import scala.concurrent
 
 
 
@@ -16,7 +17,7 @@ case class ModelValues(parameters:JsValue) {
 
   val lookupTable:Future[JsValue]={
     for {
-      modelEUITable <- loadLookupTable("prescriptive_site_0.json")
+      modelEUITable <- loadLookupTable("modelEndUses.json")
     } yield modelEUITable
   }
 
@@ -44,21 +45,52 @@ case class ModelValues(parameters:JsValue) {
     } yield endUsePercents
   }
 
+  def getBuildingLookupDetails(propID:String):Future[Map[String,String]] = concurrent.Future{
+    propID match {
+      case "SecSchl" => Map("name"->"K-12 School","id" -> "SecSchl")
+      case "Admin" => Map("name"->"City Hall/Administration","id" -> "Admin")
+      case "Lib" => Map("name"->"Public Library","id" -> "Lib")
+    }
+  }
+  def getLookupString(propDesc:ValidatedPropTypes):Future[Map[String,String]] = concurrent.Future {
+
+    var cz: String = propDesc.climate_zone.toString
+    val scenario:String =
+      (parameters \ "scenario").validate[String] match {
+        case b:JsSuccess[String] => b.get
+        case _ => "base"
+      }
+
+    val retobj = propDesc.building_type match {
+      case "SecSchl" => Map("type" -> "K-12 School",
+        "key" -> cz.concat("_SecSchl_" + scenario))
+      case "Admin" => Map("type" -> "City Hall/Administration",
+        "key" -> cz.concat("_Admin_" + scenario))
+      case "Lib" => Map("type" -> "Public Library",
+        "key" -> cz.concat("_Lib_" + scenario))
+    }
+
+    retobj
+  }
+
   def lookupEndUses(propDesc:ValidatedPropTypes): Future[TotalDistribution] = {
     for {
       table <- lookupTable
+      building <- getLookupString(propDesc)
       euiDist <-
         Future {
-          (table \ propDesc.building_type \ propDesc.climate_zone.toString).head.toOption match {
+          (table \ building("type") \ building("key")).head.toOption match {
             case Some(a) => {
               a.validate[TotalDistribution] match {
                 case JsSuccess(b: TotalDistribution, _) => b
                 case JsError(err) => throw new Exception(JsError.toJson(err).value.toString())
               }
             }
-            case _ => throw new Exception("Could not retrieve Model EUI (Electric) data!")
+            case _ => throw new Exception("Could not retrieve Model EUI data!")
           }
         }
+
+
     } yield euiDist
 
   }

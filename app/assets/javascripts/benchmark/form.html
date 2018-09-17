@@ -52,7 +52,7 @@
                                 <div class="tooltip">
                                     <sup><i class="maalka-blue circle info icon"></i></sup>
                                         <span class="tooltipimage">
-                                            <!--<img src="/assets/images/climate_zones.png" style="position:absolute;left: -10px;z-index:9999;width:400px;height:500px;">-->
+                                            <img src="/assets/images/climate_zones.jpeg" style="position:absolute;left: -10px;z-index:9999;width:700px;height:292px;">
                                         </span>
                                 </div>
 
@@ -93,26 +93,29 @@
                         </div>
                     </div>
 
-                    <!--<div ng-show="propTypes.length > 0 && auxModel.approach === 'manual'">-->
-                        <!--<div class="ui divider "></div>-->
-                        <!--<div class="field">-->
-                            <!--<label >Selected Use Type(s):</label>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="field" ng-show="auxModel.approach === 'manual'" ng-repeat="prop in propTypes">-->
-                        <!--<select class="ui dropdown search"-->
-                                <!--dropdown-->
-                                <!--ng-model="prop.changeTo"-->
-                                <!--ng-change="updatePropType($index)"-->
-                                <!--ng-options="item as item.name for item in buildingProperties.buildingType['commercial'] | orderBy : 'name' track by item.name ">-->
-                            <!--<option value="">Select</option>-->
-                        <!--</select>-->
-                    <!--</div>-->
                 </div>
+
+                <h2 class="ui header" ng-show="auxModel.approach === 'manual' && propTypes.length !== 0">
+                    <div class="inline fields">
+                        <div class="field">
+                            <i class="maalka-blue building icon" style="font-size:25px;"></i>Buildings
+                        </div>
+
+
+                        <div checkbox class="ui checkbox checked">
+                            <input type="checkbox" id="cb-default" ng-model="sizeDefault" ng-init="sizeDefault=false"
+                                   ng-true-value=true ng-false-value=false>
+                            <label for="cb-default">Use Default Values?</label>
+                        </div>
+
+                    </div>
+
+
+                </h2>
 
                 <div ng-repeat="prop in propTypes" ng-show="auxModel.approach === 'manual'" ng-class="{'page-break-after': ($index + 1) % 3 == 0}">
                     <div class="ui segment building">
-                        <div building-Info forms='forms' type='Generic' model="prop"></div>
+                        <div building-Info forms='forms' funner='sizeDefault' model="prop"></div>
                     </div>
                 </div>
 

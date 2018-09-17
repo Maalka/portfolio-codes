@@ -37,7 +37,7 @@ class CodesCSV @Inject()(implicit val actorSystem: ActorSystem,
       .runWith(Sink.seq)
   }
 
-  val typeList:Seq[String]=Seq("Office","Retail","School","Restaurant","Hotel","Warehouse","Apartment")
+  val typeList:Seq[String]=Seq("SecSchl","Admin","Lib")
   val unitList:Seq[String]=Seq("ftSQ","mSQ")
 
   def rowValid(row:Seq[Option[String]]):Boolean = {

@@ -1,16 +1,46 @@
 <div>
 
+	<div class="ui basic segment">
+		<form class="ui large form">
 
-	<div class="ui grid" style="margin-bottom:7px;margin-top:5px;">
-		<div class="five wide column">
-			<div class="field">
-				<h2 class="ui dividing header">
-                <i class="maalka-blue signal icon" style="font-size:25px;"></i>Results
-            	</h2>
-			</div>
-		</div>
+			<h2 class="ui dividing header">
+				<i class="maalka-blue signal icon" style="font-size:25px;"></i>VIEW RESULTS BELOW
+			</h2>
+
+
+				<div class="ui segment about">
+					<div class="ui grid">
+
+						<div class="four wide column"></div>
+						<div class="one wide column">
+							<label class="row-label" style="margin-right:12px;">Metric:</label>
+						</div>
+						<div class="seven wide column">
+							<div class="inline fields">
+								<div class="sixteen wide field">
+									<select class="ui dropdown sixteen wide column"
+											ng-model="auxModel.scenario"
+											ng-options="item.id as item.name for item in scenarios"
+											name="scenario">
+										<option value="">Select</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+		</form>
 	</div>
 
+
+
+	</div>
+
+	<h2 class="ui dividing header"></h2>
 
 
 	<div class="ui padded sixteen column grid" style="margin-bottom:10px;">
@@ -32,23 +62,6 @@
 
 
 			<div class="ui sixteen wide grid">
-
-				<div class="thirteen wide column right aligned">
-					<label class="row-label" style="margin-right:12px;">Metric:</label>
-				</div>
-				<div class="three wide column" style="padding-left:0px;">
-					<div class="inline fields">
-						<div class="sixteen wide field">
-							<select class="ui dropdown"
-									ng-model="scenario"
-									ng-options="item.id as item.name for item in scenarios"
-									name="resource">
-								<option value="">Select</option>
-							</select>
-						</div>
-					</div>
-
-				</div>
 
 				{{endUses}}
 
