@@ -131,7 +131,7 @@ define(['angular'], function() {
             if (newValue === undefined) {
                 return;
             } else {
-                $scope.submit();
+                $timeout(function(){$scope.submit();},0);
             }
         }
 
@@ -207,7 +207,7 @@ define(['angular'], function() {
     };
 
     $scope.submit = function () {
-
+        $scope.endUses = null;
         if($scope.auxModel.approach === "manual"){
             $scope.submitForm();
         } else {
@@ -225,10 +225,7 @@ define(['angular'], function() {
                     $scope.csvData.sites.scenario = $scope.auxModel.scenario;
                 }
 
-
                 csvJSON.push($scope.csvData.sites);
-
-                console.log(csvJSON);
                 $scope.computeBenchmarkResult(csvJSON);
 
             } else {
