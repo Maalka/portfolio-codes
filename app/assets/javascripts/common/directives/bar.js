@@ -5,7 +5,6 @@
  */
 define(['angular', 'highcharts', './main'], function(angular) {
   'use strict';
-
   var mod = angular.module('common.directives');
 
   mod.directive('bar', [function() {
@@ -24,198 +23,191 @@ define(['angular', 'highcharts', './main'], function(angular) {
         options: '='
 
       },
-      template: '<div style="width:100%;height:100%;"></div>',
+
+      template: '<div id="container" style=";margin:0 auto;"></div>',
       link: function(scope, element) {
 
         var options = {
           chart: {
-            type: 'bar'
+            type: 'bar',
+            marginTop: 50,
+            marginBottom: 70,
+            height: scope.height,
+            width: 1100
+          },
 
-          },
-          labels: {
-            style: {
-              fontSize: '11px',
-              fontWeight: 100
-            }
-          },
-          tooltip: {
-            formatter: function() {
-              return '<b>' + this.x + '</b><br/>' +
-                this.series.name + ': ' + this.y + '<br/>' +
-                'Total: ' + this.point.stackTotal;
-            }
-          },
-          legend: {
-            reversed: true,
-            symbolWidth: 10,
-            symbolHeight: 10,
-            itemDistance: 10,
-            padding: 3,
-
-            itemStyle: {
-              fontSize: '10px',
-              fontWeight: 100,
-              width: '150px'
-            }
-          },
           yAxis: [{
             min: 0,
-            opposite: false,
+            opposite: true,
             gridLineColor: 'transparent',
             gridLineWidth: 0,
             lineWidth: 1,
             title: {
               useHTML: true,
-
-              text: 'EUI [kBtu/ft<sup>2</sup>]'
+              text: 'Energy Use [kBtu]'
             }
           }, {
             min: 0,
             gridLineColor: 'transparent',
             gridLineWidth: 0,
-            opposite: true,
+            opposite: false,
             lineWidth: 1,
-
             title: {
-              text: 'Energy Use [kBtu]'
+              text: 'EUI [kBtu/ft<sup>2</sup>]'
             }
           }],
           plotOptions: {
             series: {
               stacking: 'normal'
+            },
+            bar: {
+              maxPointWidth: 18,
+              pointPadding: 0.1,
+              groupPadding: 0
             }
           },
+          tooltip: {
+            shared: false,
+            useHTML: true,
+            formatter: function() {
+              if (this.series.stackKey === 'bareui') {
+                return '<b>' + this.x + '</b><br/>' +
+                  this.series.name + ': ' + this.y + ' EUI [kBtu/ft<sup>2</sup>]' + '<br/>' +
+                  'Total: ' + this.point.stackTotal;
+              } else if (this.series.stackKey === 'bar') {
+                return '<b>' + this.x + '</b><br/>' +
+                  this.series.name + ': ' + this.y + ' Energy Use [kBtu]' + '<br/>' +
+                  'Total: ' + this.point.stackTotal;
+              } else {
+                //set a default if something went wrong
+                return '<b>' + this.x + '</b><br/>' +
+                  this.series.name + ': ' + this.y + '<br/>' +
+                  'Total: ' + this.point.stackTotal;
+              }
+            }
+          },
+
           title: {
             text: ''
           },
           xAxis: {
-            categories: scope.categories
-          },
+            categories: scope.categories,
+            labels: {
 
+              style: {
+                fontSize: '11px',
+                fontWeight: 100
+              }
+
+            }
+          },
           series: scope.series
         };
         angular.element(element).highcharts(options);
+
+
       },
       controller: ["$scope", function($scope) {
 
+
+
+
         var categories = [];
 
-        var eui = {
-          clg: [],
-          extEqp: [],
-          extLgt: [],
-          fans: [],
-          gentor: [],
-          heatRec: [],
-          heatRej: [],
-          htg: [],
-          humid: [],
-          intEqp: [],
-          intLgt: [],
-          pumps: [],
-          refrg: [],
-          swh: [],
-          net: []
+        var terms = {
+          clg: {},
+          extEqp: {},
+          extLgt: {},
+          fans: {},
+          gentor: {},
+          heatRec: {},
+          heatRej: {},
+          htg: {},
+          humid: {},
+          intEqp: {},
+          intLgt: {},
+          pumps: {},
+          refrg: {},
+          swh: {},
+          net: {}
         };
-        var energyUse = {
-          clg: [],
-          extEqp: [],
-          extLgt: [],
-          fans: [],
-          gentor: [],
-          heatRec: [],
-          heatRej: [],
-          htg: [],
-          humid: [],
-          intEqp: [],
-          intLgt: [],
-          pumps: [],
-          refrg: [],
-          swh: [],
-          net: []
+        var properties = {
+          eui: {},
+          energy: {}
         };
+        for (var term in terms) {
+          properties.eui[term] = [];
+          properties.energy[term] = [];
+        }
 
-        $scope.data.values.forEach(function(term) {
-          if (term.end_use_energy_list !== undefined) {
-            for (var i = 0; i < term.end_use_energy_list.length; i++) {
-              for (var property in term.end_use_energy_list[i].energy_breakdown) {
-
-                //if its not equal to zero print them out
-                //console.log(term.end_use_eui_list[i].eui_breakdown[property]);
-                console.log(term.end_use_energy_list[i].energy_breakdown[property]);
-                energyUse[property].push(term.end_use_energy_list[i].energy_breakdown[property]);
+        function filter() {
+          var energyList = $scope.data.values[3].end_use_energy_list;
+          for (var i = 0; i < energyList.length; i++) {
+            for (var z = 0; z < (energyList.length - i) - 1; z++) {
+              var net = energyList[z].energy_breakdown.net;
+              var next = energyList[z + 1].energy_breakdown.net;
+              if (next > net) {
+                var store = energyList[z];
+                energyList[z] = energyList[z + 1];
+                energyList[z + 1] = store;
               }
             }
           }
-        });
-
-        $scope.data.values.forEach(function(term) {
-          if (term.end_use_eui_list !== undefined) {
-            for (var i = 0; i < term.end_use_eui_list.length; i++) {
-              for (var property in term.end_use_eui_list[i].eui_breakdown) {
-
-                //if its not equal to zero print them out
-                //console.log(term.end_use_eui_list[i].eui_breakdown[property]);
-                eui[property].push(term.end_use_eui_list[i].eui_breakdown[property]);
-
-              }
-              categories.push(term.end_use_eui_list[i].building_name);
-            }
+        }
+        filter();
+        $scope.data.values[2].end_use_eui_list.forEach(function(term) {
+          categories.push(term.building_name);
+          for (var item in term.eui_breakdown) {
+            properties.eui[item].push(term.eui_breakdown[item]);
           }
         });
-        $scope.categories = categories;
-        $scope.eui = eui;
-        $scope.energyUse = energyUse;
-        var series=[];
+        $scope.data.values[3].end_use_energy_list.forEach(function(term) {
+          for (var item in term.energy_breakdown) {
+            var rounded = (term.energy_breakdown[item]).toFixed(2);
+            //keeps to 2 decimal places
+            properties.energy[item].push(Number.parseFloat(rounded));
+          }
+        });
+        $scope.height = categories.length * 20 + 120;
 
-        var colors = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
-        		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
-        		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
-        		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
-        		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
-        		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
-        		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
-        		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
-        		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
-        		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
-
+        var series = [];
+        var colors = ['#1F2C5C', '#3F58CE', '#5D70D4', '#08B4BB', '#6BD2D6', '#06A1F9', '#0579BB', '#F5B569', '#EB885C', '#D4483D', '#64467D', '#9A6ECE','#06AED5','#564787','#FDE74C'];
         var index;
         function createSeries() {
-          index=0;
-
-          for (var propEui in eui) {
-            if(propEui!=='net'){
-            var modelEui = {
-              name: propEui,
-              id: propEui,
-              data: eui[propEui],
-              color:colors[index++],
-              borderWidth: 0
-            };
-            series.push(modelEui);
-          }
-          }
-          index=0;
-          for (var propEnergy in energyUse) {
-
-          if(propEnergy!=='net'){
-            var modelEnergyUse={
+          index = 0;
+          for (var propEnergy in properties.energy) {
+            if (propEnergy !== 'net') {
+              var modelEnergy = {
                 name: propEnergy,
-                data: energyUse[propEnergy],
+                id: propEnergy+'_energy',
+                data: properties.energy[propEnergy],
+                color: colors[index++],
+                showInLegend: true,
+                borderWidth: 0
+              };
+              series.push(modelEnergy);
+            }
+          }
+          index = 0;
+          for (var propEui in properties.eui) {
+            if (propEui !== 'net') {
+              var modelEui = {
+                name: propEui,
+                data: properties.eui[propEui],
                 stack: 'eui',
                 borderWidth: 0,
-                linkedTo: propEnergy,
+                linkedTo: propEui+'_energy',
+                showInLegend: true,
                 color: colors[index++],
                 yAxis: 1
               };
-              series.push(modelEnergyUse);
-          }
+              series.push(modelEui);
+            }
           }
         }
         createSeries();
-        $scope.series=series;
-
-
+        $scope.series = series;
+        $scope.categories = categories;
 
       }]
     };
