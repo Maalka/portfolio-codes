@@ -7,7 +7,7 @@
 //define(["./test/sample_response_test_data"], function(sampleTestData) {
 define(['angular'], function() {
   'use strict';
-  var RootCtrl = function($rootScope) { 
+  var RootCtrl = function($rootScope) {
     $rootScope.includeHeader = maalkaIncludeHeader;
   };
 
@@ -47,22 +47,22 @@ define(['angular'], function() {
     if (window.matchMedia) {
 
         var printQueryList = window.matchMedia('print');
-        var phoneQueryList = window.matchMedia('(max-width: 767px)');      
-        var tabletQueryList = window.matchMedia('(min-width: 768px) and (max-width: 1200px)');            
-        var desktopQueryList = window.matchMedia('(min-width: 1200px) and (max-width: 1919px');                  
-        var largeQueryList = window.matchMedia('(min-width: 1919px)');                  
+        var phoneQueryList = window.matchMedia('(max-width: 767px)');
+        var tabletQueryList = window.matchMedia('(min-width: 768px) and (max-width: 1200px)');
+        var desktopQueryList = window.matchMedia('(min-width: 1200px) and (max-width: 1919px');
+        var largeQueryList = window.matchMedia('(min-width: 1919px)');
 
         var updateMatchMedia= function () {
             //console.log(q);
             if (printQueryList.matches) {
-                $scope.media = "print";                                    
+                $scope.media = "print";
             } else if (phoneQueryList.matches) {
-                $scope.media = "phone";                        
-            } else if (tabletQueryList.matches) { 
-                $scope.media = "tablet";            
-            } else if (desktopQueryList.matches) { 
+                $scope.media = "phone";
+            } else if (tabletQueryList.matches) {
+                $scope.media = "tablet";
+            } else if (desktopQueryList.matches) {
                 $scope.media = "desktop";
-            } 
+            }
 
             if (largeQueryList.matches) {
                 $scope.largeScreen = true;
@@ -91,7 +91,7 @@ define(['angular'], function() {
 
     $scope.$watch("tempModel.buildingType", function (v) {
         if (v === undefined || v === null) {
-            return; 
+            return;
         }
 
         if(v){
@@ -122,6 +122,7 @@ define(['angular'], function() {
 
         $scope.forms.hasValidated = false;
         $scope.endUses = null;
+        $scope.endUseProps=null;
 
     });
 
@@ -180,20 +181,61 @@ define(['angular'], function() {
 
 
 
-    $scope.computeBenchmarkResult = function(submission){
 
+    $scope.computeBenchmarkResult = function(submission){
+      var endUseProps=[];
         $log.info(submission);
 
         $scope.futures = benchmarkServices.getEnergyMetrics(submission);
 
-        $q.resolve($scope.futures).then(function (results) {
-
-            console.log(results);
+      $q.resolve($scope.futures).then(function (results) {
 
             $scope.endUses = results;
 
+            var energyList=results.values[3].end_use_energy_list;
+            var euiList=results.values[2].end_use_eui_list;
+            console.log(results,'enduses');
+
+              for(var i=0;i<energyList.length;i++){
+                var endPoint={
+                  building:"",
+                  energy:[],
+                  eui:[]
+                };
+                endPoint.building=energyList[i].building_name;
+                Object.assign(endPoint.energy, energyList[i].energy_breakdown);
+                Object.assign(endPoint.eui, euiList[i].eui_breakdown);
+                endUseProps.push(endPoint);
+              }
+              $scope.endUseProps=endUseProps;
+
+              function filter() {
+                console.log(endUseProps,'being filtered');
+                for(var s=0;s<endUseProps.length;s++){
+                  for (var z = 0; z < (endUseProps.length - s) - 1; z++) {
+                    var net = endUseProps[z].energy.net;
+                    var next = endUseProps[z + 1].energy.net;
+                    if (next > net) {
+                      var store = endUseProps[z];
+                      endUseProps[z] = endUseProps[z + 1];
+                      endUseProps[z + 1] = store;
+                    }
+                  }
+                }
+              }
+              filter();
+              function groupByBuildingType() {
+                console.log($scope,' scope');
+              }
+              groupByBuildingType() ;
+
         });
     };
+
+
+
+
+
 
     $scope.submitErrors = function () {
         if($scope.forms.baselineForm.$error.required){
@@ -403,7 +445,7 @@ define(['angular'], function() {
   DashboardCtrl.$inject = ['$rootScope', '$scope', '$window','$sce','$timeout', '$q', '$log', 'benchmarkServices'];
   return {
     DashboardCtrl: DashboardCtrl,
-    RootCtrl: RootCtrl    
+    RootCtrl: RootCtrl
 
   };
 });
