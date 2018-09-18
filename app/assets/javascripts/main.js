@@ -21,10 +21,10 @@
       'angular-file-upload': {
         deps: ['angular']
       },
-      'angular-route': { 
+      'angular-route': {
         deps: ['angular']
       },
-      'angular-cookies': { 
+      'angular-cookies': {
         deps: ['angular']
       },
       'filesaver': {
@@ -45,7 +45,7 @@
       'semantic': {
         deps: ['jquery', 'angular']
       },
-      'semantic-daterangepicker': { 
+      'semantic-daterangepicker': {
         deps: ['semantic', 'moment'],
         exports: "semantic-daterangepicker"
       }
