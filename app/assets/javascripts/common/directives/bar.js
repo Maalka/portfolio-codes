@@ -23,7 +23,6 @@ define(['angular', 'highcharts', './main'], function(angular) {
 
 
       },
-
       template: '<div id="container" style=";margin:0 auto;"></div>',
       link: function(scope, element) {
 
