@@ -20,11 +20,10 @@ define(['angular', 'highcharts', './main'], function(angular) {
         //key value pairs, to give this scope data
         //passing in data and bnding data
         data: '=',
-        options:'=',
-        title:'='
-
+        options: '='
 
       },
+
       template: '<div id="container" style=";margin:0 auto;"></div>',
       link: function(scope, element) {
 
@@ -33,15 +32,10 @@ define(['angular', 'highcharts', './main'], function(angular) {
             type: 'bar',
             marginTop: 50,
             marginBottom: 70,
-            height: scope.height,
-            width: 1100
+            height: scope.height
+
           },
-          labels: {
-            style: {
-              fontSize: '11px',
-              fontWeight: 100
-            }
-          },
+
           yAxis: [{
             min: 0,
             opposite: true,
@@ -49,8 +43,7 @@ define(['angular', 'highcharts', './main'], function(angular) {
             gridLineWidth: 0,
             lineWidth: 1,
             title: {
-              useHTML: true,
-              text: 'Energy Use [kBtu]'
+              useHTML: true
             }
           }, {
             min: 0,
@@ -59,7 +52,7 @@ define(['angular', 'highcharts', './main'], function(angular) {
             opposite: false,
             lineWidth: 1,
             title: {
-              text: 'EUI [kBtu/ft<sup>2</sup>]'
+              text: scope.options.axislabel
             }
           }],
           plotOptions: {
@@ -67,9 +60,8 @@ define(['angular', 'highcharts', './main'], function(angular) {
               stacking: 'normal'
             },
             bar: {
-              maxPointWidth: 15,
+              maxPointWidth: 18,
               pointPadding: 0.1,
-              groupPadding: 0
             }
           },
           tooltip: {
@@ -97,8 +89,15 @@ define(['angular', 'highcharts', './main'], function(angular) {
             text: ''
           },
           xAxis: {
-            categories: scope.categories
+            categories: scope.categories,
+            labels: {
 
+              style: {
+                fontSize: '11px',
+                fontWeight: 100
+              }
+
+            }
           },
           series: scope.series
         };
@@ -107,12 +106,11 @@ define(['angular', 'highcharts', './main'], function(angular) {
 
       },
       controller: ["$scope", function($scope) {
-      console.log($scope,'scope object');
-      //fewer then 10-branch off
-      //energy first, eui second
-      //increase the bar size when fewer then 10 buildings
+
+        console.log($scope);
+
         var categories = [];
-        //series,eui,
+
         var terms = {
           clg: {},
           extEqp: {},
@@ -130,13 +128,13 @@ define(['angular', 'highcharts', './main'], function(angular) {
           swh: {},
           net: {}
         };
-        var properties={
-            eui:{},
-            energy:{}
+        var properties = {
+          eui: {},
+          energy: {}
         };
-        for(var type in terms){
-          properties.eui[type]=[];
-          properties.energy[type]=[];
+        for (var term in terms) {
+          properties.eui[term] = [];
+          properties.energy[term] = [];
         }
         $scope.data.forEach(function(item){
             categories.push(item.building);
@@ -186,10 +184,6 @@ define(['angular', 'highcharts', './main'], function(angular) {
         createSeries();
         $scope.series = series;
         $scope.categories = categories;
-        $scope.height = categories.length * 30 + 120;
-        //var rounded = (term.energy_breakdown[item]).toFixed(2);
-        //keeps to 2 decimal places
-        //properties.energy[item].push(Number.parseFloat(rounded));
 
       }]
     };
