@@ -19,11 +19,10 @@ define(['angular', 'highcharts', './main'], function(angular) {
         //mapping scope into isolate scope
         //key value pairs, to give this scope data
         //passing in data and bnding data
-        data: '=',
-        options: '='
+        data: '='
+
 
       },
-
       template: '<div id="container" style=";margin:0 auto;"></div>',
       link: function(scope, element) {
 
@@ -35,7 +34,12 @@ define(['angular', 'highcharts', './main'], function(angular) {
             height: scope.height,
             width: 1100
           },
-
+          labels: {
+            style: {
+              fontSize: '11px',
+              fontWeight: 100
+            }
+          },
           yAxis: [{
             min: 0,
             opposite: true,
@@ -61,7 +65,7 @@ define(['angular', 'highcharts', './main'], function(angular) {
               stacking: 'normal'
             },
             bar: {
-              maxPointWidth: 18,
+              maxPointWidth: 15,
               pointPadding: 0.1,
               groupPadding: 0
             }
@@ -91,15 +95,8 @@ define(['angular', 'highcharts', './main'], function(angular) {
             text: ''
           },
           xAxis: {
-            categories: scope.categories,
-            labels: {
+            categories: scope.categories
 
-              style: {
-                fontSize: '11px',
-                fontWeight: 100
-              }
-
-            }
           },
           series: scope.series
         };
@@ -108,12 +105,12 @@ define(['angular', 'highcharts', './main'], function(angular) {
 
       },
       controller: ["$scope", function($scope) {
-
-
-
-
+      console.log($scope.data,'endusedata');
+      //fewer then 10-branch off
+      //energy first, eui second
+      //increase the bar size when fewer then 10 buildings 
         var categories = [];
-
+        //series,eui,
         var terms = {
           clg: {},
           extEqp: {},
@@ -131,44 +128,27 @@ define(['angular', 'highcharts', './main'], function(angular) {
           swh: {},
           net: {}
         };
-        var properties = {
-          eui: {},
-          energy: {}
+        var properties={
+            eui:{},
+            energy:{}
         };
-        for (var term in terms) {
-          properties.eui[term] = [];
-          properties.energy[term] = [];
+
+        for(var type in terms){
+          properties.eui[type]=[];
+          properties.energy[type]=[];
         }
 
-        function filter() {
-          var energyList = $scope.data.values[3].end_use_energy_list;
-          for (var i = 0; i < energyList.length; i++) {
-            for (var z = 0; z < (energyList.length - i) - 1; z++) {
-              var net = energyList[z].energy_breakdown.net;
-              var next = energyList[z + 1].energy_breakdown.net;
-              if (next > net) {
-                var store = energyList[z];
-                energyList[z] = energyList[z + 1];
-                energyList[z + 1] = store;
-              }
+        $scope.data.forEach(function(item){
+            categories.push(item.building);
+            for(var term in item.energy){
+                properties.energy[term].push(item.energy[term]);
             }
-          }
-        }
-        filter();
-        $scope.data.values[2].end_use_eui_list.forEach(function(term) {
-          categories.push(term.building_name);
-          for (var item in term.eui_breakdown) {
-            properties.eui[item].push(term.eui_breakdown[item]);
-          }
+            for(var euiTerm in item.eui){
+                properties.eui[euiTerm].push(item.eui[euiTerm]);
+            }
         });
-        $scope.data.values[3].end_use_energy_list.forEach(function(term) {
-          for (var item in term.energy_breakdown) {
-            var rounded = (term.energy_breakdown[item]).toFixed(2);
-            //keeps to 2 decimal places
-            properties.energy[item].push(Number.parseFloat(rounded));
-          }
-        });
-        $scope.height = categories.length * 20 + 120;
+        console.log(categories);
+
 
         var series = [];
         var colors = ['#1F2C5C', '#3F58CE', '#5D70D4', '#08B4BB', '#6BD2D6', '#06A1F9', '#0579BB', '#F5B569', '#EB885C', '#D4483D', '#64467D', '#9A6ECE','#06AED5','#564787','#FDE74C'];
@@ -208,6 +188,13 @@ define(['angular', 'highcharts', './main'], function(angular) {
         createSeries();
         $scope.series = series;
         $scope.categories = categories;
+        $scope.height = categories.length * 30 + 120;
+
+
+        //var rounded = (term.energy_breakdown[item]).toFixed(2);
+        //keeps to 2 decimal places
+      //properties.energy[item].push(Number.parseFloat(rounded));
+
 
       }]
     };
