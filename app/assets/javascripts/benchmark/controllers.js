@@ -192,6 +192,7 @@ define(['angular'], function() {
 
             $scope.endUses = results;
 
+
             var energyList=results.values[3].end_use_energy_list;
             var euiList=results.values[2].end_use_eui_list;
             console.log(results,'enduses');
@@ -211,7 +212,6 @@ define(['angular'], function() {
               }
               $scope.endUseProps=endUseProps;
 
-
               function filter(endUseProps) {
                 for(var s=0;s<endUseProps.length;s++){
                   for (var z = 0; z < (endUseProps.length - s) - 1; z++) {
@@ -225,7 +225,6 @@ define(['angular'], function() {
                   }
                 }
               }
-
               //groupByBuildingType sorts and groups by building type
               function groupByBuildingType() {
                 console.log(endUseProps,'being grouped by building');
@@ -233,15 +232,16 @@ define(['angular'], function() {
                 //this is the inital order of the groupings
                 //initial order is alphabetical to what the user sees
                 var buildingTypes={
-                  Admin:[],//City Hall/Administration
-                  SecSchl:[], //K12 School
-                  Lib:[]
+                  Lib:[],
+                  Admin:[],
+                  SecSchl:[]
                 };
+                var filteredArr=[];
                 //add a building to each building type
                 endUseProps.forEach(function(item){
                   buildingTypes[item.building_type].push(item);
                 });
-                
+
                 //then we want to define the order of the groupings
                 for(var building in buildingTypes){
                   for(var i=0;i<buildingTypes[building].length;i++){
@@ -250,12 +250,27 @@ define(['angular'], function() {
                       filter(buildingTypes[building]);
                   }
                 }
-                console.log(buildingTypes,'filtered and grouped');
-              }
-              groupByBuildingType() ;
 
+              
+
+
+                for(var type in buildingTypes){
+                  for(var v=0;v<buildingTypes[type].length;v++){
+                    filteredArr.push(buildingTypes[type][v]);
+                  }
+                }
+
+
+
+                //filteredArray is the array to be returned
+                console.log(filteredArr,'filtered and grouped array');
+                return filteredArr;
+              }
+
+              $scope.endUseProps=groupByBuildingType() ;
         });
     };
+
 
 
     $scope.submitErrors = function () {
