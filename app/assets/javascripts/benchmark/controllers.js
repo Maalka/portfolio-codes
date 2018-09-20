@@ -22,6 +22,16 @@ define(['angular'], function() {
     $rootScope.pageTitle = "Portfolio Codes";
 
 
+    $scope.barOptions = {};
+    $scope.barOptions.energy = {};
+    $scope.barOptions.eui = {};
+
+    $scope.barOptions.energy.label = true;
+    $scope.barOptions.energy.axislabel = "Energy Use [kBtu]";
+    $scope.barOptions.eui.label = false;
+    $scope.barOptions.eui.axislabel = "EUI [kBtu/ft2]";
+
+
     $scope.auxModel = {};
     $scope.auxModel.climate_zone = null;
     $scope.auxModel.scenario = "base";

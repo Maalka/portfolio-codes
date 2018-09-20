@@ -32,8 +32,8 @@ define(['angular', 'highcharts', './main'], function(angular) {
             type: 'bar',
             marginTop: 50,
             marginBottom: 70,
-            height: scope.height,
-            width: 1100
+            height: scope.height
+
           },
 
           yAxis: [{
@@ -43,8 +43,7 @@ define(['angular', 'highcharts', './main'], function(angular) {
             gridLineWidth: 0,
             lineWidth: 1,
             title: {
-              useHTML: true,
-              text: 'Energy Use [kBtu]'
+              useHTML: true
             }
           }, {
             min: 0,
@@ -53,7 +52,7 @@ define(['angular', 'highcharts', './main'], function(angular) {
             opposite: false,
             lineWidth: 1,
             title: {
-              text: 'EUI [kBtu/ft<sup>2</sup>]'
+              text: scope.options.axislabel
             }
           }],
           plotOptions: {
@@ -63,7 +62,6 @@ define(['angular', 'highcharts', './main'], function(angular) {
             bar: {
               maxPointWidth: 18,
               pointPadding: 0.1,
-              groupPadding: 0
             }
           },
           tooltip: {
@@ -109,8 +107,7 @@ define(['angular', 'highcharts', './main'], function(angular) {
       },
       controller: ["$scope", function($scope) {
 
-
-
+        console.log($scope);
 
         var categories = [];
 
@@ -139,6 +136,7 @@ define(['angular', 'highcharts', './main'], function(angular) {
           properties.eui[term] = [];
           properties.energy[term] = [];
         }
+
 
         function filter() {
           var energyList = $scope.data.values[3].end_use_energy_list;
