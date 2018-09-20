@@ -106,7 +106,9 @@ define(['angular', 'highcharts', './main'], function(angular) {
       },
       controller: ["$scope", function($scope) {
       console.log($scope.data,'endusedata');
-
+      //fewer then 10-branch off
+      //energy first, eui second
+      //increase the bar size when fewer then 10 buildings 
         var categories = [];
         //series,eui,
         var terms = {
