@@ -19,7 +19,9 @@ define(['angular', 'highcharts', './main'], function(angular) {
         //mapping scope into isolate scope
         //key value pairs, to give this scope data
         //passing in data and bnding data
-        data: '='
+        data: '=',
+        options:'=',
+        title:'='
 
 
       },
@@ -105,10 +107,10 @@ define(['angular', 'highcharts', './main'], function(angular) {
 
       },
       controller: ["$scope", function($scope) {
-      console.log($scope.data,'endusedata');
+      console.log($scope,'scope object');
       //fewer then 10-branch off
       //energy first, eui second
-      //increase the bar size when fewer then 10 buildings 
+      //increase the bar size when fewer then 10 buildings
         var categories = [];
         //series,eui,
         var terms = {
@@ -132,12 +134,10 @@ define(['angular', 'highcharts', './main'], function(angular) {
             eui:{},
             energy:{}
         };
-
         for(var type in terms){
           properties.eui[type]=[];
           properties.energy[type]=[];
         }
-
         $scope.data.forEach(function(item){
             categories.push(item.building);
             for(var term in item.energy){
@@ -148,8 +148,6 @@ define(['angular', 'highcharts', './main'], function(angular) {
             }
         });
         console.log(categories);
-
-
         var series = [];
         var colors = ['#1F2C5C', '#3F58CE', '#5D70D4', '#08B4BB', '#6BD2D6', '#06A1F9', '#0579BB', '#F5B569', '#EB885C', '#D4483D', '#64467D', '#9A6ECE','#06AED5','#564787','#FDE74C'];
         var index;
@@ -189,12 +187,9 @@ define(['angular', 'highcharts', './main'], function(angular) {
         $scope.series = series;
         $scope.categories = categories;
         $scope.height = categories.length * 30 + 120;
-
-
         //var rounded = (term.energy_breakdown[item]).toFixed(2);
         //keeps to 2 decimal places
-      //properties.energy[item].push(Number.parseFloat(rounded));
-
+        //properties.energy[item].push(Number.parseFloat(rounded));
 
       }]
     };
