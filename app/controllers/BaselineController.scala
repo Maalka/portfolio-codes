@@ -131,7 +131,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
                    "properties": {
                      "building_type": {
                      "type": "string",
-                     "enum": ["SecSchl", "Admin", "Lib"]
+                     "enum": ["SecSchl", "Admin", "Lib","fire_station","police_station"]
                      },
                      "building_name": {
                        "type": "string"
