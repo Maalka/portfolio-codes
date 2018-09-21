@@ -21,15 +21,18 @@ define(['angular'], function() {
     $rootScope.includeHeader = maalkaIncludeHeader;
     $rootScope.pageTitle = "Portfolio Codes";
 
-
     $scope.barOptions = {};
     $scope.barOptions.energy = {};
     $scope.barOptions.eui = {};
 
     $scope.barOptions.energy.label = true;
+    $scope.barOptions.energy.id = '_energy';
+
     $scope.barOptions.energy.axislabel = "Energy Use [kBtu]";
     $scope.barOptions.eui.label = false;
-    $scope.barOptions.eui.axislabel = "[kBtu/ft<sup>2</sup>]";
+    $scope.barOptions.eui.id = '_eui';
+
+    $scope.barOptions.eui.axislabel = "EUI [kBtu/ft<sup>2</sup>]";
 
 
     $scope.auxModel = {};
@@ -199,15 +202,48 @@ define(['angular'], function() {
 
      $q.resolve($scope.futures).then(function (results) {
             $scope.endUses = results;
+            console.log(results,'results');
+            console.log($scope,'auxModel');
+            console.log($scope.auxModel,'auxModel');
+
+          //  console.log($scope.$watchers,'watchers');
+            console.log(portfolioEui(results),'portfolioEUI');
+            console.log(portfolioEnergy(results),'portfolioEnergy');
+            $scope.portfolioEui=portfolioEui(results);
+            $scope.portfolioEnergy=portfolioEnergy(results);
+            console.log('original object',results);
             $scope.endUseProps=reformatEndUses(results);
             $scope.endUseProps=groupByBuildingType($scope.endUseProps);
             var series=createSeries($scope.endUseProps);
             $scope.energySeries=series.properties.energy;
             $scope.euiSeries=series.properties.eui;
             $scope.catergories=series.categories;
-
+            console.log('Formatting Data for Highcharts EndUse - Energy',series.properties.energy);
+            console.log('Formatting Data for Highcharts EndUse - EUI',series.properties.eui);
+            console.log('Formatting Data for Highcharts EndUse - Categories',series.categories);
         });
     };
+
+
+      function portfolioEui(results){
+          var euiList=results.values[0].total_eui_list;
+          var totalPortfolioEui=0;
+          for(var i=0;i<euiList.length;i++){
+            totalPortfolioEui+=euiList[i].eui;
+          }
+          var rounded=Math.round(totalPortfolioEui * 100) / 100;
+          return rounded;
+      }
+      function portfolioEnergy(results){
+          var energyList=results.values[1].total_energy_list;
+          var totalPortfolioEnergy=0;
+          for(var i=0;i<energyList.length;i++){
+            totalPortfolioEnergy+=energyList[i].energy;
+          }
+          var rounded=Math.round(totalPortfolioEnergy * 100) / 100;
+          return rounded;
+      }
+
       function createSeries(endUse){
         var categories = [];
         var terms = {
@@ -264,6 +300,7 @@ define(['angular'], function() {
           endPoint.building_type=energyList[i].building_type;
           Object.assign(endPoint.energy, energyList[i].energy_breakdown);
           Object.assign(endPoint.eui, euiList[i].eui_breakdown);
+          console.log('Reformatted API Object',endUseProps);
           endUseProps.push(endPoint);
         }
         return endUseProps;
@@ -295,6 +332,7 @@ define(['angular'], function() {
         }
 
       }
+      console.log('Finding Total Energy',orderBy);
       return orderBy;
     }
     function findAverageEnergy(buildingGroup){
@@ -304,11 +342,14 @@ define(['angular'], function() {
             var average=(item.total/item.size);
             averageArr.push({building:item.building,average:average});
           });
+          console.log('Finding Average Energy',averageArr);
+
           return averageArr;
     }
     function sortByHighestAverage(buildingGroup){
           var buildingAverages=findAverageEnergy(buildingGroup);
           var order=[];
+          console.log('Sorting By Highest Avarage',buildingAverages);
             for(var i=0;i<buildingAverages.length;i++){
               for (var v = 0; v < (buildingAverages.length - i) - 1; v++) {
                 var average = buildingAverages[v].average;
@@ -324,6 +365,8 @@ define(['angular'], function() {
           buildingAverages.forEach(function(item){
             order.push(item.building);
           });
+          console.log('Finished Sorting By Highest Avarage',order);
+
           return order;
     }
     function groupByBuildingType(endUseProps) {
@@ -336,11 +379,14 @@ define(['angular'], function() {
         SecSchl:[]
       };
       var filteredArr=[];
+
       //add a building to each building type
       endUseProps.forEach(function(item){
         buildingTypes[item.building_type].push(item);
       });
+      console.log('Grouping By BuildingType',buildingTypes);
       //then we want to define the order of the groupings
+
       for(var building in buildingTypes){
         for(var i=0;i<buildingTypes[building].length;i++){
           //this is what we need to pass into filter
@@ -348,6 +394,7 @@ define(['angular'], function() {
         }
       }
 
+      console.log('Filtering By net Energy Withing groups',buildingTypes);
 
       var order=sortByHighestAverage(buildingTypes);
       //reformat data for end use with including sorting by highest average order
@@ -356,9 +403,8 @@ define(['angular'], function() {
           filteredArr.push(buildingTypes[item][v]);
         }
       });
-
       //filteredArray is the array to be returned
-      console.log(filteredArr,'filtered and grouped array');
+      console.log('Sorting Groups Highest Net Average within Groups',filteredArr);
       return filteredArr;
     }
 

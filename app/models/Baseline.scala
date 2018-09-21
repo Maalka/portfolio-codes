@@ -31,6 +31,7 @@ case class EUIMetrics(parameters: JsValue) {
         case (a,b) => Map(
           "building_name" -> a.building_name,
           "building_type" -> a.building_type,
+          "floor_area" -> a.floor_area.value,
           "eui_breakdown" -> b
         )
       }
@@ -49,6 +50,8 @@ case class EUIMetrics(parameters: JsValue) {
         case (a,b) => Map(
           "building_name" -> a.building_name,
           "building_type" -> a.building_type,
+          "floor_area" -> a.floor_area.value,
+
           "energy_breakdown" -> b
         )
       }
@@ -66,6 +69,8 @@ case class EUIMetrics(parameters: JsValue) {
         case (a,b) => Map(
           "building_name" -> a.building_name,
           "building_type" -> a.building_type,
+          "floor_area" -> a.floor_area.value,
+
           "eui" -> b
         )
       }
@@ -82,6 +87,8 @@ case class EUIMetrics(parameters: JsValue) {
         case (a,b) => Map(
           "building_name" -> a.building_name,
           "building_type" -> a.building_type,
+          "floor_area" -> a.floor_area.value,
+
           "eui" -> b
         )
       }
@@ -100,6 +107,8 @@ case class EUIMetrics(parameters: JsValue) {
         case (a,b) => Map(
           "building_name" -> a.building_name,
           "building_type" -> a.building_type,
+          "floor_area" -> a.floor_area.value,
+
           "energy" -> b
         )
       }
@@ -193,10 +202,3 @@ case class ValidatedBuildingData(
                            climate_zone: String,
                            floor_area: Double,
                            floor_area_units: String)
-
-
-
-
-
-
-

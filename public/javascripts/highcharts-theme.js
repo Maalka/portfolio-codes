@@ -14,9 +14,9 @@ define(['highcharts', 'highcharts-more'], function(angular, nvd3) {
 
         // Apply the theme
         Highcharts.setOptions(Highcharts.theme);
-
+        /*
         //set the line legond symbol to be the area symbol (we want a box)
-        Highcharts.seriesTypes.line.prototype.drawLegendSymbol = 
+        Highcharts.seriesTypes.line.prototype.drawLegendSymbol =
             Highcharts.seriesTypes.area.prototype.drawLegendSymbol;
 
 
@@ -37,6 +37,7 @@ define(['highcharts', 'highcharts-more'], function(angular, nvd3) {
                 'Z'
             ];
         };
+
         (function(H) {
             var merge = H.merge;
 
@@ -45,6 +46,7 @@ define(['highcharts', 'highcharts-more'], function(angular, nvd3) {
                 chart = this.chart,
                 options = this.options,
                 legendID = options.legendID;
+                console.log(this,'legendPrototype');
 
               H.each(chart.series, function(series) {
                 if (series) {
@@ -93,6 +95,7 @@ define(['highcharts', 'highcharts-more'], function(angular, nvd3) {
               p.call(this, item);
             });
         })(Highcharts);
+        */
         return Highcharts;
     })();
 });
