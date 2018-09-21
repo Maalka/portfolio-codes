@@ -50,6 +50,8 @@ case class ModelValues(parameters:JsValue) {
       case "SecSchl" => Map("name"->"K-12 School","id" -> "SecSchl")
       case "Admin" => Map("name"->"City Hall/Administration","id" -> "Admin")
       case "Lib" => Map("name"->"Public Library","id" -> "Lib")
+      case "fire_station" => Map("name"->"Fire Station","id" -> "fire_station")
+      case "police_station" => Map("name"->"Police Station","id" -> "police_station")
     }
   }
   def getLookupString(propDesc:ValidatedPropTypes):Future[Map[String,String]] = concurrent.Future {
@@ -68,6 +70,10 @@ case class ModelValues(parameters:JsValue) {
         "key" -> cz.concat("_Admin_" + scenario))
       case "Lib" => Map("type" -> "Public Library",
         "key" -> cz.concat("_Lib_" + scenario))
+      case "fire_station" => Map("type" -> "Fire Station",
+        "key" -> cz.concat("_fire_station_" + scenario))
+      case "police_station" => Map("type" -> "Police Station",
+        "key" -> cz.concat("_police_station_" + scenario))
     }
 
     retobj

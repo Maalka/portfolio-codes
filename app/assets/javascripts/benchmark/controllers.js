@@ -376,7 +376,9 @@ define(['angular'], function() {
       var buildingTypes={
         Lib:[],
         Admin:[],
-        SecSchl:[]
+        SecSchl:[],
+        fire_station:[],
+        police_station:[]
       };
       var filteredArr=[];
 
@@ -580,7 +582,9 @@ define(['angular'], function() {
             commercial: [
                 {name:"K-12 School",id:"SecSchl"},
                 {name:"City Hall/Administration",id:"Admin"},
-                {name:"Public Library",id:"Lib"}
+                {name:"Public Library",id:"Lib"},
+                {name:"Fire Station",id:"fire_station"},
+                {name:"Police Station",id:"police_station"}
             ]
         }
     };
