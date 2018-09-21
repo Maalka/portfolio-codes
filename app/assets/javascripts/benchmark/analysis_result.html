@@ -57,20 +57,19 @@
 
 
 
-        <div class="sixteen wide column" style="padding-left:20px; padding-right:20px; padding-bottom:10px; background-color:white;">
+        <div class="eight wide column" style="padding-left:20px; padding-right:20px; padding-bottom:10px; background-color:white;">
 
+			<bar ng-style="myStyle" data="euiSeries"  categories="catergories" options="barOptions.energy"></bar>
 
-			<div class="ui sixteen wide grid">
+		</div>
 
-				<bar ng-style="myStyle" data="endUseProps" >
-				</bar>
-			
-			</div>
+		<div class="eight wide column">
+			<bar ng-style="myStyle" data="energySeries" categories="catergories" options="barOptions.eui"></bar>
 
 		</div>
 
 
-	</div>
+
 	<div>
 		<div class="ui basic horizontal segments">
 			<div class="ui basic segment right aligned">
