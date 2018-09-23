@@ -210,6 +210,8 @@ define(['angular'], function() {
             var series=createSeries($scope.endUseProps);
             $scope.energySeries=series.properties.energy;
             $scope.euiSeries=series.properties.eui;
+            $scope.negativeEui=series.properties.eui;
+
             $scope.catergories=series.categories;
           //  console.log('Formatting Data for Highcharts EndUse - Energy',series.properties.energy);
           //  console.log('Formatting Data for Highcharts EndUse - EUI',series.properties.eui);

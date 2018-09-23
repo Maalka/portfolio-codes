@@ -34,12 +34,10 @@ define(['angular', 'highcharts','maalkaflags', './main'], function(angular) {
             height: scope.height
 
           },
-
           yAxis: {
             min: 0,
             gridLineColor: 'transparent',
             gridLineWidth: 0,
-
             lineWidth: 1,
             title: {
               useHTML:true,
@@ -47,8 +45,8 @@ define(['angular', 'highcharts','maalkaflags', './main'], function(angular) {
             }
           },
       legend:{
-
-            x: 50,
+            floating: true,
+            enabled: true,
             padding: 3,
             width:1052,
             itemStyle: {
@@ -100,7 +98,6 @@ define(['angular', 'highcharts','maalkaflags', './main'], function(angular) {
 
           for (var propEnergy in $scope.data) {
             if (propEnergy !== 'net') {
-
               var modelEnergy = {
                 name: propEnergy,
                 id: propEnergy+$scope.options.id,
