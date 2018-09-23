@@ -21,15 +21,18 @@ define(['angular'], function() {
     $rootScope.includeHeader = maalkaIncludeHeader;
     $rootScope.pageTitle = "Portfolio Codes";
 
-
     $scope.barOptions = {};
     $scope.barOptions.energy = {};
     $scope.barOptions.eui = {};
 
     $scope.barOptions.energy.label = true;
+    $scope.barOptions.energy.id = '_energy';
+
     $scope.barOptions.energy.axislabel = "Energy Use [kBtu]";
     $scope.barOptions.eui.label = false;
-    $scope.barOptions.eui.axislabel = "[kBtu/ft<sup>2</sup>]";
+    $scope.barOptions.eui.id = '_eui';
+
+    $scope.barOptions.eui.axislabel = "EUI [kBtu/ft<sup>2</sup>]";
 
 
     $scope.auxModel = {};
@@ -153,7 +156,6 @@ define(['angular'], function() {
         window.print();
     };
 
-
     $scope.removeProp = function(prop){
         var index;
         for(var i = 0; i < $scope.propTypes.length; i++ ) {
@@ -199,15 +201,44 @@ define(['angular'], function() {
 
      $q.resolve($scope.futures).then(function (results) {
             $scope.endUses = results;
-            $scope.endUseProps=reformatEndUses(results);
+            var totalEnergy=results.values[0].total_eui_list;
+            var totalEui=results.values[1].total_energy_list;
+            $scope.endUseProps=results.values[4].end_uses;
+            $scope.portfolioEui=portfolioTotal(totalEnergy,'eui');
+            $scope.portfolioEnergy=portfolioTotal(totalEui,'energy');
             $scope.endUseProps=groupByBuildingType($scope.endUseProps);
             var series=createSeries($scope.endUseProps);
             $scope.energySeries=series.properties.energy;
             $scope.euiSeries=series.properties.eui;
+            $scope.negativeEui=series.properties.eui;
+
             $scope.catergories=series.categories;
+          //  console.log('Formatting Data for Highcharts EndUse - Energy',series.properties.energy);
+          //  console.log('Formatting Data for Highcharts EndUse - EUI',series.properties.eui);
+          //  console.log('Formatting Data for Highcharts EndUse - Categories',series.categories);
+            /*
+            TESTING
+            */
+            testPerformance('portfolioTotal',portfolioTotal,totalEui);
+            testPerformance('portfolioTotal',portfolioTotal,totalEnergy);
+            testPerformance('groupByBuildingType',groupByBuildingType,$scope.endUseProps);
 
         });
     };
+      function testPerformance(name,func,params){
+        var t0 = performance.now();
+        func(params);   // <---- The function you're measuring time for
+        var t1 = performance.now();
+        console.log(name+ ":" + (t1 - t0) + " milliseconds.");
+      }
+      function portfolioTotal(list,energyType){
+          var totalPortfolioEui=0;
+          for(var i=0;i<list.length;i++){
+            totalPortfolioEui+=list[i][energyType];
+          }
+          var rounded=Math.round(totalPortfolioEui * 100) / 100;
+          return rounded;
+      }
       function createSeries(endUse){
         var categories = [];
         var terms = {
@@ -236,12 +267,12 @@ define(['angular'], function() {
           properties.energy[term] = [];
         }
         endUse.forEach(function(item){
-            categories.push(item.building);
-            for(var term in item.energy){
-                properties.energy[term].push(item.energy[term]);
+            categories.push(item.building_name);
+            for(var term in item.energy_breakdown){
+                properties.energy[term].push(item.energy_breakdown[term]);
             }
-            for(var euiTerm in item.eui){
-                properties.eui[euiTerm].push(item.eui[euiTerm]);
+            for(var euiTerm in item.eui_breakdown){
+                properties.eui[euiTerm].push(item.eui_breakdown[euiTerm]);
             }
         });
         return {
@@ -249,30 +280,11 @@ define(['angular'], function() {
           categories:categories
         };
     }
-    function reformatEndUses(results){
-      var endUseProps=[];
-      var energyList=results.values[3].end_use_energy_list;
-      var euiList=results.values[2].end_use_eui_list;
-        for(var i=0;i<energyList.length;i++){
-          var endPoint={
-            building:"",
-            building_type:"",
-            energy:[],
-            eui:[]
-          };
-          endPoint.building=energyList[i].building_name;
-          endPoint.building_type=energyList[i].building_type;
-          Object.assign(endPoint.energy, energyList[i].energy_breakdown);
-          Object.assign(endPoint.eui, euiList[i].eui_breakdown);
-          endUseProps.push(endPoint);
-        }
-        return endUseProps;
-    }
     function filter(endUseProps) {
       for(var s=0;s<endUseProps.length;s++){
         for (var z = 0; z < (endUseProps.length - s) - 1; z++) {
-          var net = endUseProps[z].energy.net;
-          var next = endUseProps[z + 1].energy.net;
+          var net = endUseProps[z].energy_breakdown.net;
+          var next = endUseProps[z + 1].energy_breakdown.net;
           if (next > net) {
             var store = endUseProps[z];
             endUseProps[z] = endUseProps[z + 1];
@@ -282,13 +294,12 @@ define(['angular'], function() {
       }
     }
     function findTotalEnergy(buildingTypes){
-      //filter groups by net energy
       var orderBy=[];
       for(var category in buildingTypes){
         //operated for each category
        var sum=0;
         for(var z=0;z<buildingTypes[category].length;z++){
-           sum+=buildingTypes[category][z].energy.net;
+           sum+=buildingTypes[category][z].energy_breakdown.net;
         }
         if(sum!==0){
           orderBy.push({building:category,total:sum,size:buildingTypes[category].length});
@@ -320,16 +331,23 @@ define(['angular'], function() {
                 }
               }
           }
-          console.log('Sorted by highest average',buildingAverages);
           buildingAverages.forEach(function(item){
             order.push(item.building);
           });
           return order;
     }
+    function sortBuildings(buildingTypes){
+      //sorting buildings in each group by net energy type
+      for(var building in buildingTypes){
+        for(var i=0;i<buildingTypes[building].length;i++){
+            filter(buildingTypes[building]);
+        }
+      }
+    }
     function groupByBuildingType(endUseProps) {
       //building types for overarching groups defined
-      //this is the inital order of the groupings
-      //initial order is alphabetical to what the user sees
+      //inital order of the building groupings
+      var filteredArr=[];
       var buildingTypes={
         Lib:[],
         Admin:[],
@@ -337,20 +355,12 @@ define(['angular'], function() {
         fire_station:[],
         police_station:[]
       };
-      var filteredArr=[];
       //add a building to each building type
       endUseProps.forEach(function(item){
         buildingTypes[item.building_type].push(item);
       });
-      //then we want to define the order of the groupings
-      for(var building in buildingTypes){
-        for(var i=0;i<buildingTypes[building].length;i++){
-          //this is what we need to pass into filter
-            filter(buildingTypes[building]);
-        }
-      }
-
-
+      //sorting buildings in each group by net energy type
+      sortBuildings(buildingTypes);
       var order=sortByHighestAverage(buildingTypes);
       //reformat data for end use with including sorting by highest average order
       order.forEach(function(item){
@@ -358,9 +368,7 @@ define(['angular'], function() {
           filteredArr.push(buildingTypes[item][v]);
         }
       });
-
       //filteredArray is the array to be returned
-      console.log(filteredArr,'filtered and grouped array');
       return filteredArr;
     }
 

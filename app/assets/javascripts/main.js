@@ -51,6 +51,7 @@
       }
     },
     paths: {
+      //relative path
       'requirejs': '../lib/requirejs/require',
       'json': './requirejs-plugins/json',
       'text': './requirejs-plugins/text',

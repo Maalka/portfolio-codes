@@ -189,9 +189,8 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
           Baseline.getTotalEUIList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
           Baseline.getTotalEnergyList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
           Baseline.getTotalEUIBreakdownList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-          Baseline.getTotalEnergyBreakdownList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
-
-
+          Baseline.getTotalEnergyBreakdownList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
+          Baseline.getEndUses.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
         ))
 
         val fieldNames = Seq(
@@ -199,8 +198,8 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
           "total_eui_list",
           "total_energy_list",
           "end_use_eui_list",
-          "end_use_energy_list"
-
+          "end_use_energy_list",
+          "end_uses"
         )
 
         futures.map(fieldNames.zip(_)).map { r =>

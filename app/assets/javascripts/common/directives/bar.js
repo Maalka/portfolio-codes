@@ -3,10 +3,9 @@
  * changes form inputs based on property type
  * and supports multiple property types
  */
-define(['angular', 'highcharts', './main'], function(angular) {
+define(['angular', 'highcharts','maalkaflags', './main'], function(angular) {
   'use strict';
   var mod = angular.module('common.directives');
-
   mod.directive('bar', [function() {
     return {
 
@@ -24,8 +23,7 @@ define(['angular', 'highcharts', './main'], function(angular) {
         categories:'='
 
       },
-
-      template: '<div id="container" style=";margin:0 auto;"></div>',
+      template: '<div></div>',
       link: function(scope, element) {
 
         var options = {
@@ -36,18 +34,25 @@ define(['angular', 'highcharts', './main'], function(angular) {
             height: scope.height
 
           },
-
           yAxis: {
             min: 0,
             gridLineColor: 'transparent',
             gridLineWidth: 0,
-
             lineWidth: 1,
             title: {
               useHTML:true,
               text: scope.options.axislabel
             }
           },
+      legend:{
+            floating: true,
+            enabled: true,
+            padding: 3,
+            width:1052,
+            itemStyle: {
+                lineHeight: '14px'
+            }
+        },
           plotOptions: {
             series: {
               stacking: 'normal'
@@ -66,7 +71,6 @@ define(['angular', 'highcharts', './main'], function(angular) {
                   'Total: ' + this.point.stackTotal;
             }
           },
-
           title: {
             text: ''
           },
@@ -83,34 +87,41 @@ define(['angular', 'highcharts', './main'], function(angular) {
           },
           series: scope.series
         };
-        angular.element(element).highcharts(options);
-
-
+      angular.element(element).highcharts(options);
       },
-      controller: ["$scope", function($scope) {
+      controller: ["$scope","$element",function($scope,$element) {
         var series = [];
         var colors = ['#1F2C5C', '#3F58CE', '#5D70D4', '#08B4BB', '#6BD2D6', '#06A1F9', '#0579BB', '#F5B569', '#EB885C', '#D4483D', '#64467D', '#9A6ECE','#06AED5','#564787','#FDE74C'];
         var index;
         function createSeries() {
           index = 0;
+
           for (var propEnergy in $scope.data) {
             if (propEnergy !== 'net') {
               var modelEnergy = {
                 name: propEnergy,
-                id: propEnergy+'_energy',
+                id: propEnergy+$scope.options.id,
                 data: $scope.data[propEnergy],
                 color: colors[index++],
-                showInLegend: true,
                 borderWidth: 0
               };
-              series.push(modelEnergy);
+            if($scope.options.id==='_eui'){
+               modelEnergy.linkedTo=propEnergy+'_energy';
+               modelEnergy.showInLegend=false;
+               modelEnergy.stack='eui';
+               series.push(modelEnergy);
+             }else{
+               modelEnergy.showInLegend=true;
+               series.push(modelEnergy);
+             }
             }
           }
         }
+        console.log($scope,'scope');
         createSeries();
         $scope.series = series;
-
-        $scope.height = $scope.categories.length*10+240;
+        $scope.height = $scope.categories.length*10+360;
+        console.log($element);
       }]
     };
   }]);
