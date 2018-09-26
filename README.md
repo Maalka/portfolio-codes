@@ -1,11 +1,14 @@
-# The Portfolio Codes tool is used to understand typical energy end-use breakdowns in the most common building types in municipal buildings across the country. The tool is the result of a collaboration between Maalka, Integral Group, New Buildings Institute, Eco Edge, and NEEA under the Department of Energy Municipal Portfolio Codes Program.
+# The Portfolio Codes tool is used to understand typical energy end-use breakdowns in the most common building types in municipal buildings across the country. 
 
 ## Intro
 
 The Portfolio Codes tool is used to understand typical energy end-use breakdowns in the most common building types in municipal buildings across the country. By selecting a climate zone and adding a list of buildings (manually or through CSV upload), users can experiment to understand the potential impacts of investing in broad energy saving building upgrades across the portfolio. Four upgrade scenarios, each increasing in terms of cost and comprehensiveness, provide insights into how individual buildings and the whole portfolio will be impacted.
 
 ## Collaborating Orgnanizations
-Maalka: Built the tool
+
+The tool is the result of a collaboration between Maalka, Integral Group, New Buildings Institute, Eco Edge, and NEEA under the Department of Energy Municipal Portfolio Codes Program.
+
+Maalka: Built the open-source tool
 Integral Group: Provided the model end-use data driving the results
 New Buildings Institute: Provided design guidance and city data analysis
 Eco Edge: Interacted with cities to get the data for calibrating the models
@@ -41,28 +44,3 @@ The JavaScript modules are organized as follows:
 
 This uses the normal JavaScript files and loads libraries from the downloaded WebJars.
 
-### Prod Mode
-
-Running:
-
-* Run `sbt testProd`
-
-Deployment:
-
-* Produce executable via `sbt clean dist`
-* Extract `unzip target/universal/maalka-benchmark--2.x.x.zip`
-* Run `maalka-benchmark--2.x.x/bin/maalka-benchmark- -Dhttp.port=9000 -Dconfig.resource=prod.conf`
-
-
-This uses the uglified JavaScript files, versioned and compressed assets, and loads WebJars resources from the jsDelivr CDN.
-
-### Install deb
-* run sbt debian:packageBin
-* dpkg -i target/maalka-benchmark_<<VERSION>>.deb
-* apt-get install -f
-
-To remove a previous version of maalka-benchmark
-* dpkg --remove maalka-benchmark
-
-To see what version is installed
-* dpkg-query -l | grep maalka-benchmark
