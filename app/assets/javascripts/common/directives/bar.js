@@ -108,9 +108,8 @@ define(['angular', './main', 'highcharts'], function(angular) {
       scope.$watch('width',function(width){
           console.log(width,'width');
             console.log(chart,'chart');
-          chart.setSize((width/2), (chart.height));
-
-      });
+          chart.setSize((width/2), (chart.height),true);
+        });
       },
       controller: ["$scope","$element",function($scope,$element) {
 
