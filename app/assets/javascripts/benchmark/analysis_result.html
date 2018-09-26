@@ -47,35 +47,40 @@
                 </div>
             </div>
         </div>
-		<div class="seven wide column" style="padding-left:20px; padding-right:20px; background-color:white;">
+
+
+
+		<div class="eight wide column" style="padding-left:20px; padding-right:20px; background-color:white;">
 			<div class="row" style="padding-top:0.1em;padding-left:5em;;">
 				<h2 class="ui dividing header">
 					Portfolio Energy:
-					<span style="font-size:1em">{{portfolioEnergy / 1000  | number : 2}}</span>
-					<span style="text-transform:none;">MBtu</span>
+					<div>
+						<span style="font-size:1em">{{portfolioEnergy / 1000  | number : 2}}</span>
+						<span style="text-transform:none;">MBtu</span>
+					</div>
+
 				</h2>
 
 			</div>
 		</div>
-		<div class="seven wide column">
+		<div class="eight wide column" style="padding-left:20px; padding-right:20px; background-color:white;">
 			<div class="row" style="padding-top:0.1em;padding-left:1.5em;">
 				<h2 class="ui dividing header">
 					Portfolio EUI:
-					<span style="font-size:1em">{{portfolioEui | number : 2}}</span>
-					<span style="text-transform:none;"> kBtu/ft<sup>2</sup></span>
+					<div>
+						<span style="font-size:1em">{{portfolioEui | number : 2}}</span>
+						<span style="text-transform:none;"> kBtu/ft<sup>2</sup></span>
+					</div>
+
 				</h2>
 			</div>
 		</div>
 
 		<div class="seven wide column" style="padding-left:20px; padding-right:20px; background-color:white;">
-
-			<bar ng-style="myStyle" data="energySeries" categories="catergories" options="barOptions.energy"></bar>
-
+			<bar data="energySeries" categories="catergories" options="barOptions.energy"></bar>
 		</div>
-		<div class="seven wide column">
-
-			<bar ng-style="myStyle" data="euiSeries" categories="catergories"  options="barOptions.eui"></bar>
-
+		<div class="seven wide column" style="padding-left:20px; padding-right:20px; background-color:white;">
+			<bar  data="euiSeries" categories="catergories"  options="barOptions.eui"></bar>
 		</div>
 
 
