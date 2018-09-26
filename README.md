@@ -1,13 +1,15 @@
-# Architecture 2030 Baseline Tool in partnership with Maalka (http://www.maalka.com) for Assessing Building Energy Efficiency Relative to National Median Performance for similar building types.
+# The Portfolio Codes tool is used to understand typical energy end-use breakdowns in the most common building types in municipal buildings across the country. The tool is the result of a collaboration between Maalka, Integral Group, New Buildings Institute, Eco Edge, and NEEA under the Department of Energy Municipal Portfolio Codes Program.
 
 ## Intro
 
-The EPA is in the process of updating its comparison and goal setting tools to be driven by newly available 2012 data.
- The goal of this tool is to provide users (e.g. building owners, 2030 members) with an engaging and intuitive tool
- with which they can effectively compare their energy-use intensity with similar buildings types, understanding
- the change of their energy-use efficiency over time, and to set energy-use intensity targets for achieving desired
- performance scores based on 2003 CBECS data. Basing the tool functionality on the 2003 CBECS dataset will enable
-2030 members to maintain pre-existing goals and baselines so that progress can continue to be consistently measured
+The Portfolio Codes tool is used to understand typical energy end-use breakdowns in the most common building types in municipal buildings across the country. By selecting a climate zone and adding a list of buildings (manually or through CSV upload), users can experiment to understand the potential impacts of investing in broad energy saving building upgrades across the portfolio. Four upgrade scenarios, each increasing in terms of cost and comprehensiveness, provide insights into how individual buildings and the whole portfolio will be impacted.
+
+## Collaborating Orgnanizations
+Maalka: Built the tool
+Integral Group: Provided the model end-use data driving the results
+New Buildings Institute: Provided design guidance and city data analysis
+Eco Edge: Interacted with cities to get the data for calibrating the models
+NEEA: Provided funding support and initial city engagement
 
 ## Code Organization
 
