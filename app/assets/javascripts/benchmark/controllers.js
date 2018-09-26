@@ -482,46 +482,6 @@ define(['angular'], function() {
 
         console.log("Will compute here");
 
-//        function nullZero(a) {
-//            if(a===0){
-//                return null;
-//            } else {
-//            return a;
-//            }
-//        }
-
-
-//        var endUses = ["Heating", "Cooling", "Interior Lighting", "Plug Loads", "Service Hot Water", "Fans"];
-//        var shortNames = ["htg", "clg", "intLgt", "intEqp", "swh", "fans"];
-//        var othersEndUses = ["Exterior Equipment","Exterior Light","Generators","Heat Recovery","Heat Rejection","Humidity Control","Pumps","Refrigeration"];
-//        var othersNames = ["extEqp","extLgt","gentor","heatRec","heatRej","humid","pumps","refrg"];
-//
-//
-//        var endUsesTable = {} ;
-//        endUsesTable.endUses = [] ;
-//        endUsesTable.endUsesOther = [] ;
-//        endUsesTable.endUsesTotal = [] ;
-//
-//
-//        var endUseResponse = $scope.getPropResponseField(results,"prescriptive_metrics");
-//
-//        endUsesTable.eui = endUseResponse.site_eui;
-//        endUsesTable.energy = endUseResponse.site_energy / 1000; // this will be either MBtu or MWh
-//
-//
-//
-//        for (var i =0; i < endUses.length; i ++) {
-//
-//            endUsesTable.endUses.push([
-//                endUses[i],
-//                nullZero(endUseResponse.prescriptive_electricity_metric_data[shortNames[i]]),
-//                nullZero(endUseResponse.prescriptive_natural_gas_metric_data[shortNames[i]]),
-//                nullZero(endUseResponse.prescriptive_end_use_metric_data[shortNames[i]]),
-//                endUseResponse.prescriptive_end_use_metric_percents[shortNames[i]]*100
-//            ]);
-//        }
-
-
     };
 
 

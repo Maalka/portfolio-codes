@@ -38,8 +38,14 @@
     </script>
 
   </head>
-  <body id="benchmark" ng-cloak>
-    <div data-ng-view  ng-cloak>
+  <body id="benchmark" class="site" ng-cloak>
+    @if(includeHeader) {
+      @header()
+    }
+    <div class="site-content" data-ng-view  ng-cloak>
     </div>
+    @if(includeHeader) {
+      @footer()
+    }
   </body>
 </html>

@@ -1,0 +1,196 @@
+
+<div>
+
+    <h1 class="ui header">Municipal Portfolio Codes Assessment Use Case</h1>
+    <div class="ui hidden divider"></div>
+    <p>
+        Cities across the country are beginning to explore ways to improve the energy efficiency of their building portfolios.
+        The process of identifying specific improvement strategies can be long and confusing, spanning multiple levels of
+        analysis. The Portfolio Codes Assessment tool was designed to be the first step, by enabling municipalities to
+        conduct a quick, simple analysis to understand the typical breakdown of energy end-uses for their buildings and the
+        impact that different tiers of investment strategies may have on their overall energy-use and efficiency.
+    </p>
+
+    <h2>
+        <em>
+            <span style="color:#363636">
+                How was the Portfolio Codes Tool created?
+            </span>
+
+        </em>
+    </h2>
+
+    <p>
+      The MPP team worked with the cities of Providence (RI), Grand Rapids (MI), and Eugene (OR) to develop and refine a process
+      for data-driven Strategic Energy Management. The cities were chosen because they could offer perspectives into how energy-usage patterns may vary
+        across distinct climate zones.
+
+        <div class="ui hidden divider"></div>
+
+        <img src="./assets/images/mpp_map.png"></p>
+
+        <div class="ui hidden divider"></div>
+
+        Over time, the team was able to work with each city to collect energy-use data for each building in its portfolio.
+        The team normalized the data by building size and grouped buildings by type to statistically determine a representative
+        energy-use profile for each building type in the portfolio (See Below - Red lines correspond to representative building).
+
+        <img src="./assets/images/portfolio energy over time.png"></p>
+
+        <br>
+
+        The representative building energy-use profile was then combined with actual meteorological (AMY) data to articulate
+        and calibrate a precise energy model for the most common building types found in a municipal portfolio.
+
+        The breakdown of energy end-uses was determined for each building type.
+
+        <img src="./assets/images/end use model.png"></p>
+
+        Finally, several scenarios for improving energy efficiency were tested on the representative energy models and results were
+        integrated into the open-source tool.
+
+        <br><br>
+
+    </p>
+
+
+
+    <h2>
+        <em>
+            <span style="color:#363636">
+                What were the scenarios tested on the calibrated models?
+            </span>
+
+        </em>
+    </h2>
+    <p>
+        4 tiers of improvement strategies, increasing in cost and comprehensiveness, were then applied to the calibrated models and impacts were analyzed.
+
+        Outputs of these calibrated models and simulation were finally integrated into this open-source tool to enable users to understand differences in how buildings across
+        climate zones consume energy and how improvement strategies can impact performance across a portfolio.
+    </p>
+
+    <ul class="icon1" style="padding-left:15%">
+        <div class="ui middle aligned list">
+            <div class="item">
+                <img class="ui image" src="/assets/images/1.png">
+                <div class="content">
+                    <div class="description">EEM1(Low Cost): Lighting Retrofit
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div>
+                <ul>
+                    <li> Upgrade lighting to LEDs </li>
+                    <li> Add occupancy sensors to common areas such as corridors, restrooms, mechanical room and lobby </li>
+                </ul>
+            </div>
+            <br>
+            <div class="item">
+                <img class="ui image" src="/assets/images/2.png">
+                <div class="content">
+                    <div class="description">EEM2(Medium Cost): HVAC Retrofit
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <ul>
+                        <li> Match ASHRAE 90.1-2016 HVAC efficiency </li>
+                        <li> Includes lighting retrofit from 1st scenario </li>
+                    </ul>
+                </div>
+                <br>
+            </div>
+            <div class="item">
+                <img class="ui image" src="/assets/images/3.png">
+                <div class="content">
+                    <div class="description">EEM3(High Cost): Green Retrofit
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <ul>
+                        <li> Full ASHRAE 90.1 Baseline building (lighting, HVAC, envelope) – uses VAV w/ Reheat system </li>
+                        <li> Infiltration rate is reduced from 0.3 CFM/ exterior surface to 0.1 CFM/ exterior surface,
+                            due to envelope retrofit (WWR not changed) </li>
+                    </ul>
+                </div>
+                <br>
+            </div>
+            <div class="item">
+                <img class="ui image" src="/assets/images/4.png">
+                <div class="content">
+                    <div class="description">EEM4(Extravagant): Deep Green Retrofit
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <ul>
+                        <li> High Performance Envelope: R-40 Roof Insulation and R13 + R15 c.i. Wall Insulation </li>
+                        <li> High Performance Window: U-0.25/ SHGC-0.38 </li>
+                        <li> Better Cooling Efficiency: 15 EER for package single zone split system; 10 EER for AHU system </li>
+                        <li> Includes all other ASHRAE 90.1 retrofits </li>
+                    </ul>
+                </div>
+                <br>
+            </div>
+        </div>
+    </ul>
+
+
+    <h2>
+      <em>
+            <span style="color:#363636">
+                How do I use the Portfolios Codes Tool?
+            </span>
+
+      </em>
+    </h2>
+
+    <div class="item">
+        <img class="ui image" src="/assets/images/1.png">
+        <div class="content">
+            <div class="description">Option 1: Manually Enter Building Information
+            </div>
+        </div>
+    </div>
+    <br>
+    <img src="./assets/images/manual initial input.png"></p>
+    <br>
+    <img src="./assets/images/manual building input.png"></p>
+
+    <p>
+      The tool was designed to enable analysis for two main cases:
+    </p>
+
+
+    <div class="item">
+        <img class="ui image" src="/assets/images/2.png">
+        <div class="content">
+            <div class="description">Option 2: Upload CSV for Portfolio of Buildings
+            </div>
+        </div>
+    </div>
+    <br>
+    <img src="./assets/images/csv upload.png"></p>
+
+
+    <div class="item">
+        <img class="ui image" src="/assets/images/2.png">
+        <div class="content">
+            <div class="description">Option 3: Click 'Generate Results'
+            </div>
+        </div>
+    </div>
+    <br>
+    <img src="./assets/images/results.png"></p>
+
+
+
+    <div class="ui hidden divider"></div>
+
+
+
+</div>
+    

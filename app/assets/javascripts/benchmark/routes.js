@@ -8,10 +8,7 @@ define(['angular', './controllers', 'common'], function(angular, controllers) {
   mod.config(['$routeProvider', function($routeProvider) {
     $routeProvider
         .when('/',  {templateUrl: 'javascripts/benchmark/benchmark.html',  controller:controllers.DashboardCtrl})
-        .when('/about',  {templateUrl: 'javascripts/benchmark/about.html', controller:controllers.RootCtrl})
-        .when('/guide',  {templateUrl: 'javascripts/benchmark/guide.html', controller:controllers.RootCtrl})
-        .when('/bulk',  {templateUrl: 'javascripts/benchmark/bulk.html', controller:controllers.RootCtrl})
-        .when('/simple',  {templateUrl: 'javascripts/benchmark/simple.html', controller:controllers.RootCtrl});
+        .when('/usecase',  {templateUrl: 'javascripts/benchmark/usecase.html'});
   }]);
   return mod;
 });
