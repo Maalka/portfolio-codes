@@ -35,13 +35,19 @@
 		</form>
 	</div>
 
+	<h2 class="ui dividing header"></h2>
 
+		<div>
+			<div class="ui basic horizontal segments">
+				<div class="ui basic segment right aligned">
+					<a href ng-click="print()"><i>PRINT</i> <i class="maalka-blue print icon"></i></a>
+				</div>
+			</div>
+		</div>
 
 	</div>
 
-	<h2 class="ui dividing header"></h2>
-	<span id="portfolioEui">Portfolio EUI {{portfolioEui}}</span>
-	<span id="portfolioEnergy">Portfolio Energy {{portfolioEnergy}}</span>
+
 
 	<div class="ui padded sixteen column grid" style="margin-bottom:10px;">
 
@@ -54,22 +60,15 @@
                 </div>
             </div>
         </div>
-
+	  <div class="row" style="padding-top:0.1em;padding-left:5.5em;;">	<div class="ui small header" style="text-transform:none;letter-spacing: 0.02em;">Portfolio Energy: <span style="font-size:1em">{{portfolioEnergy}}</span><span style="text-transform:none;"> kBtu</span></div></div>
+		<div class="row" style="padding-top:0.1em;padding-left:5.5em;">	<div class="ui small header"style="text-transform:none;letter-spacing: 0.02em;">Portfolio Eui: <span style="font-size:1em">{{portfolioEui}}</span><span style="text-transform:none;"> kBtu/ft<sup>2</sup></span></div></div>
   	<div class="eight wide column" style="padding-left:20px; padding-right:20px; background-color:white;">
 			<bar ng-style="myStyle" data="energySeries" categories="catergories" options="barOptions.energy"></bar>
 		</div>
 		<div class="eight wide column">
+
 			<bar ng-style="myStyle" data="euiSeries" categories="catergories"  options="barOptions.eui"></bar>
 
 		</div>
 
-
-
-	<div>
-		<div class="ui basic horizontal segments">
-			<div class="ui basic segment right aligned">
-				<a href ng-click="print()"><i>PRINT</i> <i class="maalka-blue print icon"></i></a>
-			</div>
-		</div>
-	</div>
 </div>

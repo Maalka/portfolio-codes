@@ -12,6 +12,8 @@ define(['highcharts', 'highcharts-more'], function(angular, nvd3) {
             }
         };
 
+        console.log(Highcharts,'highcharts');
+
         // Apply the theme
         Highcharts.setOptions(Highcharts.theme);
         /*
