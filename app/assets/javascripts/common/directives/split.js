@@ -6,14 +6,14 @@
 define(['angular', './main', 'highcharts'], function(angular) {
   'use strict';
   var mod = angular.module('common.directives');
-  mod.directive('bar', [function() {
+  mod.directive('split', [function() {
     return {
 
       restrict: 'E',
       //define the scope property, pass data through into this directive
       //isolate scope, the directive has its own scope, not the same as the scope in the html
       //get scope data off html and map it onto this scope
-      replace:true,
+
       scope: {
         //mapping scope into isolate scope
         //key value pairs, to give this scope data
@@ -23,8 +23,8 @@ define(['angular', './main', 'highcharts'], function(angular) {
         categories:'='
 
       },
-      template:'<div id="container"></div>',
-      link: function(scope, element){
+      link: function(scope, element) {
+
         var options = {
           chart: {
             type: 'bar',
@@ -32,9 +32,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
             marginBottom: 70,
             height: scope.height
 
-
           },
-
           yAxis: {
             min: 0,
             gridLineColor: 'transparent',
@@ -46,7 +44,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
             }
           },
       legend:{
-       align: 'right',
+        align: 'right',
        verticalAlign: 'top',
        layout: 'vertical',
             itemStyle: {
@@ -92,28 +90,13 @@ define(['angular', './main', 'highcharts'], function(angular) {
           },
           series: scope.series
         };
-        var chart;
-          angular.element(element).highcharts(options, function () {
-              chart=this;
-              scope.containerW=chart.containerWidth;
-          });
-          scope.$watch('containerW',function(){
-              redraw();
-          });
-
-        function redraw(){
-          console.log(chart.containerWidth,'con');
-          chart.isDirtyBox=true;
-          chart.chartWidth=chart.containerWidth;
-          chart.reflow();
-          chart.redraw();
-        }
+      angular.element(element).highcharts(options);
       },
       controller: ["$scope","$element",function($scope,$element) {
 
 
         var series = [];
-        var colors = ['#1F2C5C', '#3F58CE', '#5D70D4', '#08B4BB', '#6BD2D6', '#06A1F9', '#0579BB', '#F5B569', '#EB885C', '#D4483D', '#64467D', '#9A6ECE','#06AED5','#564787','#FDE74C'];
+        //var colors = ['#1F2C5C', '#3F58CE', '#5D70D4', '#08B4BB', '#6BD2D6', '#06A1F9', '#0579BB', '#F5B569', '#EB885C', '#D4483D', '#64467D', '#9A6ECE','#06AED5','#564787','#FDE74C'];
         var index;
 
         function createSeries() {
@@ -124,7 +107,18 @@ define(['angular', './main', 'highcharts'], function(angular) {
                 name: propEnergy,
                 id: propEnergy+$scope.options.id,
                 data: $scope.data[propEnergy],
-                color: colors[index++],
+                color: {
+                    pattern: {
+                        path: {
+                            d: 'M 0 0 L 6 6 M 5 -1 L 7 1 M -1 5 L 1 7',
+                            strokeWidth: 3
+                        },
+                        height: 6,
+                        width: 6,
+                        r: 4,
+                        color: '#3F58CE'
+                    }
+                },
                 borderWidth: 0
               };
             if($scope.options.id==='_eui'){
@@ -143,7 +137,6 @@ define(['angular', './main', 'highcharts'], function(angular) {
         $scope.series = series;
         console.log($element);
         $scope.height = $scope.categories.length*10+360;
-        console.log($element,'el');
       }]
     };
   }]);
