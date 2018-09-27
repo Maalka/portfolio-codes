@@ -13,7 +13,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
       //define the scope property, pass data through into this directive
       //isolate scope, the directive has its own scope, not the same as the scope in the html
       //get scope data off html and map it onto this scope
-
+      replace:true,
       scope: {
         //mapping scope into isolate scope
         //key value pairs, to give this scope data
@@ -23,14 +23,14 @@ define(['angular', './main', 'highcharts'], function(angular) {
         categories:'='
 
       },
+      template:'<div id="container"></div>',
       link: function(scope, element){
         var options = {
           chart: {
             type: 'bar',
             marginTop: 50,
             marginBottom: 70,
-            height: scope.height,
-            reflow: false
+            height: scope.height
 
 
           },
@@ -94,22 +94,20 @@ define(['angular', './main', 'highcharts'], function(angular) {
         };
         var chart;
           angular.element(element).highcharts(options, function () {
-             chart = this;
+              chart=this;
+              scope.containerW=chart.containerWidth;
           });
-      scope.width = window.innerWidth;
-      scope.height = window.innerHeight;
-      angular.element(window).bind('resize', function(){
-        scope.width = window.innerWidth;
-        scope.height = window.innerHeight;
-        // manuall $digest required as resize event
-        // is outside of angular
-        scope.$digest();
-      });
-      scope.$watch('width',function(width){
-          console.log(width,'width');
-            console.log(chart,'chart');
-          chart.setSize((width/2), (chart.height),true);
-        });
+          scope.$watch('containerW',function(){
+              redraw();
+          });
+
+        function redraw(){
+          console.log(chart.containerWidth,'con');
+          chart.isDirtyBox=true;
+          chart.chartWidth=chart.containerWidth;
+          chart.reflow();
+          chart.redraw();
+        }
       },
       controller: ["$scope","$element",function($scope,$element) {
 
