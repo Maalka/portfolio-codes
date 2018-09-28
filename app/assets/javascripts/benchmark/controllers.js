@@ -193,8 +193,19 @@ define(['angular'], function() {
     };
 
 
+    function groupDiffs(endUses,energy,eui){
+          for(var i=0;i<endUses.length;i++){
+            if(energy[i].energy_diff<0){
+              energy[i].energy_diff=0;
+            }
+            if(eui[i].eui_diff<0){
+              eui[i].eui_diff=0;
+            }
+            endUses[i].energyDiff=Math.round(energy[i].energy_diff);
+            endUses[i].euiDiff=Math.round(eui[i].eui_diff);
 
-
+          }
+    }
     $scope.computeBenchmarkResult = function(submission){
         $log.info(submission);
 
@@ -205,6 +216,14 @@ define(['angular'], function() {
             var totalEnergy=results.values[0].total_eui_list;
             var totalEui=results.values[1].total_energy_list;
             $scope.endUseProps=results.values[4].end_uses;
+            var energyDiffs=results.values[5].energy_diff;
+            var euiDiffs=results.values[6].eui_diff;
+            groupDiffs($scope.endUseProps,energyDiffs,euiDiffs);
+              console.log($scope.endUseProps,'endUse');
+
+            console.log(energyDiffs,'energyDiff');
+            console.log(euiDiffs,'eui diff');
+
             $scope.portfolioEui=portfolioTotal(totalEnergy,'eui');
             $scope.portfolioEnergy=portfolioTotal(totalEui,'energy');
             $scope.endUseProps=groupByBuildingType($scope.endUseProps);
@@ -214,8 +233,10 @@ define(['angular'], function() {
             $scope.negativeEui=series.properties.eui;
             console.log($scope.endUseProps,'endUses');
             console.log(JSON.stringify($scope.endUseProps),'endUses');
+            console.log(  $scope.energySeries,'euiSeries');
+            console.log($scope.euiSeries,'eseries');
 
-            $scope.catergories=series.categories;
+            $scope.categories=series.categories;
           //  console.log('Formatting Data for Highcharts EndUse - Energy',series.properties.energy);
           //  console.log('Formatting Data for Highcharts EndUse - EUI',series.properties.eui);
           //  console.log('Formatting Data for Highcharts EndUse - Categories',series.categories);
@@ -228,22 +249,26 @@ define(['angular'], function() {
 
         });
     };
+
       function testPerformance(name,func,params){
-        var t0 = performance.now();
+        //var t0 = performance.now();
         func(params);   // <---- The function you're measuring time for
-        var t1 = performance.now();
-        console.log(name+ ":" + (t1 - t0) + " milliseconds.");
+        //var t1 = performance.now();
+        //console.log(name+ ":" + (t1 - t0) + " milliseconds.");
       }
       function portfolioTotal(list,energyType){
           var totalPortfolioEui=0;
           for(var i=0;i<list.length;i++){
             totalPortfolioEui+=list[i][energyType];
           }
-          var rounded=Math.round(totalPortfolioEui * 100) / 100;
+          var rounded=Math.round(totalPortfolioEui);
           return rounded;
       }
+
       function createSeries(endUse){
         var categories = [];
+
+
         var terms = {
           clg: {},
           extEqp: {},
@@ -259,25 +284,39 @@ define(['angular'], function() {
           pumps: {},
           refrg: {},
           swh: {},
-          net: {}
+          net: {},
         };
+
         var properties = {
           eui: {},
-          energy: {}
+          energy: {},
+          differences:{}
         };
         for (var term in terms) {
           properties.eui[term] = [];
           properties.energy[term] = [];
         }
+        properties.energy.diff=[];
+        properties.eui.diff=[];
+
+        console.log(properties,'props');
         endUse.forEach(function(item){
             categories.push(item.building_name);
+
+            properties.energy.diff.push(item.energyDiff);
             for(var term in item.energy_breakdown){
-                properties.energy[term].push(item.energy_breakdown[term]);
+                properties.energy[term].push(Math.round(item.energy_breakdown[term]));
             }
+
+
             for(var euiTerm in item.eui_breakdown){
                 properties.eui[euiTerm].push(item.eui_breakdown[euiTerm]);
             }
+            properties.eui.diff.push(item.euiDiff);
         });
+
+        console.log(properties,'props');
+
         return {
           properties:properties,
           categories:categories
@@ -478,13 +517,6 @@ define(['angular'], function() {
         }
 
         return size.reduce(add, 0);
-    };
-
-
-    $scope.computeEndUses = function(){
-
-        console.log("Will compute here");
-
     };
 
 
