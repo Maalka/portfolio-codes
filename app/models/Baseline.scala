@@ -158,9 +158,10 @@ case class EUIMetrics(parameters: JsValue) {
       differenceEUIList:List[Energy] <- Future{(modelTotalBaseEUI,modelTotalEUI).zipped.map(_-_)}
 
     } yield {
-      differenceEUIList.map{
-        case a => Map(
-          "eui_diff" -> a.value
+      (propList,differenceEUIList).zipped.map{
+        case (a,b) => Map(
+          "building_name" -> a.building_name,
+          "eui_diff" -> b.value
         )
       }
     }
@@ -181,9 +182,10 @@ case class EUIMetrics(parameters: JsValue) {
       differenceEnergyList:List[Energy] <- Future{(energyBaseList,energyList).zipped.map(_-_)}
 
     } yield {
-      differenceEnergyList.map{
-        case a => Map(
-          "eui_diff" -> a.value
+      (propList,differenceEnergyList).zipped.map{
+        case (a,b) => Map(
+          "building_name" -> a.building_name,
+          "energy_diff" -> b.value
         )
       }
     }
