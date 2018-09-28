@@ -115,7 +115,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
   val schema = Json.fromJson[SchemaType](Json.parse(
     """{
         "type": "array",
-        "id": "http://znc.maalka.com/znc",
+        "id": "http://portfolio-codes.maalka.com/baseline",
         "items": [
           {
           "id": "/items",
@@ -157,6 +157,10 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
               "type": "string",
               "enum": ["imperial", "metric"]
             },
+            "scenario": {
+              "type": "string",
+              "enum": ["base", "EEM1", "EEM2", "EEM3", "EEM4"]
+            },
             "climate_zone": {
               "type": "string",
               "enum": ["1A","2A","2B","3A","3B","3C","4A","4B","4C","5A","5B","6A","6B","7","8"],
@@ -190,7 +194,10 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
           Baseline.getTotalEnergyList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
           Baseline.getTotalEUIBreakdownList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
           Baseline.getTotalEnergyBreakdownList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-          Baseline.getEndUses.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
+          Baseline.getEndUses.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
+
+          Baseline.getEnergyDiff.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
+          Baseline.getEUIDiff.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
         ))
 
         val fieldNames = Seq(
@@ -199,7 +206,10 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
           "total_energy_list",
           "end_use_eui_list",
           "end_use_energy_list",
-          "end_uses"
+          "end_uses",
+
+          "energy_diff",
+          "eui_diff"
         )
 
         futures.map(fieldNames.zip(_)).map { r =>

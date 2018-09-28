@@ -204,6 +204,12 @@ define(['angular'], function() {
             var totalEnergy=results.values[0].total_eui_list;
             var totalEui=results.values[1].total_energy_list;
             $scope.endUseProps=results.values[4].end_uses;
+            $scope.energyDiffs=results.values[5].energy_diff;
+            $scope.euiDiffs=results.values[6].eui_diff;
+
+            console.log($scope.energyDiffs);
+            console.log($scope.euiDiffs);
+
             $scope.portfolioEui=portfolioTotal(totalEnergy,'eui');
             $scope.portfolioEnergy=portfolioTotal(totalEui,'energy');
             $scope.endUseProps=groupByBuildingType($scope.endUseProps);
@@ -212,7 +218,7 @@ define(['angular'], function() {
             $scope.euiSeries=series.properties.eui;
             $scope.negativeEui=series.properties.eui;
 
-            $scope.catergories=series.categories;
+            $scope.categories=series.categories;
           //  console.log('Formatting Data for Highcharts EndUse - Energy',series.properties.energy);
           //  console.log('Formatting Data for Highcharts EndUse - EUI',series.properties.eui);
           //  console.log('Formatting Data for Highcharts EndUse - Categories',series.categories);
@@ -226,10 +232,10 @@ define(['angular'], function() {
         });
     };
       function testPerformance(name,func,params){
-        var t0 = performance.now();
+        //var t0 = performance.now();
         func(params);   // <---- The function you're measuring time for
-        var t1 = performance.now();
-        console.log(name+ ":" + (t1 - t0) + " milliseconds.");
+        //var t1 = performance.now();
+        //console.log(name+ ":" + (t1 - t0) + " milliseconds.");
       }
       function portfolioTotal(list,energyType){
           var totalPortfolioEui=0;
@@ -475,13 +481,6 @@ define(['angular'], function() {
         }
 
         return size.reduce(add, 0);
-    };
-
-
-    $scope.computeEndUses = function(){
-
-        console.log("Will compute here");
-
     };
 
 

@@ -24,7 +24,7 @@ case class EUIMetrics(parameters: JsValue) {
   def getTotalEUIBreakdownList:Future[Seq[Map[String,Any]]] = {
     for {
       propList <- modelEUI.getValidatedPropList
-      modelBreakdowns <- Future.sequence(propList.map{modelEUI.lookupEndUses(_)})
+      modelBreakdowns <- Future.sequence(propList.map{modelEUI.lookupEndUses(_,None)})
     } yield {
       val test = (propList,modelBreakdowns)
         .zipped.map{
@@ -43,8 +43,9 @@ case class EUIMetrics(parameters: JsValue) {
   def getEndUses:Future[Seq[Map[String,Any]]] = {
     for {
       propList <- modelEUI.getValidatedPropList
-      modelEui <- Future.sequence(propList.map{modelEUI.lookupEndUses(_)})
+      modelEui <- Future.sequence(propList.map{modelEUI.lookupEndUses(_,None)})
       modelEnergy <- Future.sequence(propList.map{modelEUI.lookupModelEndUseEnergies(_)})
+
     } yield {
       val test = (propList,modelEui,modelEnergy)
         .zipped.map{
@@ -56,7 +57,6 @@ case class EUIMetrics(parameters: JsValue) {
           "energy_breakdown" -> c
         )
       }
-      println(test)
       test
     }
   }
@@ -126,6 +126,64 @@ case class EUIMetrics(parameters: JsValue) {
           "building_type" -> a.building_type,
           "floor_area" -> a.floor_area.value,
           "energy" -> b
+        )
+      }
+    }
+  }
+
+
+  def getTotalEUIBaseList:Future[List[Map[String,Any]]] = {
+    for {
+      propList <- modelEUI.getValidatedPropList
+      modelTotalEUI <- Future.sequence(propList.map{modelEUI.lookupModelTotalBaseIntensity(_)})
+    } yield {
+      (propList,modelTotalEUI).zipped.map{
+        case (a,b) => Map(
+          "building_name" -> a.building_name,
+          "building_type" -> a.building_type,
+          "floor_area" -> a.floor_area.value,
+          "eui" -> b
+        )
+      }
+    }
+  }
+
+  def getEUIDiff(): Future[List[Map[String,Any]]] = {
+    for {
+      propList <- modelEUI.getValidatedPropList
+
+      modelTotalBaseEUI:List[Energy] <- Future.sequence(propList.map{modelEUI.lookupModelTotalBaseIntensity(_)})
+      modelTotalEUI:List[Energy] <- Future.sequence(propList.map{modelEUI.lookupModelTotalMetricIntensity(_)})
+
+      differenceEUIList:List[Energy] <- Future{(modelTotalBaseEUI,modelTotalEUI).zipped.map(_-_)}
+
+    } yield {
+      differenceEUIList.map{
+        case a => Map(
+          "eui_diff" -> a.value
+        )
+      }
+    }
+  }
+
+  def getEnergyDiff(): Future[List[Map[String,Any]]] = {
+    for {
+      propList <- modelEUI.getValidatedPropList
+
+      modelTotalBaseEUI:List[Energy] <- Future.sequence(propList.map{modelEUI.lookupModelTotalBaseIntensity(_)})
+      areaList:List[Double] <- Future{propList.map(_.floor_area.value)}
+      energyBaseList:List[Energy] <- Future{(areaList,modelTotalBaseEUI).zipped.map(_*_)}
+
+      modelTotalEUI:List[Energy] <- Future.sequence(propList.map{modelEUI.lookupModelTotalMetricIntensity(_)})
+      areaList:List[Double] <- Future{propList.map(_.floor_area.value)}
+      energyList:List[Energy] <- Future{(areaList,modelTotalEUI).zipped.map(_*_)}
+
+      differenceEnergyList:List[Energy] <- Future{(energyBaseList,energyList).zipped.map(_-_)}
+
+    } yield {
+      differenceEnergyList.map{
+        case a => Map(
+          "eui_diff" -> a.value
         )
       }
     }

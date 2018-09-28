@@ -102,14 +102,14 @@ define(['angular', './main', 'highcharts'], function(angular) {
           });
 
         function redraw(){
-          console.log(chart.containerWidth,'con');
+          //console.log(chart.containerWidth,'con');
           chart.isDirtyBox=true;
           chart.chartWidth=chart.containerWidth;
           chart.reflow();
           chart.redraw();
         }
       },
-      controller: ["$scope","$element",function($scope,$element) {
+      controller: ["$scope",function($scope) {
 
 
         var series = [];
@@ -141,9 +141,9 @@ define(['angular', './main', 'highcharts'], function(angular) {
         }
         createSeries();
         $scope.series = series;
-        console.log($element);
+        //console.log($element);
         $scope.height = $scope.categories.length*10+360;
-        console.log($element,'el');
+        //console.log($element,'el');
       }]
     };
   }]);
