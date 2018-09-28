@@ -1,6 +1,6 @@
 <div>
 
-    <div class="ui stackable grid container" style="padding-top:14px">
+    <div class="ui stackable grid container" style="padding-top:14px;">
         <!-- setup the response grids *** LARGE SCREEN-->
         <div class="sixteen wide column"
             ng-class="{'desktop-padding-left': largeScreen}"
@@ -22,15 +22,15 @@
         </div>
     </div>
 
+    <div class="ui container" style="min-height:200px" ng-if="!endUses"></div>
 
-    
     <div class="ui stackable grid container" style="padding-top:14px" ng-if="endUses">
 
         <div class="sixteen wide column"
              ng-class="{'desktop-padding-right': largeScreen}"
              element="'#data-input'">
             <div class="ui hidden divider"></div>
-            <div ng-include src="'javascripts/benchmark/analysis_result.html'" style="padding-left: 1em;">Not Defined</div>
+            <div ng-include src="'javascripts/benchmark/analysis_result.html'">Not Defined</div>
         </div>
 
     </div>
