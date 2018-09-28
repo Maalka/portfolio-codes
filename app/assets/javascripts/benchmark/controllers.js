@@ -12,6 +12,7 @@ define(['angular'], function() {
   };
 
 
+
   RootCtrl.$inject = ['$rootScope'];
 
   var DashboardCtrl = function($rootScope, $scope, $window, $sce, $timeout, $q, $log, benchmarkServices) {
@@ -211,6 +212,8 @@ define(['angular'], function() {
             $scope.energySeries=series.properties.energy;
             $scope.euiSeries=series.properties.eui;
             $scope.negativeEui=series.properties.eui;
+            console.log($scope.endUseProps,'endUses');
+            console.log(JSON.stringify($scope.endUseProps),'endUses');
 
             $scope.catergories=series.categories;
           //  console.log('Formatting Data for Highcharts EndUse - Energy',series.properties.energy);

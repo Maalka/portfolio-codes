@@ -96,13 +96,16 @@ define(['angular', './main', 'highcharts'], function(angular) {
           angular.element(element).highcharts(options, function () {
               chart=this;
               scope.containerW=chart.containerWidth;
+              console.log(this,'chart');
+
           });
+      
           scope.$watch('containerW',function(){
+            //on a container width change redraw the chart
               redraw();
           });
-
+        //redraw the highcharts and set it to the contrainer width on resize
         function redraw(){
-          console.log(chart.containerWidth,'con');
           chart.isDirtyBox=true;
           chart.chartWidth=chart.containerWidth;
           chart.reflow();
