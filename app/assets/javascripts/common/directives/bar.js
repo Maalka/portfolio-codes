@@ -19,6 +19,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
         //key value pairs, to give this scope data
         //passing in data and bnding data
         data: '=',
+        diff:'=',
         options: '=',
         categories:'='
 
@@ -96,13 +97,16 @@ define(['angular', './main', 'highcharts'], function(angular) {
           angular.element(element).highcharts(options, function () {
               chart=this;
               scope.containerW=chart.containerWidth;
-          });
-          scope.$watch('containerW',function(){
-              redraw();
+              console.log(this,'chart');
+
           });
 
+          scope.$watch('containerW',function(){
+            //on a container width change redraw the chart
+              redraw();
+          });
+        //redraw the highcharts and set it to the contrainer width on resize
         function redraw(){
-          //console.log(chart.containerWidth,'con');
           chart.isDirtyBox=true;
           chart.chartWidth=chart.containerWidth;
           chart.reflow();
@@ -113,14 +117,14 @@ define(['angular', './main', 'highcharts'], function(angular) {
 
 
         var series = [];
-        var colors = ['#1F2C5C', '#3F58CE', '#5D70D4', '#08B4BB', '#6BD2D6', '#06A1F9', '#0579BB', '#F5B569', '#EB885C', '#D4483D', '#64467D', '#9A6ECE','#06AED5','#564787','#FDE74C'];
+        var colors = ['#1F2C5C', '#3F58CE', '#5D70D4', '#08B4BB', '#6BD2D6', '#06A1F9', '#0579BB', '#F5B569', '#EB885C', '#D4483D', '#64467D', '#9A6ECE','#06AED5','#564787','#000000','#000000'];
         var index;
-
+        console.log($scope.diff);
         function createSeries() {
           index = 0;
           for (var propEnergy in $scope.data) {
             if (propEnergy !== 'net') {
-              var modelEnergy = {
+               var modelEnergy = {
                 name: propEnergy,
                 id: propEnergy+$scope.options.id,
                 data: $scope.data[propEnergy],
@@ -128,17 +132,18 @@ define(['angular', './main', 'highcharts'], function(angular) {
                 borderWidth: 0
               };
             if($scope.options.id==='_eui'){
-              modelEnergy.showInLegend=true;
-               series.push(modelEnergy);
+                modelEnergy.showInLegend=true;
+
              }else{
                modelEnergy.linkedTo=propEnergy+'_eui';
                modelEnergy.showInLegend=false;
                modelEnergy.stack='_energy';
-               series.push(modelEnergy);
              }
+             series.push(modelEnergy);
             }
           }
         }
+
         createSeries();
         $scope.series = series;
         //console.log($element);
