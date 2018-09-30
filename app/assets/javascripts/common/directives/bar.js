@@ -21,8 +21,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
         data: '=',
         differences:'=',
         options: '=',
-        categories:'=',
-        chart:'='
+        categories:'='
 
 
       },
@@ -32,16 +31,21 @@ define(['angular', './main', 'highcharts'], function(angular) {
           var siblingChart=angular.element(element).parent().prev().children().highcharts();
           var currentChart=current;
           //if the chart legend is selected
-          if(current.chart.legend.selected){
-
+          if(current.selected){
+            siblingChart.series.forEach(function(item){
+              if(item.name===currentChart.name){
+                  item.hide();
+              }
+            });
+          }else{
+            console.log(current);
+            siblingChart.series.forEach(function(item){
+              if(item.name===currentChart.name){
+                  item.show();
+              }
+            });
           }
-          console.log(current);
-          siblingChart.series.forEach(function(item){
-            if(item.name===currentChart.name){
-                item.select();
-                item.hide();
-            }
-          });
+
           return true;
         }
         var options = {
@@ -79,7 +83,9 @@ define(['angular', './main', 'highcharts'], function(angular) {
               pointPadding: 0,
               events: {
                   legendItemClick: function () {
+                    console.log(this,'this');
                       connectLegends(this);
+
                   }
               }
             }
@@ -115,10 +121,8 @@ define(['angular', './main', 'highcharts'], function(angular) {
 
           angular.element(element).highcharts(options, function () {
               chart=this;
-              scope.chart.push(this);
               scope.containerW=chart.containerWidth;
           });
-          console.log(scope.chart);
 
           scope.$watch('containerW',function(){
             //on a container width change redraw the chart
