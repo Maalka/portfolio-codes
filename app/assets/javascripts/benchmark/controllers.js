@@ -29,6 +29,7 @@ define(['angular'], function() {
     $scope.barOptions.energy.showInLegend = false;
     $scope.barOptions.energy.linkedTo = '_eui';
     $scope.barOptions.eui.linkedTo = undefined;
+    $scope.charts = [];
 
     $scope.barOptions.energy.label = true;
     $scope.barOptions.energy.id = '_energy';

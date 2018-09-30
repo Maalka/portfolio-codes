@@ -21,13 +21,32 @@ define(['angular', './main', 'highcharts'], function(angular) {
         data: '=',
         differences:'=',
         options: '=',
-        categories:'='
+        categories:'=',
+        chart:'='
+
 
       },
       template:'<div id="container"></div>',
       link: function(scope, element){
+        function connectLegends(current){
+          var siblingChart=angular.element(element).parent().prev().children().highcharts();
+          var currentChart=current;
+          //if the chart legend is selected
+          if(current.chart.legend.selected){
+
+          }
+          console.log(current);
+          siblingChart.series.forEach(function(item){
+            if(item.name===currentChart.name){
+                item.select();
+                item.hide();
+            }
+          });
+          return true;
+        }
         var options = {
           chart: {
+            className:scope.options.id,
             type: 'bar',
             marginTop: 50,
             marginBottom: 70,
@@ -60,7 +79,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
               pointPadding: 0,
               events: {
                   legendItemClick: function () {
-                      return false;
+                      connectLegends(this);
                   }
               }
             }
@@ -93,10 +112,13 @@ define(['angular', './main', 'highcharts'], function(angular) {
           series: scope.series
         };
         var chart;
+
           angular.element(element).highcharts(options, function () {
               chart=this;
+              scope.chart.push(this);
               scope.containerW=chart.containerWidth;
           });
+          console.log(scope.chart);
 
           scope.$watch('containerW',function(){
             //on a container width change redraw the chart
