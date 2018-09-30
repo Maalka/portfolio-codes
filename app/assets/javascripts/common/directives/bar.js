@@ -32,10 +32,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
             marginTop: 50,
             marginBottom: 70,
             height: scope.height
-
-
           },
-
           yAxis: {
             min: 0,
             gridLineColor: 'transparent',
@@ -97,8 +94,6 @@ define(['angular', './main', 'highcharts'], function(angular) {
           angular.element(element).highcharts(options, function () {
               chart=this;
               scope.containerW=chart.containerWidth;
-              console.log(this,'chart');
-
           });
 
           scope.$watch('containerW',function(){
@@ -119,10 +114,6 @@ define(['angular', './main', 'highcharts'], function(angular) {
         var series = [];
         var colors = ['#FFF','#1F2C5C', '#3F58CE', '#5D70D4', '#08B4BB', '#6BD2D6', '#06A1F9', '#0579BB', '#F5B569', '#EB885C', '#D4483D', '#64467D', '#9A6ECE','#06AED5','#564787','#000000','#000000'];
         var index;
-        console.log($scope.differences,'diff');
-        console.log($scope.data,'diff');
-        console.log(Object.keys($scope.data).length,'lengh');
-
 
         function createSeries() {
           index = 1;
@@ -140,7 +131,6 @@ define(['angular', './main', 'highcharts'], function(angular) {
                 borderWidth: 0
               };
               index++;
-              console.log(index,'index');
              series.push(modelEnergy);
             }
           }
@@ -167,13 +157,9 @@ define(['angular', './main', 'highcharts'], function(angular) {
 
         }
         createSeries();
-
         addInDifferences();
-
         $scope.series = series;
-        //console.log($element);
         $scope.height = $scope.categories.length*10+360;
-        //console.log($element,'el');
       }]
     };
   }]);
