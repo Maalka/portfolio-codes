@@ -69,6 +69,8 @@ define(['angular', './main', 'highcharts'], function(angular) {
             shared: false,
             useHTML: true,
             formatter: function() {
+              console.log(this.point,'thispoint');
+
                 return '<b>' + this.x + '</b><br/>' +
                   this.series.name + ': ' + this.y + ' '+scope.options.axislabel+ '<br/>' +
                   'Total: ' + this.point.stackTotal;
@@ -141,13 +143,13 @@ define(['angular', './main', 'highcharts'], function(angular) {
              name: 'differences'+$scope.options.id,
              id: 'differences'+$scope.options.id,
              data: $scope.differences,
-             color: '#FFFFFF',
+             color: '#DCDCDC',
              showInLegend:false,
              stack:$scope.options.id,
              index:0,
              dataLabels: {
                    enabled: $scope.options.showLabels,
-                   align: 'center',
+                   align: 'left',
                    color: '#000000',
                    x: 20
                },
