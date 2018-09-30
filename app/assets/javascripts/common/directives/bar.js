@@ -27,18 +27,19 @@ define(['angular', './main', 'highcharts'], function(angular) {
       },
       template:'<div id="container"></div>',
       link: function(scope, element){
+
         function connectLegends(current){
           var siblingChart=angular.element(element).parent().prev().children().highcharts();
           var currentChart=current;
-          //if the chart legend is selected
-          if(current.selected){
+          //if the chart legend is visible, if its not it was selected
+          //so it should be hidden
+          if(current.visible){
             siblingChart.series.forEach(function(item){
               if(item.name===currentChart.name){
                   item.hide();
               }
             });
           }else{
-            console.log(current);
             siblingChart.series.forEach(function(item){
               if(item.name===currentChart.name){
                   item.show();
@@ -48,6 +49,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
 
           return true;
         }
+
         var options = {
           chart: {
             className:scope.options.id,
@@ -83,8 +85,9 @@ define(['angular', './main', 'highcharts'], function(angular) {
               pointPadding: 0,
               events: {
                   legendItemClick: function () {
-                    console.log(this,'this');
-                      connectLegends(this);
+
+
+                    connectLegends(this);
 
                   }
               }
