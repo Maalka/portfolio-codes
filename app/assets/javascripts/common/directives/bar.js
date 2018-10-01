@@ -19,23 +19,45 @@ define(['angular', './main', 'highcharts'], function(angular) {
         //key value pairs, to give this scope data
         //passing in data and bnding data
         data: '=',
-        diff:'=',
+        differences:'=',
         options: '=',
         categories:'='
+
 
       },
       template:'<div id="container"></div>',
       link: function(scope, element){
+
+        function connectLegends(current){
+          var siblingChart=angular.element(element).parent().prev().children().highcharts();
+          var currentChart=current;
+          //if the chart legend is visible, if its not it was selected
+          //so it should be hidden
+          if(current.visible){
+            siblingChart.series.forEach(function(item){
+              if(item.name===currentChart.name){
+                  item.hide();
+              }
+            });
+          }else{
+            siblingChart.series.forEach(function(item){
+              if(item.name===currentChart.name){
+                  item.show();
+              }
+            });
+          }
+
+          return true;
+        }
+
         var options = {
           chart: {
+            className:scope.options.id,
             type: 'bar',
             marginTop: 50,
             marginBottom: 70,
             height: scope.height
-
-
           },
-
           yAxis: {
             min: 0,
             gridLineColor: 'transparent',
@@ -63,7 +85,10 @@ define(['angular', './main', 'highcharts'], function(angular) {
               pointPadding: 0,
               events: {
                   legendItemClick: function () {
-                      return false;
+
+
+                    connectLegends(this);
+
                   }
               }
             }
@@ -72,6 +97,8 @@ define(['angular', './main', 'highcharts'], function(angular) {
             shared: false,
             useHTML: true,
             formatter: function() {
+              console.log(this.point,'thispoint');
+
                 return '<b>' + this.x + '</b><br/>' +
                   this.series.name + ': ' + this.y + ' '+scope.options.axislabel+ '<br/>' +
                   'Total: ' + this.point.stackTotal;
@@ -94,11 +121,10 @@ define(['angular', './main', 'highcharts'], function(angular) {
           series: scope.series
         };
         var chart;
+
           angular.element(element).highcharts(options, function () {
               chart=this;
               scope.containerW=chart.containerWidth;
-              console.log(this,'chart');
-
           });
 
           scope.$watch('containerW',function(){
@@ -117,38 +143,54 @@ define(['angular', './main', 'highcharts'], function(angular) {
 
 
         var series = [];
-        var colors = ['#1F2C5C', '#3F58CE', '#5D70D4', '#08B4BB', '#6BD2D6', '#06A1F9', '#0579BB', '#F5B569', '#EB885C', '#D4483D', '#64467D', '#9A6ECE','#06AED5','#564787','#000000','#000000'];
+        var colors = ['#FFF','#1F2C5C', '#3F58CE', '#5D70D4', '#08B4BB', '#6BD2D6', '#06A1F9', '#0579BB', '#F5B569', '#EB885C', '#D4483D', '#64467D', '#9A6ECE','#06AED5','#564787','#000000','#000000'];
         var index;
-        console.log($scope.diff);
+
         function createSeries() {
-          index = 0;
+          index = 1;
           for (var propEnergy in $scope.data) {
             if (propEnergy !== 'net') {
                var modelEnergy = {
                 name: propEnergy,
                 id: propEnergy+$scope.options.id,
                 data: $scope.data[propEnergy],
-                color: colors[index++],
+                color: colors[index],
+                index: index,
+                showInLegend:$scope.options.showInLegend,
+                linkedTo:$scope.options.linkedTo,
+                stack:$scope.options.id,
                 borderWidth: 0
               };
-            if($scope.options.id==='_eui'){
-                modelEnergy.showInLegend=true;
-
-             }else{
-               modelEnergy.linkedTo=propEnergy+'_eui';
-               modelEnergy.showInLegend=false;
-               modelEnergy.stack='_energy';
-             }
+              index++;
              series.push(modelEnergy);
             }
           }
         }
 
+        function addInDifferences(){
+            var differences = {
+             name: 'differences'+$scope.options.id,
+             id: 'differences'+$scope.options.id,
+             data: $scope.differences,
+             color: '#DCDCDC',
+             showInLegend:false,
+             stack:$scope.options.id,
+             index:0,
+             dataLabels: {
+                   enabled: $scope.options.showLabels,
+                   align: 'left',
+                   color: '#000000',
+                   x: 20
+               },
+             borderWidth: 0
+            };
+            series.push(differences);
+
+        }
         createSeries();
+        addInDifferences();
         $scope.series = series;
-        //console.log($element);
         $scope.height = $scope.categories.length*10+360;
-        //console.log($element,'el');
       }]
     };
   }]);

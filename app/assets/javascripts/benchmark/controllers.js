@@ -25,6 +25,10 @@ define(['angular'], function() {
     $scope.barOptions = {};
     $scope.barOptions.energy = {};
     $scope.barOptions.eui = {};
+    $scope.barOptions.eui.showInLegend = true;
+    $scope.barOptions.energy.showInLegend = false;
+    $scope.barOptions.energy.linkedTo = '_eui';
+    $scope.barOptions.eui.linkedTo = undefined;
 
     $scope.barOptions.energy.label = true;
     $scope.barOptions.energy.id = '_energy';
@@ -194,6 +198,7 @@ define(['angular'], function() {
 
 
     function groupDiffs(endUses,energy,eui){
+          var showLabels=true;
           for(var i=0;i<endUses.length;i++){
             if(energy[i].energy_diff<0){
               energy[i].energy_diff=0;
@@ -201,10 +206,13 @@ define(['angular'], function() {
             if(eui[i].eui_diff<0){
               eui[i].eui_diff=0;
             }
-            endUses[i].energyDiff=Math.round(energy[i].energy_diff);
-            endUses[i].euiDiff=Math.round(eui[i].eui_diff);
-
+            endUses[i].energy_diff=Math.round(energy[i].energy_diff);
+            endUses[i].eui_diff=Math.round(eui[i].eui_diff);
+            if(eui[i].eui_diff===0||energy[i].energy_diff===0){
+              showLabels=false;
+            }
           }
+          return showLabels;
     }
     $scope.computeBenchmarkResult = function(submission){
         $log.info(submission);
@@ -218,8 +226,9 @@ define(['angular'], function() {
             $scope.endUseProps=results.values[4].end_uses;
             var energyDiffs=results.values[5].energy_diff;
             var euiDiffs=results.values[6].eui_diff;
-            groupDiffs($scope.endUseProps,energyDiffs,euiDiffs);
-              console.log($scope.endUseProps,'endUse');
+            var showLabels=groupDiffs($scope.endUseProps,energyDiffs,euiDiffs);
+            $scope.barOptions.eui.showLabels=showLabels;
+            $scope.barOptions.energy.showLabels=showLabels;
 
             console.log(energyDiffs,'energyDiff');
             console.log(euiDiffs,'eui diff');
@@ -228,6 +237,7 @@ define(['angular'], function() {
             $scope.portfolioEnergy=portfolioTotal(totalEui,'energy');
             $scope.endUseProps=groupByBuildingType($scope.endUseProps);
             var series=createSeries($scope.endUseProps);
+            $scope.differences=series.differences;
             $scope.energySeries=series.properties.energy;
             $scope.euiSeries=series.properties.eui;
             $scope.negativeEui=series.properties.eui;
@@ -267,7 +277,10 @@ define(['angular'], function() {
 
       function createSeries(endUse){
         var categories = [];
-
+        var differences={
+          eui:[],
+          energy:[]
+        };
 
         var terms = {
           clg: {},
@@ -284,41 +297,41 @@ define(['angular'], function() {
           pumps: {},
           refrg: {},
           swh: {},
-          net: {},
+          net: {}
         };
 
         var properties = {
           eui: {},
-          energy: {},
-          differences:{}
+          energy: {}
         };
         for (var term in terms) {
           properties.eui[term] = [];
           properties.energy[term] = [];
         }
-        properties.energy.diff=[];
-        properties.eui.diff=[];
+
 
         console.log(properties,'props');
         endUse.forEach(function(item){
+            differences.eui.push(item.eui_diff);
+            differences.energy.push(item.energy_diff);
             categories.push(item.building_name);
 
-            properties.energy.diff.push(item.energyDiff);
+
             for(var term in item.energy_breakdown){
                 properties.energy[term].push(Math.round(item.energy_breakdown[term]));
             }
 
-
             for(var euiTerm in item.eui_breakdown){
                 properties.eui[euiTerm].push(item.eui_breakdown[euiTerm]);
             }
-            properties.eui.diff.push(item.euiDiff);
         });
 
         console.log(properties,'props');
+        console.log(differences,'diff');
 
         return {
           properties:properties,
+          differences:differences,
           categories:categories
         };
     }

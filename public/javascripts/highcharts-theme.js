@@ -13,8 +13,7 @@ define(['highcharts', 'highcharts-more'], function(angular, nvd3) {
         };
 
         console.log(Highcharts,'highcharts');
-
-        // Apply the theme
+      
         Highcharts.setOptions(Highcharts.theme);
         /*
         //set the line legond symbol to be the area symbol (we want a box)
