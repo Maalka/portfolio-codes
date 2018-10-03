@@ -148,6 +148,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
 
         function createSeries() {
           index = 1;
+          var legendIndex=0;
           for (var propEnergy in $scope.data) {
             if (propEnergy !== 'net') {
                var modelEnergy = {
@@ -156,7 +157,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
                 data: $scope.data[propEnergy],
                 color: colors[index],
                 index: index,
-                showInLegend:$scope.options.showInLegend,
+                showInLegend:$scope.options.showInLegend[legendIndex++],
                 linkedTo:$scope.options.linkedTo,
                 stack:$scope.options.id,
                 borderWidth: 0
@@ -166,7 +167,6 @@ define(['angular', './main', 'highcharts'], function(angular) {
             }
           }
         }
-
         function addInDifferences(){
             var differences = {
              name: 'differences'+$scope.options.id,
@@ -187,8 +187,10 @@ define(['angular', './main', 'highcharts'], function(angular) {
             series.push(differences);
 
         }
+
         createSeries();
         addInDifferences();
+
         $scope.series = series;
         $scope.height = $scope.categories.length*10+360;
       }]

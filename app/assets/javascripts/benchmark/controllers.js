@@ -237,6 +237,8 @@ define(['angular'], function() {
             $scope.portfolioEnergy=portfolioTotal(totalEui,'energy');
             $scope.endUseProps=groupByBuildingType($scope.endUseProps);
             var series=createSeries($scope.endUseProps);
+            $scope.barOptions.eui.showInLegend=series.legend;
+
             $scope.differences=series.differences;
             $scope.energySeries=series.properties.energy;
             $scope.euiSeries=series.properties.eui;
@@ -274,7 +276,21 @@ define(['angular'], function() {
           var rounded=Math.round(totalPortfolioEui);
           return rounded;
       }
-
+      function inLegend(series,terms){
+        var inLegend=[];
+        for (var term in terms) {
+            var total=0;
+            for(var i=0;i<series.energy[term].length;i++){
+                total+=series.energy[term][i];
+            }
+            if(total===0){
+              inLegend.push(false);
+            }else{
+              inLegend.push(true);
+            }
+        }
+        return inLegend;
+      }
       function createSeries(endUse){
         var categories = [];
         var differences={
@@ -299,7 +315,6 @@ define(['angular'], function() {
           swh: {},
           net: {}
         };
-
         var properties = {
           eui: {},
           energy: {}
@@ -308,31 +323,23 @@ define(['angular'], function() {
           properties.eui[term] = [];
           properties.energy[term] = [];
         }
-
-
-        console.log(properties,'props');
         endUse.forEach(function(item){
             differences.eui.push(item.eui_diff);
             differences.energy.push(item.energy_diff);
             categories.push(item.building_name);
-
-
             for(var term in item.energy_breakdown){
                 properties.energy[term].push(Math.round(item.energy_breakdown[term]));
             }
-
             for(var euiTerm in item.eui_breakdown){
                 properties.eui[euiTerm].push(item.eui_breakdown[euiTerm]);
             }
         });
-
-        console.log(properties,'props');
-        console.log(differences,'diff');
-
+        var legend=inLegend(properties,terms);
         return {
           properties:properties,
           differences:differences,
-          categories:categories
+          categories:categories,
+          legend:legend
         };
     }
     function filter(endUseProps) {
