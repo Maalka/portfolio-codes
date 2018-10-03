@@ -2873,6 +2873,25 @@
                 "total_heatRec": 0
             }
         ],
+        "6A_police_station_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 23.9,
+                "total_clg": 6.8,
+                "total_fans": 5.27,
+                "total_net": 69.24,
+                "total_humid": 0,
+                "total_intEqp": 13.35,
+                "total_swh": 2.01,
+                "total_refrg": 0.0,
+                "total_htg": 15.32,
+                "total_extLgt": 0.0,
+                "total_gentor": 0,
+                "total_pumps": 2.61,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
         "3A_police_station_base": [
             {
                 "total_extEqp": 0,
@@ -2930,6 +2949,44 @@
                 "total_heatRec": 0
             }
         ],
+        "3B_police_station_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 23.9,
+                "total_clg": 14.6,
+                "total_fans": 12.51,
+                "total_net": 74.43,
+                "total_humid": 0,
+                "total_intEqp": 13.35,
+                "total_swh": 2.3,
+                "total_refrg": 0.0,
+                "total_htg": 7.77,
+                "total_extLgt": 0.0,
+                "total_gentor": 0,
+                "total_pumps": 0.0,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4B_police_station_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 23.9,
+                "total_clg": 9.76,
+                "total_fans": 12.24,
+                "total_net": 74.64,
+                "total_humid": 0,
+                "total_intEqp": 13.35,
+                "total_swh": 2.53,
+                "total_refrg": 0.0,
+                "total_htg": 12.87,
+                "total_extLgt": 0.0,
+                "total_gentor": 0,
+                "total_pumps": 0.0,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
         "6B_police_station_base": [
             {
                 "total_extEqp": 0,
@@ -2945,6 +3002,25 @@
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
                 "total_pumps": 0.0,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3C_police_station_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 23.9,
+                "total_clg": 5.37,
+                "total_fans": 5.5,
+                "total_net": 56.09,
+                "total_humid": 0,
+                "total_intEqp": 13.35,
+                "total_swh": 1.74,
+                "total_refrg": 0.0,
+                "total_htg": 4.6,
+                "total_extLgt": 0.0,
+                "total_gentor": 0,
+                "total_pumps": 1.64,
                 "total_heatRej": 0,
                 "total_heatRec": 0
             }
@@ -3025,21 +3101,21 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_police_station_EEM1": [
+        "2A_police_station_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 23.9,
-                "total_clg": 16.56,
-                "total_fans": 11.4,
-                "total_net": 79.33,
+                "total_clg": 14.54,
+                "total_fans": 5.58,
+                "total_net": 65.14,
                 "total_humid": 0,
                 "total_intEqp": 13.35,
-                "total_swh": 2.36,
+                "total_swh": 1.53,
                 "total_refrg": 0.0,
-                "total_htg": 11.75,
+                "total_htg": 3.3,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
-                "total_pumps": 0.0,
+                "total_pumps": 2.94,
                 "total_heatRej": 0,
                 "total_heatRec": 0
             }
@@ -3063,18 +3139,18 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_police_station_EEM2": [
+        "2B_police_station_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 23.9,
-                "total_clg": 22.38,
-                "total_fans": 9.04,
-                "total_net": 77.64,
+                "total_clg": 25.16,
+                "total_fans": 13.12,
+                "total_net": 81.44,
                 "total_humid": 0,
                 "total_intEqp": 13.35,
-                "total_swh": 2.16,
+                "total_swh": 2.02,
                 "total_refrg": 0.0,
-                "total_htg": 6.82,
+                "total_htg": 3.89,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
                 "total_pumps": 0.0,
@@ -3215,18 +3291,37 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_police_station_EEM2": [
+        "4C_police_station_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 23.9,
-                "total_clg": 9.74,
-                "total_fans": 8.29,
-                "total_net": 72.11,
+                "total_clg": 5.55,
+                "total_fans": 10.0,
+                "total_net": 72.73,
                 "total_humid": 0,
                 "total_intEqp": 13.35,
-                "total_swh": 2.53,
+                "total_swh": 2.6,
                 "total_refrg": 0.0,
-                "total_htg": 14.3,
+                "total_htg": 17.33,
+                "total_extLgt": 0.0,
+                "total_gentor": 0,
+                "total_pumps": 0.0,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "1A_police_station_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 23.9,
+                "total_clg": 28.84,
+                "total_fans": 11.29,
+                "total_net": 80.11,
+                "total_humid": 0,
+                "total_intEqp": 13.35,
+                "total_swh": 1.89,
+                "total_refrg": 0.0,
+                "total_htg": 0.84,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
                 "total_pumps": 0.0,
@@ -3238,17 +3333,17 @@
             {
                 "total_extEqp": 0,
                 "total_intLgt": 23.9,
-                "total_clg": 5.96,
-                "total_fans": 5.16,
-                "total_net": 74.4,
+                "total_clg": 5.01,
+                "total_fans": 4.55,
+                "total_net": 67.57,
                 "total_humid": 0,
-                "total_intEqp": 13.35,
+                "total_intEqp": 13.32,
                 "total_swh": 2.15,
                 "total_refrg": 0.0,
-                "total_htg": 21.32,
+                "total_htg": 16.53,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
-                "total_pumps": 2.56,
+                "total_pumps": 2.11,
                 "total_heatRej": 0,
                 "total_heatRec": 0
             }
@@ -3291,18 +3386,18 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_police_station_EEM2": [
+        "6B_police_station_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 23.9,
-                "total_clg": 9.93,
-                "total_fans": 7.39,
-                "total_net": 76.34,
+                "total_clg": 4.42,
+                "total_fans": 9.72,
+                "total_net": 67.35,
                 "total_humid": 0,
                 "total_intEqp": 13.35,
-                "total_swh": 2.56,
+                "total_swh": 2.33,
                 "total_refrg": 0.0,
-                "total_htg": 19.22,
+                "total_htg": 13.62,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
                 "total_pumps": 0.0,
@@ -3405,25 +3500,6 @@
                 "total_heatRec": 0
             }
         ],
-        "8_police_station_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 23.9,
-                "total_clg": 2.35,
-                "total_fans": 32.19,
-                "total_net": 102.53,
-                "total_humid": 0,
-                "total_intEqp": 13.35,
-                "total_swh": 3.27,
-                "total_refrg": 0.0,
-                "total_htg": 27.46,
-                "total_extLgt": 0.0,
-                "total_gentor": 0,
-                "total_pumps": 0.0,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
         "4C_police_station_EEM2": [
             {
                 "total_extEqp": 0,
@@ -3443,18 +3519,18 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_police_station_EEM1": [
+        "4B_police_station_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 23.9,
-                "total_clg": 10.4,
-                "total_fans": 10.59,
-                "total_net": 78.15,
+                "total_clg": 9.74,
+                "total_fans": 8.29,
+                "total_net": 72.11,
                 "total_humid": 0,
                 "total_intEqp": 13.35,
-                "total_swh": 2.56,
+                "total_swh": 2.53,
                 "total_refrg": 0.0,
-                "total_htg": 17.35,
+                "total_htg": 14.3,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
                 "total_pumps": 0.0,
@@ -3500,44 +3576,6 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_police_station_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 23.9,
-                "total_clg": 14.6,
-                "total_fans": 12.51,
-                "total_net": 74.43,
-                "total_humid": 0,
-                "total_intEqp": 13.35,
-                "total_swh": 2.3,
-                "total_refrg": 0.0,
-                "total_htg": 7.77,
-                "total_extLgt": 0.0,
-                "total_gentor": 0,
-                "total_pumps": 0.0,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "5B_police_station_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 23.9,
-                "total_clg": 6.28,
-                "total_fans": 10.79,
-                "total_net": 74.89,
-                "total_humid": 0,
-                "total_intEqp": 13.35,
-                "total_swh": 2.66,
-                "total_refrg": 0.0,
-                "total_htg": 17.91,
-                "total_extLgt": 0.0,
-                "total_gentor": 0,
-                "total_pumps": 0.0,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
         "3B_police_station_base": [
             {
                 "total_extEqp": 0,
@@ -3557,21 +3595,40 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_police_station_EEM4": [
+        "8_police_station_base": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 29.88,
+                "total_clg": 2.96,
+                "total_fans": 35.01,
+                "total_net": 106.97,
+                "total_humid": 0,
+                "total_intEqp": 16.68,
+                "total_swh": 3.27,
+                "total_refrg": 0.0,
+                "total_htg": 19.17,
+                "total_extLgt": 0.0,
+                "total_gentor": 0,
+                "total_pumps": 0.0,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "2A_police_station_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 23.9,
-                "total_clg": 5.37,
-                "total_fans": 5.5,
-                "total_net": 56.09,
+                "total_clg": 21.77,
+                "total_fans": 11.3,
+                "total_net": 78.42,
                 "total_humid": 0,
                 "total_intEqp": 13.35,
-                "total_swh": 1.74,
+                "total_swh": 2.16,
                 "total_refrg": 0.0,
-                "total_htg": 4.6,
+                "total_htg": 5.94,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
-                "total_pumps": 1.64,
+                "total_pumps": 0.0,
                 "total_heatRej": 0,
                 "total_heatRec": 0
             }
@@ -3626,6 +3683,25 @@
                 "total_swh": 3.27,
                 "total_refrg": 0.0,
                 "total_htg": 22.85,
+                "total_extLgt": 0.0,
+                "total_gentor": 0,
+                "total_pumps": 0.0,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3C_police_station_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 23.9,
+                "total_clg": 4.8,
+                "total_fans": 8.53,
+                "total_net": 63.2,
+                "total_humid": 0,
+                "total_intEqp": 13.35,
+                "total_swh": 2.46,
+                "total_refrg": 0.0,
+                "total_htg": 10.16,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
                 "total_pumps": 0.0,
@@ -3690,18 +3766,18 @@
                 "total_heatRec": 0
             }
         ],
-        "7_police_station_EEM1": [
+        "5A_police_station_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 23.9,
-                "total_clg": 3.53,
-                "total_fans": 11.73,
-                "total_net": 78.96,
+                "total_clg": 7.62,
+                "total_fans": 10.68,
+                "total_net": 79.42,
                 "total_humid": 0,
                 "total_intEqp": 13.35,
-                "total_swh": 3.03,
+                "total_swh": 2.73,
                 "total_refrg": 0.0,
-                "total_htg": 23.41,
+                "total_htg": 21.14,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
                 "total_pumps": 0.0,
@@ -3721,25 +3797,6 @@
                 "total_swh": 1.89,
                 "total_refrg": 0.0,
                 "total_htg": 0.72,
-                "total_extLgt": 0.0,
-                "total_gentor": 0,
-                "total_pumps": 0.0,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "6A_police_station_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 23.9,
-                "total_clg": 5.19,
-                "total_fans": 10.84,
-                "total_net": 79.59,
-                "total_humid": 0,
-                "total_intEqp": 13.35,
-                "total_swh": 2.84,
-                "total_refrg": 0.0,
-                "total_htg": 23.48,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
                 "total_pumps": 0.0,
@@ -3785,18 +3842,37 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_police_station_EEM1": [
+        "5B_police_station_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 23.9,
-                "total_clg": 4.8,
-                "total_fans": 8.53,
-                "total_net": 63.2,
+                "total_clg": 6.28,
+                "total_fans": 10.79,
+                "total_net": 74.89,
                 "total_humid": 0,
                 "total_intEqp": 13.35,
-                "total_swh": 2.46,
+                "total_swh": 2.66,
                 "total_refrg": 0.0,
-                "total_htg": 10.16,
+                "total_htg": 17.91,
+                "total_extLgt": 0.0,
+                "total_gentor": 0,
+                "total_pumps": 0.0,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "6B_police_station_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 23.9,
+                "total_clg": 4.28,
+                "total_fans": 12.11,
+                "total_net": 77.25,
+                "total_humid": 0,
+                "total_intEqp": 13.35,
+                "total_swh": 2.86,
+                "total_refrg": 0.0,
+                "total_htg": 20.74,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
                 "total_pumps": 0.0,
@@ -3880,25 +3956,6 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_police_station_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 23.9,
-                "total_clg": 21.77,
-                "total_fans": 11.3,
-                "total_net": 78.42,
-                "total_humid": 0,
-                "total_intEqp": 13.35,
-                "total_swh": 2.16,
-                "total_refrg": 0.0,
-                "total_htg": 5.94,
-                "total_extLgt": 0.0,
-                "total_gentor": 0,
-                "total_pumps": 0.0,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
         "4B_police_station_base": [
             {
                 "total_extEqp": 0,
@@ -3956,37 +4013,18 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_police_station_EEM1": [
+        "4A_police_station_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 23.9,
-                "total_clg": 7.62,
-                "total_fans": 10.68,
-                "total_net": 79.42,
+                "total_clg": 10.4,
+                "total_fans": 10.59,
+                "total_net": 78.15,
                 "total_humid": 0,
                 "total_intEqp": 13.35,
-                "total_swh": 2.73,
+                "total_swh": 2.56,
                 "total_refrg": 0.0,
-                "total_htg": 21.14,
-                "total_extLgt": 0.0,
-                "total_gentor": 0,
-                "total_pumps": 0.0,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4B_police_station_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 23.9,
-                "total_clg": 9.76,
-                "total_fans": 12.24,
-                "total_net": 74.64,
-                "total_humid": 0,
-                "total_intEqp": 13.35,
-                "total_swh": 2.53,
-                "total_refrg": 0.0,
-                "total_htg": 12.87,
+                "total_htg": 17.35,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
                 "total_pumps": 0.0,
@@ -4051,44 +4089,6 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_police_station_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 23.9,
-                "total_clg": 28.84,
-                "total_fans": 11.29,
-                "total_net": 80.11,
-                "total_humid": 0,
-                "total_intEqp": 13.35,
-                "total_swh": 1.89,
-                "total_refrg": 0.0,
-                "total_htg": 0.84,
-                "total_extLgt": 0.0,
-                "total_gentor": 0,
-                "total_pumps": 0.0,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "6B_police_station_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 23.9,
-                "total_clg": 4.28,
-                "total_fans": 12.11,
-                "total_net": 77.25,
-                "total_humid": 0,
-                "total_intEqp": 13.35,
-                "total_swh": 2.86,
-                "total_refrg": 0.0,
-                "total_htg": 20.74,
-                "total_extLgt": 0.0,
-                "total_gentor": 0,
-                "total_pumps": 0.0,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
         "4C_police_station_EEM3": [
             {
                 "total_extEqp": 0,
@@ -4146,18 +4146,18 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_police_station_EEM3": [
+        "6A_police_station_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 23.9,
-                "total_clg": 4.42,
-                "total_fans": 9.72,
-                "total_net": 67.35,
+                "total_clg": 5.19,
+                "total_fans": 10.84,
+                "total_net": 79.59,
                 "total_humid": 0,
                 "total_intEqp": 13.35,
-                "total_swh": 2.33,
+                "total_swh": 2.84,
                 "total_refrg": 0.0,
-                "total_htg": 13.62,
+                "total_htg": 23.48,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
                 "total_pumps": 0.0,
@@ -4165,37 +4165,37 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_police_station_EEM4": [
+        "4A_police_station_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 23.9,
-                "total_clg": 14.54,
-                "total_fans": 5.58,
-                "total_net": 65.14,
+                "total_clg": 9.93,
+                "total_fans": 7.39,
+                "total_net": 76.34,
                 "total_humid": 0,
                 "total_intEqp": 13.35,
-                "total_swh": 1.53,
+                "total_swh": 2.56,
                 "total_refrg": 0.0,
-                "total_htg": 3.3,
+                "total_htg": 19.22,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
-                "total_pumps": 2.94,
+                "total_pumps": 0.0,
                 "total_heatRej": 0,
                 "total_heatRec": 0
             }
         ],
-        "8_police_station_base": [
+        "7_police_station_EEM1": [
             {
                 "total_extEqp": 0,
-                "total_intLgt": 29.88,
-                "total_clg": 2.96,
-                "total_fans": 35.01,
-                "total_net": 106.97,
+                "total_intLgt": 23.9,
+                "total_clg": 3.53,
+                "total_fans": 11.73,
+                "total_net": 78.96,
                 "total_humid": 0,
-                "total_intEqp": 16.68,
-                "total_swh": 3.27,
+                "total_intEqp": 13.35,
+                "total_swh": 3.03,
                 "total_refrg": 0.0,
-                "total_htg": 19.17,
+                "total_htg": 23.41,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
                 "total_pumps": 0.0,
@@ -4222,37 +4222,18 @@
                 "total_heatRec": 0
             }
         ],
-        "6A_police_station_EEM4": [
+        "3A_police_station_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 23.9,
-                "total_clg": 6.8,
-                "total_fans": 5.27,
-                "total_net": 69.24,
+                "total_clg": 16.56,
+                "total_fans": 11.4,
+                "total_net": 79.33,
                 "total_humid": 0,
                 "total_intEqp": 13.35,
-                "total_swh": 2.01,
+                "total_swh": 2.36,
                 "total_refrg": 0.0,
-                "total_htg": 15.32,
-                "total_extLgt": 0.0,
-                "total_gentor": 0,
-                "total_pumps": 2.61,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4C_police_station_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 23.9,
-                "total_clg": 5.55,
-                "total_fans": 10.0,
-                "total_net": 72.73,
-                "total_humid": 0,
-                "total_intEqp": 13.35,
-                "total_swh": 2.6,
-                "total_refrg": 0.0,
-                "total_htg": 17.33,
+                "total_htg": 11.75,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
                 "total_pumps": 0.0,
@@ -4260,18 +4241,37 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_police_station_EEM1": [
+        "8_police_station_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 23.9,
-                "total_clg": 25.16,
-                "total_fans": 13.12,
-                "total_net": 81.44,
+                "total_clg": 2.35,
+                "total_fans": 32.19,
+                "total_net": 102.53,
                 "total_humid": 0,
                 "total_intEqp": 13.35,
-                "total_swh": 2.02,
+                "total_swh": 3.27,
                 "total_refrg": 0.0,
-                "total_htg": 3.89,
+                "total_htg": 27.46,
+                "total_extLgt": 0.0,
+                "total_gentor": 0,
+                "total_pumps": 0.0,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "2A_police_station_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 23.9,
+                "total_clg": 22.38,
+                "total_fans": 9.04,
+                "total_net": 77.64,
+                "total_humid": 0,
+                "total_intEqp": 13.35,
+                "total_swh": 2.16,
+                "total_refrg": 0.0,
+                "total_htg": 6.82,
                 "total_extLgt": 0.0,
                 "total_gentor": 0,
                 "total_pumps": 0.0,
@@ -4282,956 +4282,6 @@
     },
     "Public Library": {
         "6A_Lib_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 14.58,
-                "total_clg": 11.0,
-                "total_fans": 12.53,
-                "total_net": 102.36,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.86,
-                "total_refrg": 0.0,
-                "total_htg": 50.48,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "8_Lib_base": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 21.62,
-                "total_fans": 14.96,
-                "total_net": 78.82,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.72,
-                "total_refrg": 0.0,
-                "total_htg": 16.95,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "2A_Lib_base": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 22.46,
-                "total_fans": 5.66,
-                "total_net": 56.32,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.34,
-                "total_refrg": 0.0,
-                "total_htg": 0.19,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 3.12,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "3C_Lib_EEM4": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 14.58,
-                "total_clg": 2.49,
-                "total_fans": 12.83,
-                "total_net": 199.54,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 1.08,
-                "total_refrg": 0.0,
-                "total_htg": 155.68,
-                "total_extLgt": 2.81,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "2B_Lib_EEM3": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 6.11,
-                "total_fans": 4.39,
-                "total_net": 45.28,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.5,
-                "total_refrg": 0.0,
-                "total_htg": 8.18,
-                "total_extLgt": 2.82,
-                "total_gentor": 0,
-                "total_pumps": 1.56,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "8_Lib_EEM3": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 14.58,
-                "total_clg": 23.47,
-                "total_fans": 17.48,
-                "total_net": 76.96,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.7,
-                "total_refrg": 0.0,
-                "total_htg": 7.82,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "5B_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 8.3,
-                "total_fans": 13.01,
-                "total_net": 67.73,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.82,
-                "total_refrg": 0.0,
-                "total_htg": 21.03,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4C_Lib_EEM4": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 10.89,
-                "total_fans": 9.75,
-                "total_net": 62.4,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.55,
-                "total_refrg": 0.0,
-                "total_htg": 16.65,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "5B_Lib_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 14.58,
-                "total_clg": 8.77,
-                "total_fans": 13.35,
-                "total_net": 70.65,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.82,
-                "total_refrg": 0.0,
-                "total_htg": 20.22,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "7_Lib_EEM4": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 25.22,
-                "total_fans": 15.02,
-                "total_net": 82.87,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.72,
-                "total_refrg": 0.0,
-                "total_htg": 17.34,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "5B_Lib_EEM4": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 5.99,
-                "total_fans": 9.1,
-                "total_net": 50.24,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.57,
-                "total_refrg": 0.0,
-                "total_htg": 10.01,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "6B_Lib_EEM4": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 40.02,
-                "total_fans": 18.88,
-                "total_net": 86.19,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.58,
-                "total_refrg": 0.0,
-                "total_htg": 2.13,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "7_Lib_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 25.58,
-                "total_fans": 12.49,
-                "total_net": 64.13,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.4,
-                "total_refrg": 0.0,
-                "total_htg": 1.09,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "2B_Lib_EEM4": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 14.58,
-                "total_clg": 7.02,
-                "total_fans": 11.87,
-                "total_net": 108.39,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.9,
-                "total_refrg": 0.0,
-                "total_htg": 61.11,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "7_Lib_EEM3": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 14.58,
-                "total_clg": 26.05,
-                "total_fans": 15.41,
-                "total_net": 86.47,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.72,
-                "total_refrg": 0.0,
-                "total_htg": 16.8,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "1A_Lib_EEM4": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 30.46,
-                "total_fans": 10.6,
-                "total_net": 66.19,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.39,
-                "total_refrg": 0.0,
-                "total_htg": 0.16,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "1A_Lib_EEM3": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 38.14,
-                "total_fans": 14.73,
-                "total_net": 78.29,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.57,
-                "total_refrg": 0.0,
-                "total_htg": 0.27,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "1A_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 44.19,
-                "total_fans": 14.8,
-                "total_net": 84.4,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.57,
-                "total_refrg": 0.0,
-                "total_htg": 0.27,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "1A_Lib_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 14.58,
-                "total_clg": 45.49,
-                "total_fans": 15.26,
-                "total_net": 89.08,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.57,
-                "total_refrg": 0.0,
-                "total_htg": 0.26,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "2B_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 7.19,
-                "total_fans": 10.89,
-                "total_net": 59.02,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.57,
-                "total_refrg": 0.0,
-                "total_htg": 15.79,
-                "total_extLgt": 2.82,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4B_Lib_base": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 10.31,
-                "total_fans": 5.06,
-                "total_net": 44.55,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.42,
-                "total_refrg": 0.0,
-                "total_htg": 2.56,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 1.65,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "8_Lib_EEM4": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 22.64,
-                "total_fans": 17.02,
-                "total_net": 73.03,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.7,
-                "total_refrg": 0.0,
-                "total_htg": 8.1,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "7_Lib_base": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 34.41,
-                "total_fans": 18.8,
-                "total_net": 80.47,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.58,
-                "total_refrg": 0.0,
-                "total_htg": 2.09,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4C_Lib_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 14.58,
-                "total_clg": 16.05,
-                "total_fans": 14.39,
-                "total_net": 88.92,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.79,
-                "total_refrg": 0.0,
-                "total_htg": 30.2,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4C_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 15.41,
-                "total_fans": 14.01,
-                "total_net": 85.89,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.79,
-                "total_refrg": 0.0,
-                "total_htg": 31.1,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "2B_Lib_base": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 17.37,
-                "total_fans": 5.06,
-                "total_net": 52.15,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.39,
-                "total_refrg": 0.0,
-                "total_htg": 1.98,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 2.79,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "3C_Lib_EEM3": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 4.56,
-                "total_fans": 4.12,
-                "total_net": 58.38,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.59,
-                "total_refrg": 0.0,
-                "total_htg": 22.61,
-                "total_extLgt": 2.82,
-                "total_gentor": 0,
-                "total_pumps": 1.97,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "3C_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 4.12,
-                "total_fans": 10.37,
-                "total_net": 96.19,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.67,
-                "total_refrg": 0.0,
-                "total_htg": 56.46,
-                "total_extLgt": 2.82,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "3C_Lib_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 3.67,
-                "total_fans": 11.62,
-                "total_net": 130.97,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.98,
-                "total_refrg": 0.0,
-                "total_htg": 90.13,
-                "total_extLgt": 2.82,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "2A_Lib_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 14.58,
-                "total_clg": 34.42,
-                "total_fans": 15.27,
-                "total_net": 83.71,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.65,
-                "total_refrg": 0.0,
-                "total_htg": 5.88,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "2A_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 33.35,
-                "total_fans": 14.85,
-                "total_net": 79.51,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.65,
-                "total_refrg": 0.0,
-                "total_htg": 6.08,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "2A_Lib_EEM3": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 28.69,
-                "total_fans": 14.78,
-                "total_net": 74.66,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.65,
-                "total_refrg": 0.0,
-                "total_htg": 5.95,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "2A_Lib_EEM4": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 22.17,
-                "total_fans": 9.91,
-                "total_net": 60.52,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.45,
-                "total_refrg": 0.0,
-                "total_htg": 3.41,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "6A_Lib_base": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 5.6,
-                "total_fans": 4.28,
-                "total_net": 43.02,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.49,
-                "total_refrg": 0.0,
-                "total_htg": 6.67,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 1.44,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "5B_Lib_EEM3": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 6.96,
-                "total_fans": 12.95,
-                "total_net": 65.89,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.82,
-                "total_refrg": 0.0,
-                "total_htg": 20.57,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4B_Lib_EEM3": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 5.13,
-                "total_fans": 9.73,
-                "total_net": 44.39,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.78,
-                "total_refrg": 0.0,
-                "total_htg": 4.17,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4B_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 6.38,
-                "total_fans": 9.77,
-                "total_net": 45.76,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.78,
-                "total_refrg": 0.0,
-                "total_htg": 4.25,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4B_Lib_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 14.58,
-                "total_clg": 6.91,
-                "total_fans": 10.07,
-                "total_net": 49.29,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.78,
-                "total_refrg": 0.0,
-                "total_htg": 4.03,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "5B_Lib_base": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 7.39,
-                "total_fans": 4.8,
-                "total_net": 43.58,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.47,
-                "total_refrg": 0.0,
-                "total_htg": 4.98,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 1.4,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4B_Lib_EEM4": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 3.85,
-                "total_fans": 6.81,
-                "total_net": 37.9,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.54,
-                "total_refrg": 0.0,
-                "total_htg": 2.12,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "8_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 13.74,
-                "total_fans": 4.81,
-                "total_net": 50.9,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.43,
-                "total_refrg": 0.0,
-                "total_htg": 4.65,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 2.73,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "1A_Lib_base": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 2.7,
-                "total_fans": 4.09,
-                "total_net": 75.77,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.64,
-                "total_refrg": 0.0,
-                "total_htg": 42.12,
-                "total_extLgt": 2.81,
-                "total_gentor": 0,
-                "total_pumps": 1.69,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4A_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 2.16,
-                "total_fans": 10.94,
-                "total_net": 142.73,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.74,
-                "total_refrg": 0.0,
-                "total_htg": 104.34,
-                "total_extLgt": 2.81,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4A_Lib_EEM3": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 19.33,
-                "total_fans": 16.96,
-                "total_net": 69.51,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.7,
-                "total_refrg": 0.0,
-                "total_htg": 7.94,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4C_Lib_base": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 4.62,
-                "total_fans": 4.23,
-                "total_net": 37.95,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.47,
-                "total_refrg": 0.0,
-                "total_htg": 2.83,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 1.25,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4A_Lib_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 1.85,
-                "total_fans": 12.46,
-                "total_net": 194.15,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 1.08,
-                "total_refrg": 0.0,
-                "total_htg": 154.21,
-                "total_extLgt": 2.81,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "3B_Lib_base": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 5.48,
-                "total_fans": 13.51,
-                "total_net": 97.43,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.92,
-                "total_refrg": 0.0,
-                "total_htg": 52.94,
-                "total_extLgt": 2.82,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "6A_Lib_EEM4": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 8.58,
-                "total_fans": 10.01,
-                "total_net": 74.43,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.59,
-                "total_refrg": 0.0,
-                "total_htg": 30.68,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4A_Lib_EEM4": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 14.13,
-                "total_fans": 10.92,
-                "total_net": 54.33,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.48,
-                "total_refrg": 0.0,
-                "total_htg": 4.23,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "6A_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 10.47,
-                "total_fans": 12.15,
-                "total_net": 99.91,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.86,
-                "total_refrg": 0.0,
-                "total_htg": 51.86,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "3A_Lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5250,322 +4300,18 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_Lib_EEM4": [
+        "8_Lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
-                "total_clg": 4.75,
-                "total_fans": 12.06,
-                "total_net": 135.67,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.98,
-                "total_refrg": 0.0,
-                "total_htg": 90.39,
-                "total_extLgt": 2.82,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "5A_Lib_base": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 9.47,
-                "total_fans": 4.49,
-                "total_net": 49.27,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.48,
-                "total_refrg": 0.0,
-                "total_htg": 7.91,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 2.38,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "3B_Lib_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 4.59,
-                "total_fans": 13.46,
-                "total_net": 95.26,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.92,
-                "total_refrg": 0.0,
-                "total_htg": 51.72,
-                "total_extLgt": 2.82,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "3B_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 4.78,
-                "total_fans": 11.17,
-                "total_net": 71.41,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.63,
-                "total_refrg": 0.0,
-                "total_htg": 30.25,
-                "total_extLgt": 2.82,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "3B_Lib_EEM3": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 4.58,
-                "total_fans": 4.42,
-                "total_net": 48.84,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.55,
-                "total_refrg": 0.0,
-                "total_htg": 13.26,
-                "total_extLgt": 2.82,
-                "total_gentor": 0,
-                "total_pumps": 1.49,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "7_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 17.37,
-                "total_fans": 5.49,
-                "total_net": 51.05,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.35,
-                "total_refrg": 0.0,
-                "total_htg": 1.17,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 2.13,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "5A_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 14.33,
-                "total_fans": 16.33,
-                "total_net": 75.13,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.78,
-                "total_refrg": 0.0,
-                "total_htg": 19.11,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "8_Lib_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 16.36,
-                "total_fans": 9.71,
-                "total_net": 61.28,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.49,
-                "total_refrg": 0.0,
-                "total_htg": 10.13,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "6B_Lib_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 14.58,
-                "total_clg": 9.13,
-                "total_fans": 13.94,
-                "total_net": 80.27,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.84,
-                "total_refrg": 0.0,
-                "total_htg": 28.89,
-                "total_extLgt": 2.82,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "6B_Lib_EEM3": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 14.58,
-                "total_clg": 40.99,
-                "total_fans": 19.33,
-                "total_net": 90.43,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.58,
-                "total_refrg": 0.0,
-                "total_htg": 2.02,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "6B_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 8.66,
-                "total_fans": 13.53,
-                "total_net": 77.57,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.84,
-                "total_refrg": 0.0,
-                "total_htg": 29.96,
-                "total_extLgt": 2.82,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "3C_Lib_base": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 4.42,
-                "total_fans": 11.67,
-                "total_net": 133.96,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.98,
-                "total_refrg": 0.0,
-                "total_htg": 92.32,
-                "total_extLgt": 2.82,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "6A_Lib_EEM3": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 8.93,
-                "total_fans": 12.1,
-                "total_net": 97.11,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.86,
-                "total_refrg": 0.0,
-                "total_htg": 50.65,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "3A_Lib_EEM1": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 5.57,
-                "total_fans": 11.44,
-                "total_net": 103.72,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.9,
-                "total_refrg": 0.0,
-                "total_htg": 61.24,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "3A_Lib_EEM3": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 5.72,
-                "total_fans": 4.21,
-                "total_net": 52.47,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.54,
-                "total_refrg": 0.0,
-                "total_htg": 15.42,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 2.04,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "3A_Lib_EEM2": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 5.59,
-                "total_fans": 9.63,
-                "total_net": 78.1,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.62,
-                "total_refrg": 0.0,
-                "total_htg": 37.69,
-                "total_extLgt": 2.83,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4A_Lib_base": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 2.28,
-                "total_fans": 12.51,
-                "total_net": 198.4,
+                "total_clg": 2.49,
+                "total_fans": 12.83,
+                "total_net": 199.54,
                 "total_humid": 0,
                 "total_intEqp": 10.06,
                 "total_swh": 1.08,
                 "total_refrg": 0.0,
-                "total_htg": 157.98,
+                "total_htg": 155.68,
                 "total_extLgt": 2.81,
                 "total_gentor": 0,
                 "total_pumps": 0.03,
@@ -5573,37 +4319,18 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_Lib_EEM4": [
+        "2A_Lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
-                "total_clg": 5.85,
-                "total_fans": 13.94,
-                "total_net": 99.6,
+                "total_clg": 34.42,
+                "total_fans": 15.27,
+                "total_net": 83.71,
                 "total_humid": 0,
                 "total_intEqp": 10.06,
-                "total_swh": 0.92,
+                "total_swh": 0.65,
                 "total_refrg": 0.0,
-                "total_htg": 51.41,
-                "total_extLgt": 2.82,
-                "total_gentor": 0,
-                "total_pumps": 0.03,
-                "total_heatRej": 0,
-                "total_heatRec": 0
-            }
-        ],
-        "4C_Lib_EEM3": [
-            {
-                "total_extEqp": 0,
-                "total_intLgt": 11.66,
-                "total_clg": 13.16,
-                "total_fans": 13.95,
-                "total_net": 82.86,
-                "total_humid": 0,
-                "total_intEqp": 10.06,
-                "total_swh": 0.79,
-                "total_refrg": 0.0,
-                "total_htg": 30.38,
+                "total_htg": 5.88,
                 "total_extLgt": 2.83,
                 "total_gentor": 0,
                 "total_pumps": 0.03,
@@ -5611,18 +4338,37 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_Lib_EEM3": [
+        "3C_Lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
-                "total_clg": 12.16,
-                "total_fans": 16.27,
-                "total_net": 72.51,
+                "total_clg": 4.62,
+                "total_fans": 4.23,
+                "total_net": 37.95,
                 "total_humid": 0,
                 "total_intEqp": 10.06,
-                "total_swh": 0.78,
+                "total_swh": 0.47,
                 "total_refrg": 0.0,
-                "total_htg": 18.72,
+                "total_htg": 2.83,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 1.25,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "2B_Lib_EEM3": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 25.58,
+                "total_fans": 12.49,
+                "total_net": 64.13,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.4,
+                "total_refrg": 0.0,
+                "total_htg": 1.09,
                 "total_extLgt": 2.83,
                 "total_gentor": 0,
                 "total_pumps": 0.03,
@@ -5630,7 +4376,26 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_Lib_EEM1": [
+        "8_Lib_EEM3": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 2.16,
+                "total_fans": 10.94,
+                "total_net": 142.73,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.74,
+                "total_refrg": 0.0,
+                "total_htg": 104.34,
+                "total_extLgt": 2.81,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "5B_Lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5649,7 +4414,254 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_Lib_EEM1": [
+        "4C_Lib_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 5.6,
+                "total_fans": 4.28,
+                "total_net": 43.02,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.49,
+                "total_refrg": 0.0,
+                "total_htg": 6.67,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 1.44,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "5B_Lib_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 8.66,
+                "total_fans": 13.53,
+                "total_net": 77.57,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.84,
+                "total_refrg": 0.0,
+                "total_htg": 29.96,
+                "total_extLgt": 2.82,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "7_Lib_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 4.56,
+                "total_fans": 4.12,
+                "total_net": 58.38,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.59,
+                "total_refrg": 0.0,
+                "total_htg": 22.61,
+                "total_extLgt": 2.82,
+                "total_gentor": 0,
+                "total_pumps": 1.97,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "5B_Lib_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 6.11,
+                "total_fans": 4.39,
+                "total_net": 45.28,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.5,
+                "total_refrg": 0.0,
+                "total_htg": 8.18,
+                "total_extLgt": 2.82,
+                "total_gentor": 0,
+                "total_pumps": 1.56,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "6B_Lib_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 4.58,
+                "total_fans": 4.42,
+                "total_net": 48.84,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.55,
+                "total_refrg": 0.0,
+                "total_htg": 13.26,
+                "total_extLgt": 2.82,
+                "total_gentor": 0,
+                "total_pumps": 1.49,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "7_Lib_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 4.42,
+                "total_fans": 11.67,
+                "total_net": 133.96,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.98,
+                "total_refrg": 0.0,
+                "total_htg": 92.32,
+                "total_extLgt": 2.82,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "2B_Lib_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 17.37,
+                "total_fans": 5.49,
+                "total_net": 51.05,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.35,
+                "total_refrg": 0.0,
+                "total_htg": 1.17,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 2.13,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "7_Lib_EEM3": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 4.12,
+                "total_fans": 10.37,
+                "total_net": 96.19,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.67,
+                "total_refrg": 0.0,
+                "total_htg": 56.46,
+                "total_extLgt": 2.82,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "1A_Lib_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 22.46,
+                "total_fans": 5.66,
+                "total_net": 56.32,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.34,
+                "total_refrg": 0.0,
+                "total_htg": 0.19,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 3.12,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "1A_Lib_EEM3": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 30.46,
+                "total_fans": 10.6,
+                "total_net": 66.19,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.39,
+                "total_refrg": 0.0,
+                "total_htg": 0.16,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "1A_Lib_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 38.14,
+                "total_fans": 14.73,
+                "total_net": 78.29,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.57,
+                "total_refrg": 0.0,
+                "total_htg": 0.27,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "1A_Lib_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 44.19,
+                "total_fans": 14.8,
+                "total_net": 84.4,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.57,
+                "total_refrg": 0.0,
+                "total_htg": 0.27,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "2B_Lib_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 34.41,
+                "total_fans": 18.8,
+                "total_net": 80.47,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.58,
+                "total_refrg": 0.0,
+                "total_htg": 2.09,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4B_Lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -5668,26 +4680,273 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_Lib_base": [
+        "8_Lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
-                "total_clg": 7.72,
-                "total_fans": 4.33,
-                "total_net": 52.07,
+                "total_clg": 2.7,
+                "total_fans": 4.09,
+                "total_net": 75.77,
                 "total_humid": 0,
                 "total_intEqp": 10.06,
-                "total_swh": 0.51,
+                "total_swh": 0.64,
                 "total_refrg": 0.0,
-                "total_htg": 12.65,
-                "total_extLgt": 2.83,
+                "total_htg": 42.12,
+                "total_extLgt": 2.81,
                 "total_gentor": 0,
-                "total_pumps": 2.31,
+                "total_pumps": 1.69,
                 "total_heatRej": 0,
                 "total_heatRec": 0
             }
         ],
-        "5A_Lib_EEM4": [
+        "7_Lib_base": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 14.58,
+                "total_clg": 4.75,
+                "total_fans": 12.06,
+                "total_net": 135.67,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.98,
+                "total_refrg": 0.0,
+                "total_htg": 90.39,
+                "total_extLgt": 2.82,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4C_Lib_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 8.3,
+                "total_fans": 13.01,
+                "total_net": 67.73,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.82,
+                "total_refrg": 0.0,
+                "total_htg": 21.03,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4C_Lib_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 6.96,
+                "total_fans": 12.95,
+                "total_net": 65.89,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.82,
+                "total_refrg": 0.0,
+                "total_htg": 20.57,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "2B_Lib_base": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 14.58,
+                "total_clg": 40.99,
+                "total_fans": 19.33,
+                "total_net": 90.43,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.58,
+                "total_refrg": 0.0,
+                "total_htg": 2.02,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3C_Lib_EEM3": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 3.85,
+                "total_fans": 6.81,
+                "total_net": 37.9,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.54,
+                "total_refrg": 0.0,
+                "total_htg": 2.12,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3C_Lib_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 5.13,
+                "total_fans": 9.73,
+                "total_net": 44.39,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.78,
+                "total_refrg": 0.0,
+                "total_htg": 4.17,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3C_Lib_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 6.38,
+                "total_fans": 9.77,
+                "total_net": 45.76,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.78,
+                "total_refrg": 0.0,
+                "total_htg": 4.25,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "2A_Lib_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 33.35,
+                "total_fans": 14.85,
+                "total_net": 79.51,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.65,
+                "total_refrg": 0.0,
+                "total_htg": 6.08,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "2A_Lib_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 28.69,
+                "total_fans": 14.78,
+                "total_net": 74.66,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.65,
+                "total_refrg": 0.0,
+                "total_htg": 5.95,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "2A_Lib_EEM3": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 22.17,
+                "total_fans": 9.91,
+                "total_net": 60.52,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.45,
+                "total_refrg": 0.0,
+                "total_htg": 3.41,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "2A_Lib_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 17.37,
+                "total_fans": 5.06,
+                "total_net": 52.15,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.39,
+                "total_refrg": 0.0,
+                "total_htg": 1.98,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 2.79,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "6A_Lib_base": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 14.58,
+                "total_clg": 7.02,
+                "total_fans": 11.87,
+                "total_net": 108.39,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.9,
+                "total_refrg": 0.0,
+                "total_htg": 61.11,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "5B_Lib_EEM3": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 7.19,
+                "total_fans": 10.89,
+                "total_net": 59.02,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.57,
+                "total_refrg": 0.0,
+                "total_htg": 15.79,
+                "total_extLgt": 2.82,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4B_Lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5702,6 +4961,747 @@
                 "total_extLgt": 2.83,
                 "total_gentor": 0,
                 "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4B_Lib_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 12.16,
+                "total_fans": 16.27,
+                "total_net": 72.51,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.78,
+                "total_refrg": 0.0,
+                "total_htg": 18.72,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4B_Lib_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 14.33,
+                "total_fans": 16.33,
+                "total_net": 75.13,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.78,
+                "total_refrg": 0.0,
+                "total_htg": 19.11,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "5B_Lib_base": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 14.58,
+                "total_clg": 9.13,
+                "total_fans": 13.94,
+                "total_net": 80.27,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.84,
+                "total_refrg": 0.0,
+                "total_htg": 28.89,
+                "total_extLgt": 2.82,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4B_Lib_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 7.39,
+                "total_fans": 4.8,
+                "total_net": 43.58,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.47,
+                "total_refrg": 0.0,
+                "total_htg": 4.98,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 1.4,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "8_Lib_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 1.85,
+                "total_fans": 12.46,
+                "total_net": 194.15,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 1.08,
+                "total_refrg": 0.0,
+                "total_htg": 154.21,
+                "total_extLgt": 2.81,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "1A_Lib_base": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 14.58,
+                "total_clg": 45.49,
+                "total_fans": 15.26,
+                "total_net": 89.08,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.57,
+                "total_refrg": 0.0,
+                "total_htg": 0.26,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4A_Lib_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 13.16,
+                "total_fans": 13.95,
+                "total_net": 82.86,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.79,
+                "total_refrg": 0.0,
+                "total_htg": 30.38,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4A_Lib_EEM3": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 10.89,
+                "total_fans": 9.75,
+                "total_net": 62.4,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.55,
+                "total_refrg": 0.0,
+                "total_htg": 16.65,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4C_Lib_base": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 14.58,
+                "total_clg": 8.77,
+                "total_fans": 13.35,
+                "total_net": 70.65,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.82,
+                "total_refrg": 0.0,
+                "total_htg": 20.22,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4A_Lib_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 15.41,
+                "total_fans": 14.01,
+                "total_net": 85.89,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.79,
+                "total_refrg": 0.0,
+                "total_htg": 31.1,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3B_Lib_base": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 14.58,
+                "total_clg": 23.47,
+                "total_fans": 17.48,
+                "total_net": 76.96,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.7,
+                "total_refrg": 0.0,
+                "total_htg": 7.82,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "6A_Lib_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 5.72,
+                "total_fans": 4.21,
+                "total_net": 52.47,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.54,
+                "total_refrg": 0.0,
+                "total_htg": 15.42,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 2.04,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4A_Lib_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 9.47,
+                "total_fans": 4.49,
+                "total_net": 49.27,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.48,
+                "total_refrg": 0.0,
+                "total_htg": 7.91,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 2.38,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "6A_Lib_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 5.57,
+                "total_fans": 11.44,
+                "total_net": 103.72,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.9,
+                "total_refrg": 0.0,
+                "total_htg": 61.24,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3A_Lib_base": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 14.58,
+                "total_clg": 26.05,
+                "total_fans": 15.41,
+                "total_net": 86.47,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.72,
+                "total_refrg": 0.0,
+                "total_htg": 16.8,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3B_Lib_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 10.31,
+                "total_fans": 5.06,
+                "total_net": 44.55,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.42,
+                "total_refrg": 0.0,
+                "total_htg": 2.56,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 1.65,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "5A_Lib_base": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 14.58,
+                "total_clg": 11.0,
+                "total_fans": 12.53,
+                "total_net": 102.36,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.86,
+                "total_refrg": 0.0,
+                "total_htg": 50.48,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3B_Lib_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 22.64,
+                "total_fans": 17.02,
+                "total_net": 73.03,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.7,
+                "total_refrg": 0.0,
+                "total_htg": 8.1,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3B_Lib_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 19.33,
+                "total_fans": 16.96,
+                "total_net": 69.51,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.7,
+                "total_refrg": 0.0,
+                "total_htg": 7.94,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3B_Lib_EEM3": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 14.13,
+                "total_fans": 10.92,
+                "total_net": 54.33,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.48,
+                "total_refrg": 0.0,
+                "total_htg": 4.23,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "7_Lib_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 3.67,
+                "total_fans": 11.62,
+                "total_net": 130.97,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.98,
+                "total_refrg": 0.0,
+                "total_htg": 90.13,
+                "total_extLgt": 2.82,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "5A_Lib_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 8.93,
+                "total_fans": 12.1,
+                "total_net": 97.11,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.86,
+                "total_refrg": 0.0,
+                "total_htg": 50.65,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "8_Lib_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 2.28,
+                "total_fans": 12.51,
+                "total_net": 198.4,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 1.08,
+                "total_refrg": 0.0,
+                "total_htg": 157.98,
+                "total_extLgt": 2.81,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "6B_Lib_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 5.48,
+                "total_fans": 13.51,
+                "total_net": 97.43,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.92,
+                "total_refrg": 0.0,
+                "total_htg": 52.94,
+                "total_extLgt": 2.82,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "6B_Lib_EEM3": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 4.78,
+                "total_fans": 11.17,
+                "total_net": 71.41,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.63,
+                "total_refrg": 0.0,
+                "total_htg": 30.25,
+                "total_extLgt": 2.82,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "6B_Lib_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 4.59,
+                "total_fans": 13.46,
+                "total_net": 95.26,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.92,
+                "total_refrg": 0.0,
+                "total_htg": 51.72,
+                "total_extLgt": 2.82,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3C_Lib_base": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 14.58,
+                "total_clg": 6.91,
+                "total_fans": 10.07,
+                "total_net": 49.29,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.78,
+                "total_refrg": 0.0,
+                "total_htg": 4.03,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "6A_Lib_EEM3": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 5.59,
+                "total_fans": 9.63,
+                "total_net": 78.1,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.62,
+                "total_refrg": 0.0,
+                "total_htg": 37.69,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3A_Lib_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 25.22,
+                "total_fans": 15.02,
+                "total_net": 82.87,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.72,
+                "total_refrg": 0.0,
+                "total_htg": 17.34,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3A_Lib_EEM3": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 16.36,
+                "total_fans": 9.71,
+                "total_net": 61.28,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.49,
+                "total_refrg": 0.0,
+                "total_htg": 10.13,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3A_Lib_EEM2": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 21.62,
+                "total_fans": 14.96,
+                "total_net": 78.82,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.72,
+                "total_refrg": 0.0,
+                "total_htg": 16.95,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4A_Lib_base": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 14.58,
+                "total_clg": 16.05,
+                "total_fans": 14.39,
+                "total_net": 88.92,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.79,
+                "total_refrg": 0.0,
+                "total_htg": 30.2,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "3A_Lib_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 13.74,
+                "total_fans": 4.81,
+                "total_net": 50.9,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.43,
+                "total_refrg": 0.0,
+                "total_htg": 4.65,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 2.73,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "4C_Lib_EEM3": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 5.99,
+                "total_fans": 9.1,
+                "total_net": 50.24,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.57,
+                "total_refrg": 0.0,
+                "total_htg": 10.01,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "5A_Lib_EEM3": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 8.58,
+                "total_fans": 10.01,
+                "total_net": 74.43,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.59,
+                "total_refrg": 0.0,
+                "total_htg": 30.68,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "2B_Lib_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 40.02,
+                "total_fans": 18.88,
+                "total_net": 86.19,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.58,
+                "total_refrg": 0.0,
+                "total_htg": 2.13,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "5A_Lib_EEM1": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 10.47,
+                "total_fans": 12.15,
+                "total_net": 99.91,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.86,
+                "total_refrg": 0.0,
+                "total_htg": 51.86,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "6B_Lib_base": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 14.58,
+                "total_clg": 5.85,
+                "total_fans": 13.94,
+                "total_net": 99.6,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.92,
+                "total_refrg": 0.0,
+                "total_htg": 51.41,
+                "total_extLgt": 2.82,
+                "total_gentor": 0,
+                "total_pumps": 0.03,
+                "total_heatRej": 0,
+                "total_heatRec": 0
+            }
+        ],
+        "5A_Lib_EEM4": [
+            {
+                "total_extEqp": 0,
+                "total_intLgt": 11.66,
+                "total_clg": 7.72,
+                "total_fans": 4.33,
+                "total_net": 52.07,
+                "total_humid": 0,
+                "total_intEqp": 10.06,
+                "total_swh": 0.51,
+                "total_refrg": 0.0,
+                "total_htg": 12.65,
+                "total_extLgt": 2.83,
+                "total_gentor": 0,
+                "total_pumps": 2.31,
                 "total_heatRej": 0,
                 "total_heatRec": 0
             }
