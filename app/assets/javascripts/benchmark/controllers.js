@@ -196,24 +196,49 @@ define(['angular'], function() {
         }
     };
 
+    function round(value, digits) {
+        if(!digits){
+            digits = 2;
+        }
+        value = value * Math.pow(10, digits);
+        value = Math.round(value);
+        value = value / Math.pow(10, digits);
+        return value;
+    }
 
-    function groupDiffs(endUses,energy,eui){
+    function groupDiffs(endUses,energyUses,euiUses){
           var showLabels=true;
           for(var i=0;i<endUses.length;i++){
-            if(energy[i].energy_diff<0){
-              energy[i].energy_diff=0;
+            if(energyUses[i].energy_diff<0){
+              energyUses[i].energy_diff=0;
             }
-            if(eui[i].eui_diff<0){
-              eui[i].eui_diff=0;
+            if(euiUses[i].eui_diff<0){
+              euiUses[i].eui_diff=0;
             }
-            endUses[i].energy_diff=Math.round(energy[i].energy_diff);
-            endUses[i].eui_diff=Math.round(eui[i].eui_diff);
-            if(eui[i].eui_diff===0||energy[i].energy_diff===0){
+            //TODO: net energy is off by 3*area units
+            console.log(energyUses,'original');
+            console.log(euiUses,'original');
+
+          var differenceEnergy=(energyUses[i].energy_diff/energyUses[i].energy);
+          var differenceEui=(euiUses[i].eui_diff/euiUses[i].eui);
+        var energyDiffRnd=round(differenceEnergy);
+            var euiDiffRnd=round(differenceEui);
+          console.log(differenceEnergy,'difference energy');
+          console.log(differenceEnergy,'difference eui');
+
+
+            endUses[i].energy_diff=energyDiffRnd;
+            endUses[i].eui_diff=euiDiffRnd;
+            console.log('netDiffEnergy',endUses[i].energy_diff);
+            console.log('netDiffEui',endUses[i].eui_diff);
+            if(euiUses[i].eui_diff===0||energyUses[i].energy_diff===0){
               showLabels=false;
             }
           }
           return showLabels;
     }
+
+
     $scope.computeBenchmarkResult = function(submission){
         $log.info(submission);
 
@@ -221,10 +246,13 @@ define(['angular'], function() {
 
      $q.resolve($scope.futures).then(function (results) {
             $scope.endUses = results;
+            console.log(results,'results');
+
             var totalEnergy=results.values[0].total_eui_list;
             var totalEui=results.values[1].total_energy_list;
             $scope.endUseProps=results.values[4].end_uses;
             var energyDiffs=results.values[5].energy_diff;
+
             var euiDiffs=results.values[6].eui_diff;
             var showLabels=groupDiffs($scope.endUseProps,energyDiffs,euiDiffs);
             $scope.barOptions.eui.showLabels=showLabels;
@@ -276,6 +304,7 @@ define(['angular'], function() {
           var rounded=Math.round(totalPortfolioEui);
           return rounded;
       }
+
       function inLegend(series,terms){
         var inLegend=[];
         for (var term in terms) {
@@ -291,6 +320,7 @@ define(['angular'], function() {
         }
         return inLegend;
       }
+
       function createSeries(endUse){
         var categories = [];
         var differences={
@@ -328,7 +358,7 @@ define(['angular'], function() {
             differences.energy.push(item.energy_diff);
             categories.push(item.building_name);
             for(var term in item.energy_breakdown){
-                properties.energy[term].push(Math.round(item.energy_breakdown[term]));
+                properties.energy[term].push(item.energy_breakdown[term]);
             }
             for(var euiTerm in item.eui_breakdown){
                 properties.eui[euiTerm].push(item.eui_breakdown[euiTerm]);

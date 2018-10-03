@@ -85,10 +85,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
               pointPadding: 0,
               events: {
                   legendItemClick: function () {
-
-
                     connectLegends(this);
-
                   }
               }
             }
@@ -97,11 +94,9 @@ define(['angular', './main', 'highcharts'], function(angular) {
             shared: false,
             useHTML: true,
             formatter: function() {
-              console.log(this.point,'thispoint');
-
                 return '<b>' + this.x + '</b><br/>' +
                   this.series.name + ': ' + this.y + ' '+scope.options.axislabel+ '<br/>' +
-                  'Total: ' + this.point.stackTotal;
+                  'Total: ' + (Math.round(this.point.stackTotal*100)/100);
             }
           },
           title: {
@@ -167,6 +162,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
             }
           }
         }
+
         function addInDifferences(){
             var differences = {
              name: 'differences'+$scope.options.id,
