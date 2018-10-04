@@ -29,15 +29,17 @@ define(['angular'], function() {
     $scope.barOptions.energy.showInLegend = false;
     $scope.barOptions.energy.linkedTo = '_eui';
     $scope.barOptions.eui.linkedTo = undefined;
+    $scope.barOptions.eui.labelSpacing = 10;
+    $scope.barOptions.energy.labelSpacing = 30;
 
     $scope.barOptions.energy.label = true;
     $scope.barOptions.energy.id = '_energy';
 
-    $scope.barOptions.energy.axislabel = "Energy Use [kBtu]";
+    $scope.barOptions.energy.axislabel = " [MBtus]";
     $scope.barOptions.eui.label = false;
     $scope.barOptions.eui.id = '_eui';
 
-    $scope.barOptions.eui.axislabel = "EUI [kBtu/ft<sup>2</sup>]";
+    $scope.barOptions.eui.axislabel = " [kBtu/ft<sup>2</sup>]";
 
 
     $scope.auxModel = {};
@@ -198,40 +200,46 @@ define(['angular'], function() {
 
     function round(value, digits) {
         if(!digits){
-            digits = 2;
+            digits = 1;
         }
         value = value * Math.pow(10, digits);
         value = Math.round(value);
         value = value / Math.pow(10, digits);
         return value;
     }
-
-    function groupDiffs(endUses,energyUses,euiUses){
+    function groupDiffs(endUses,energyDiff,euiDiff){
           var showLabels=true;
+
           for(var i=0;i<endUses.length;i++){
-            if(energyUses[i].energy_diff<0){
-              energyUses[i].energy_diff=0;
+            if(energyDiff[i].energy_diff<0){
+              energyDiff[i].energy_diff=0;
             }
-            if(euiUses[i].eui_diff<0){
-              euiUses[i].eui_diff=0;
+            if(euiDiff[i].eui_diff<0){
+              euiDiff[i].eui_diff=0;
             }
             //TODO: net energy is off by 3*area units
-            console.log(energyUses,'original');
-            console.log(euiUses,'original');
+            //diff+senario=base and you want diff/base
 
-          var differenceEnergy=(energyUses[i].energy_diff/energyUses[i].energy);
-          var differenceEui=(euiUses[i].eui_diff/euiUses[i].eui);
-        var energyDiffRnd=round(differenceEnergy);
-            var euiDiffRnd=round(differenceEui);
-          console.log(differenceEnergy,'difference energy');
-          console.log(differenceEnergy,'difference eui');
+            var energyScenario=energyDiff[i].energy;
+            var euiScenario=euiDiff[i].eui;
+
+            var energyBase=energyDiff[i].energy_diff+energyScenario;
+            var euiBase=euiDiff[i].eui_diff+euiScenario;
 
 
-            endUses[i].energy_diff=energyDiffRnd;
-            endUses[i].eui_diff=euiDiffRnd;
-            console.log('netDiffEnergy',endUses[i].energy_diff);
-            console.log('netDiffEui',endUses[i].eui_diff);
-            if(euiUses[i].eui_diff===0||energyUses[i].energy_diff===0){
+
+            var differenceEnergy=(energyDiff[i].energy_diff/energyBase);
+            var differenceEui=(euiDiff[i].eui_diff/euiDiff[i].eui);
+
+
+
+
+            endUses[i].energy_diff=round(differenceEnergy);
+            endUses[i].eui_diff=round(differenceEui);
+            endUses[i].scenario_energy=round(energyScenario);
+            endUses[i].scenario_eui=round(euiBase);
+
+            if(euiDiff[i].eui_diff===0||energyDiff[i].energy_diff===0){
               showLabels=false;
             }
           }
@@ -246,7 +254,6 @@ define(['angular'], function() {
 
      $q.resolve($scope.futures).then(function (results) {
             $scope.endUses = results;
-            console.log(results,'results');
 
             var totalEnergy=results.values[0].total_eui_list;
             var totalEui=results.values[1].total_energy_list;
@@ -255,14 +262,12 @@ define(['angular'], function() {
 
             var euiDiffs=results.values[6].eui_diff;
             var showLabels=groupDiffs($scope.endUseProps,energyDiffs,euiDiffs);
-            $scope.barOptions.eui.showLabels=showLabels;
+            $scope.barOptions.eui.showLabels=false;
             $scope.barOptions.energy.showLabels=showLabels;
 
-            console.log(energyDiffs,'energyDiff');
-            console.log(euiDiffs,'eui diff');
 
             $scope.portfolioEui=portfolioTotal(totalEnergy,'eui');
-            $scope.portfolioEnergy=portfolioTotal(totalEui,'energy');
+            $scope.portfolioEnergy=(portfolioTotal(totalEui,'energy')/1000);
             $scope.endUseProps=groupByBuildingType($scope.endUseProps);
             var series=createSeries($scope.endUseProps);
             $scope.barOptions.eui.showInLegend=series.legend;
@@ -271,10 +276,7 @@ define(['angular'], function() {
             $scope.energySeries=series.properties.energy;
             $scope.euiSeries=series.properties.eui;
             $scope.negativeEui=series.properties.eui;
-            console.log($scope.endUseProps,'endUses');
-            console.log(JSON.stringify($scope.endUseProps),'endUses');
-            console.log(  $scope.energySeries,'euiSeries');
-            console.log($scope.euiSeries,'eseries');
+
 
             $scope.categories=series.categories;
           //  console.log('Formatting Data for Highcharts EndUse - Energy',series.properties.energy);
@@ -310,7 +312,7 @@ define(['angular'], function() {
         for (var term in terms) {
             var total=0;
             for(var i=0;i<series.energy[term].length;i++){
-                total+=series.energy[term][i];
+                total+=series.energy[term][i].y;
             }
             if(total===0){
               inLegend.push(false);
@@ -320,7 +322,9 @@ define(['angular'], function() {
         }
         return inLegend;
       }
-
+      function convertToMBtus(value){
+        return value/1000;
+      }
       function createSeries(endUse){
         var categories = [];
         var differences={
@@ -353,15 +357,17 @@ define(['angular'], function() {
           properties.eui[term] = [];
           properties.energy[term] = [];
         }
+
         endUse.forEach(function(item){
             differences.eui.push(item.eui_diff);
             differences.energy.push(item.energy_diff);
             categories.push(item.building_name);
             for(var term in item.energy_breakdown){
-                properties.energy[term].push(item.energy_breakdown[term]);
+
+                properties.energy[term].push({y:convertToMBtus(item.energy_breakdown[term]),difference:item.energy_diff,total:item.scenario_energy});
             }
             for(var euiTerm in item.eui_breakdown){
-                properties.eui[euiTerm].push(item.eui_breakdown[euiTerm]);
+                properties.eui[euiTerm].push({y:item.eui_breakdown[euiTerm],difference:item.eui_diff,total:item.scenario_eui});
             }
         });
         var legend=inLegend(properties,terms);
