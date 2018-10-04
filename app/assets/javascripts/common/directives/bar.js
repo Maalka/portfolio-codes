@@ -85,10 +85,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
               pointPadding: 0,
               events: {
                   legendItemClick: function () {
-
-
                     connectLegends(this);
-
                   }
               }
             }
@@ -97,11 +94,13 @@ define(['angular', './main', 'highcharts'], function(angular) {
             shared: false,
             useHTML: true,
             formatter: function() {
-              console.log(this.point,'thispoint');
-
+            if(this.series.name===("differences"+scope.options.id)){
+              return false;
+            }
                 return '<b>' + this.x + '</b><br/>' +
-                  this.series.name + ': ' + this.y + ' '+scope.options.axislabel+ '<br/>' +
-                  'Total: ' + this.point.stackTotal;
+                  'End Use: '+Math.round(this.y)+' '+scope.options.axislabel+'<br/>'+
+                  'Total: '  + Math.round(this.y-this.point.difference) + ' '+scope.options.axislabel+ '<br/>' +
+                  'Total Base: ' + Math.round(this.point.total-this.point.difference)+' '+scope.options.axislabel;
             }
           },
           title: {
@@ -148,6 +147,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
 
         function createSeries() {
           index = 1;
+          var legendIndex=0;
           for (var propEnergy in $scope.data) {
             if (propEnergy !== 'net') {
                var modelEnergy = {
@@ -156,7 +156,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
                 data: $scope.data[propEnergy],
                 color: colors[index],
                 index: index,
-                showInLegend:$scope.options.showInLegend,
+                showInLegend:$scope.options.showInLegend[legendIndex++],
                 linkedTo:$scope.options.linkedTo,
                 stack:$scope.options.id,
                 borderWidth: 0
@@ -167,25 +167,33 @@ define(['angular', './main', 'highcharts'], function(angular) {
           }
         }
 
+
+
         function addInDifferences(){
             var differences = {
              name: 'differences'+$scope.options.id,
              id: 'differences'+$scope.options.id,
              data: $scope.differences,
-             color: '#DCDCDC',
+             color: '#FFFFFF',
              showInLegend:false,
              stack:$scope.options.id,
              index:0,
              dataLabels: {
                    enabled: $scope.options.showLabels,
-                   align: 'left',
-                   color: '#000000',
-                   x: 20
+                    color: '#000000',
+                    align:'left',
+                    useHTML: true,
+                    style: {
+                      fontSize: '10px',
+                      paddingLeft: '10px',
+                    },
+                   formatter:function(){
+                     return (this.y*100)+' %';
+                   }
                },
              borderWidth: 0
             };
             series.push(differences);
-
         }
         createSeries();
         addInDifferences();

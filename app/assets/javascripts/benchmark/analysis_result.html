@@ -55,8 +55,8 @@
 				<h2 class="ui dividing header">
 					Portfolio Energy:
 					<div>
-						<span style="font-size:1em">{{portfolioEnergy / 1000  | number : 2}}</span>
-						<span style="text-transform:none;">MBtu</span>
+						<span style="font-size:1em">{{portfolioEnergy | number :0 }}</span>
+						<span style="text-transform:none;">MBtus</span>
 					</div>
 
 				</h2>
@@ -68,7 +68,7 @@
 				<h2 class="ui dividing header">
 					Portfolio EUI:
 					<div>
-						<span style="font-size:1em">{{portfolioEui | number : 2}}</span>
+						<span style="font-size:1em">{{portfolioEui | number :0 }}</span>
 						<span style="text-transform:none;"> kBtu/ft<sup>2</sup></span>
 					</div>
 
@@ -80,7 +80,7 @@
 			<bar data="energySeries" categories="categories" differences="differences.energy" options="barOptions.energy" ></bar>
 		</div>
 		<div class="eight wide column">
-			<bar  data="euiSeries" categories="categories" differences="differences.eui" options="barOptions.eui" chart="charts"></bar>
+			<bar  data="euiSeries" categories="categories" differences="differences.eui" options="barOptions.eui"></bar>
 		</div>
 
 

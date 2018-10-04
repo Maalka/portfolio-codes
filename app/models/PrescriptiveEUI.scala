@@ -134,7 +134,6 @@ case class ModelValues(parameters:JsValue) {
     }
 
   def transformEndUses(factor:Double,Total:TotalDistribution):Future[TotalDistribution] = Future {
-
     TotalDistribution(
           Total.total_htg/factor,
           Total.total_clg/factor,
