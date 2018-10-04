@@ -69,7 +69,7 @@
     </h1>
 
     <p>
-        4 tiers of improvement strategies, increasing in cost and comprehensiveness, were then applied to the calibrated models and impacts were analyzed.
+        Four tiers of improvement strategies, increasing in cost and comprehensiveness, were then applied to the calibrated models and impacts were analyzed.
 
         Outputs of these calibrated models and simulation were finally integrated into this open-source tool to enable users to understand differences in how buildings across
         climate zones consume energy and how improvement strategies can impact performance across a portfolio.
@@ -77,9 +77,18 @@
 
     <div class="ui hidden divider"></div>
 
-    <div class="ui ordered list">
+
+    <img class="ui huge centered image" src="./assets/images/scenario_tests.png">
+
+    <div class="ui hidden divider"></div>
+
+
+
+
+    <div class="ui ordered list" style="padding-left:100px;">
+
         <div class="item">
-            <div class="header">EEM1(Low Cost): Lighting Retrofit</div>
+            <div class="header">Scenario EEM1: Lighting Retrofit</div>
             <ul>
                 <li> <p>Upgrade lighting to LEDs </p></li>
                 <li> <p>Add occupancy sensors to common areas such as corridors, restrooms, mechanical room and lobby </p></li>
@@ -87,7 +96,7 @@
         </div>
         <br>
         <div class="item">
-            <div class="header">EEM2(Medium Cost): HVAC Retrofit</div>
+            <div class="header">Scenario EEM2: HVAC Retrofit</div>
             <ul>
                 <li> <p>Match ASHRAE 90.1-2016 HVAC efficiency </p></li>
                 <li> <p>Includes lighting retrofit from 1st scenario </p></li>
@@ -95,7 +104,7 @@
         </div>
         <br>
         <div class="item">
-            <div class="header">EEM3(High Cost): Green Retrofit</div>
+            <div class="header">Scenario EEM3: Green Retrofit</div>
             <ul>
                 <li> <p>Full ASHRAE 90.1 Baseline building (lighting, HVAC, envelope) – uses VAV w/ Reheat system </p></li>
                 <li> <p>Infiltration rate is reduced from 0.3 CFM/ exterior surface to 0.1 CFM/ exterior surface,
@@ -104,7 +113,7 @@
         </div>
         <br>
         <div class="item">
-            <div class="header">EEM4(Extravagant): Deep Green Retrofit</div>
+            <div class="header">Scenario EEM4: Deep Green Retrofit</div>
             <ul>
                 <li><p>High Performance Envelope: R-40 Roof Insulation and R13 + R15 c.i. Wall Insulation </p></li>
                 <li> <p>High Performance Window: U-0.25/ SHGC-0.38 </p></li>
@@ -115,6 +124,8 @@
     </div>
 
     <div class="ui hidden divider"></div>
+
+
 
     <h1 class="small header">
         <i>How do I use the Portfolios Codes Tool?</i>
@@ -131,7 +142,39 @@
     <img class="ui huge centered image" src="./assets/images/manual building input.png">
 
     <p>
-      <i>The tool was designed to enable analysis for two main cases:</i>
+        <i> The tool accepts five types of  buildings: Administration (e.g. Office), Libraries,
+            Police Stations, Fire Stations, and K-12 Schools. If Gross Floor Area data is not available,
+            users can click 'Use Default Values', which will provide the option to set rough building sizes based on typical municipal designations:
+        </i>
+
+
+        <br><br>
+        <div style="padding-left:100px;">
+
+            <ul class="ui list">
+                <li>
+                    Very Small: 5000 sq.ft
+                </li>
+                <li>
+                    Small: 15000 sq.ft
+                </li>
+                <li>
+                    Medium: 25000 sq.ft
+                </li>
+                <li>
+                    Medium-Large: 50000 sq.ft
+                </li>
+                <li>
+                    Large: 100000 sq.ft
+                </li>
+                <li>
+                    Very Large: 250000 sq.ft
+                </li>
+
+            </ul>
+
+        </div>
+    <br><br>
     </p>
 
     <div class="ui secondary padded segment">
@@ -140,19 +183,72 @@
 
     <div class="ui hidden divider"></div>
 
+    <img class="ui large centered image" src="./assets/images/csv_example.png">
+
+    <div class="ui hidden divider"></div>
+
+
+
+
+
+
+    <div style="padding-left:100px;">
+    <h2 class="ui header">Download and start with the Sample CSV here <a href="../assets/files/codes_sample.csv" class="export"> here</a>. </h2>
+    </div>
+
+
+    <div class="ui hidden divider"></div>
+
     <img class="ui huge centered image" src="./assets/images/csv upload.png">
 
     <div class="ui hidden divider"></div>
 
-    <div class="ui secondary padded segment">
-        <p><b>Option 3:</b> Click 'Generate Results'</p>
-    </div>
+
+    <p>
+        <i>Click 'Upload', and  the 'Generate Results' to view  energy-use results.
+        Note: CSV climate_zone must be the same for all buildings.</i>
+    </p>
+
 
     <div class="ui hidden divider"></div>
 
-    <img class="ui huge centered image" src="./assets/images/results.png"><
+    <img class="ui huge centered image" src="./assets/images/results.png">
 
     <div class="ui hidden divider"></div>
+
+
+
+    <p>
+
+            The left bars represent the breakdown of energy end-uses for each building. Moving the cursor over part of the bar
+            displays the total energy-use for the building and specified end-use. The right bars represent intensity.</i> <br><br>
+    </p>
+
+    <div class="ui hidden divider"></div>
+
+    <img class="ui huge centered image" src="./assets/images/scenario.png">
+
+    <div class="ui hidden divider"></div>
+
+    <p>
+        <i>To view the impact of different retrofit scenarios, users can select from the list of 4 Upgrade Tiers in the dropdown above.
+            The % difference from the 'Base' and selected scenarios to the right of each bar represents expected energy savings.</i> <br><br>
+    </p>
+
+    <div class="ui hidden divider"></div>
+
+    <img class="ui huge centered image" src="./assets/images/savings.png">
+
+    <div class="ui hidden divider"></div>
+
+    <p>
+        <i>Users can explore the impacts of different scenarios on buildings across their municipal portfolio.</i>
+
+    </p>
+
+    <div class="ui hidden divider"></div>
+
+
     <div class="ui hidden divider"></div>
     <div class="ui hidden divider"></div>
 

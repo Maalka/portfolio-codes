@@ -1,6 +1,6 @@
 {
     "K-12 School": {
-        "6A_SecSchl_EEM4": [
+        "6A_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -19,7 +19,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_SecSchl_EEM4": [
+        "1A_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -38,7 +38,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_SecSchl_EEM3": [
+        "1A_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -57,7 +57,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_SecSchl_EEM2": [
+        "1A_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -76,7 +76,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_SecSchl_EEM1": [
+        "1A_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -95,7 +95,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_SecSchl_EEM4": [
+        "3A_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -114,7 +114,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_SecSchl_EEM4": [
+        "3B_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -133,7 +133,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5B_SecSchl_EEM1": [
+        "5B_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -152,7 +152,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_SecSchl_EEM1": [
+        "3B_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -171,7 +171,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_SecSchl_EEM2": [
+        "3B_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -190,7 +190,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_SecSchl_EEM3": [
+        "3B_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -209,7 +209,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_SecSchl_base": [
+        "5A_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -228,7 +228,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5B_SecSchl_EEM4": [
+        "5B_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -247,7 +247,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_SecSchl_base": [
+        "7_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -266,7 +266,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5B_SecSchl_EEM2": [
+        "5B_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -285,7 +285,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5B_SecSchl_EEM3": [
+        "5B_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -304,7 +304,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_SecSchl_EEM1": [
+        "4C_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -323,7 +323,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_SecSchl_EEM2": [
+        "4B_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -342,7 +342,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_SecSchl_EEM3": [
+        "4B_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -361,7 +361,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_SecSchl_EEM1": [
+        "3A_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -380,7 +380,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_SecSchl_EEM1": [
+        "4B_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -399,7 +399,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_SecSchl_EEM4": [
+        "3C_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -418,7 +418,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_SecSchl_EEM3": [
+        "3C_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -437,7 +437,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_SecSchl_EEM2": [
+        "3C_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -456,7 +456,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_SecSchl_EEM1": [
+        "3C_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -475,7 +475,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_SecSchl_EEM4": [
+        "4B_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -494,7 +494,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_SecSchl_EEM4": [
+        "8_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -513,7 +513,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_SecSchl_base": [
+        "2A_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -532,7 +532,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_SecSchl_base": [
+        "3A_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -551,7 +551,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6A_SecSchl_EEM2": [
+        "6A_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -570,7 +570,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_SecSchl_EEM2": [
+        "8_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -589,7 +589,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_SecSchl_EEM3": [
+        "8_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -608,7 +608,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5B_SecSchl_base": [
+        "5B_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -627,7 +627,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_SecSchl_EEM1": [
+        "6B_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -646,7 +646,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_SecSchl_EEM2": [
+        "3A_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -665,7 +665,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_SecSchl_EEM3": [
+        "6B_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -684,7 +684,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_SecSchl_EEM1": [
+        "2B_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -703,7 +703,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_SecSchl_EEM3": [
+        "2B_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -722,7 +722,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_SecSchl_EEM2": [
+        "2B_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -741,7 +741,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_SecSchl_EEM4": [
+        "2B_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -760,7 +760,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6A_SecSchl_EEM1": [
+        "6A_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -779,7 +779,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_SecSchl_EEM1": [
+        "2A_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -798,7 +798,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_SecSchl_EEM2": [
+        "2A_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -817,7 +817,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_SecSchl_EEM3": [
+        "2A_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -836,7 +836,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_SecSchl_EEM4": [
+        "2A_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -855,7 +855,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_SecSchl_EEM3": [
+        "3A_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -874,7 +874,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_SecSchl_base": [
+        "2B_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -893,7 +893,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_SecSchl_EEM2": [
+        "6B_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -912,7 +912,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_SecSchl_base": [
+        "4C_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -931,7 +931,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_SecSchl_base": [
+        "6B_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -950,7 +950,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_SecSchl_EEM1": [
+        "8_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -969,7 +969,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_SecSchl_base": [
+        "8_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -988,7 +988,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_SecSchl_EEM4": [
+        "4A_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1007,7 +1007,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_SecSchl_EEM2": [
+        "4A_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1026,7 +1026,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_SecSchl_base": [
+        "1A_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -1045,7 +1045,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_SecSchl_EEM1": [
+        "4A_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1064,7 +1064,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_SecSchl_EEM3": [
+        "5A_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1083,7 +1083,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_SecSchl_base": [
+        "4B_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -1102,7 +1102,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_SecSchl_EEM2": [
+        "4C_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1121,7 +1121,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_SecSchl_EEM3": [
+        "4C_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1140,7 +1140,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_SecSchl_EEM4": [
+        "4C_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1159,7 +1159,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_SecSchl_EEM2": [
+        "5A_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1178,7 +1178,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_SecSchl_EEM4": [
+        "5A_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1197,7 +1197,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_SecSchl_EEM1": [
+        "7_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1216,7 +1216,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_SecSchl_EEM3": [
+        "7_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1235,7 +1235,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_SecSchl_EEM2": [
+        "7_sec_school_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1254,7 +1254,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_SecSchl_EEM4": [
+        "7_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1273,7 +1273,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_SecSchl_base": [
+        "4A_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -1292,7 +1292,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_SecSchl_EEM4": [
+        "6B_sec_school_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1311,7 +1311,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_SecSchl_base": [
+        "3B_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -1330,7 +1330,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_SecSchl_base": [
+        "3C_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -1349,7 +1349,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6A_SecSchl_EEM3": [
+        "6A_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1368,7 +1368,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6A_SecSchl_base": [
+        "6A_sec_school_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 5.03,
@@ -1387,7 +1387,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_SecSchl_EEM1": [
+        "5A_sec_school_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -1406,7 +1406,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_SecSchl_EEM3": [
+        "4A_sec_school_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 2.54,
@@ -4281,7 +4281,7 @@
         ]
     },
     "Public Library": {
-        "6A_Lib_EEM1": [
+        "6A_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4300,7 +4300,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_Lib_base": [
+        "8_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -4319,7 +4319,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_Lib_base": [
+        "2A_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -4338,7 +4338,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_Lib_EEM4": [
+        "3C_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4357,7 +4357,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_Lib_EEM3": [
+        "2B_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4376,7 +4376,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_Lib_EEM3": [
+        "8_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4395,7 +4395,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5B_Lib_EEM2": [
+        "5B_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4414,7 +4414,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_Lib_EEM4": [
+        "4C_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4433,7 +4433,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5B_Lib_EEM1": [
+        "5B_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4452,7 +4452,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_Lib_EEM4": [
+        "7_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4471,7 +4471,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5B_Lib_EEM4": [
+        "5B_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4490,7 +4490,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_Lib_EEM4": [
+        "6B_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4509,7 +4509,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_Lib_EEM1": [
+        "7_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4528,7 +4528,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_Lib_EEM4": [
+        "2B_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4547,7 +4547,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_Lib_EEM3": [
+        "7_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4566,7 +4566,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_Lib_EEM4": [
+        "1A_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4585,7 +4585,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_Lib_EEM3": [
+        "1A_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4604,7 +4604,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_Lib_EEM2": [
+        "1A_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4623,7 +4623,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_Lib_EEM1": [
+        "1A_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4642,7 +4642,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_Lib_EEM2": [
+        "2B_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4661,7 +4661,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_Lib_base": [
+        "4B_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -4680,7 +4680,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_Lib_EEM4": [
+        "8_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4699,7 +4699,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_Lib_base": [
+        "7_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -4718,7 +4718,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_Lib_EEM1": [
+        "4C_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4737,7 +4737,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_Lib_EEM2": [
+        "4C_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4756,7 +4756,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_Lib_base": [
+        "2B_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -4775,7 +4775,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_Lib_EEM3": [
+        "3C_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4794,7 +4794,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_Lib_EEM2": [
+        "3C_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4813,7 +4813,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_Lib_EEM1": [
+        "3C_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4832,7 +4832,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_Lib_EEM1": [
+        "2A_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4851,7 +4851,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_Lib_EEM2": [
+        "2A_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4870,7 +4870,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_Lib_EEM3": [
+        "2A_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4889,7 +4889,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_Lib_EEM4": [
+        "2A_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4908,7 +4908,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6A_Lib_base": [
+        "6A_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -4927,7 +4927,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5B_Lib_EEM3": [
+        "5B_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4946,7 +4946,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_Lib_EEM3": [
+        "4B_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4965,7 +4965,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_Lib_EEM2": [
+        "4B_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -4984,7 +4984,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_Lib_EEM1": [
+        "4B_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5003,7 +5003,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5B_Lib_base": [
+        "5B_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -5022,7 +5022,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_Lib_EEM4": [
+        "4B_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5041,7 +5041,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_Lib_EEM2": [
+        "8_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5060,7 +5060,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_Lib_base": [
+        "1A_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -5079,7 +5079,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_Lib_EEM2": [
+        "4A_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5098,7 +5098,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_Lib_EEM3": [
+        "4A_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5117,7 +5117,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_Lib_base": [
+        "4C_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -5136,7 +5136,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_Lib_EEM1": [
+        "4A_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5155,7 +5155,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_Lib_base": [
+        "3B_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -5174,7 +5174,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6A_Lib_EEM4": [
+        "6A_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5193,7 +5193,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_Lib_EEM4": [
+        "4A_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5212,7 +5212,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6A_Lib_EEM2": [
+        "6A_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5231,7 +5231,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_Lib_base": [
+        "3A_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -5250,7 +5250,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_Lib_EEM4": [
+        "3B_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5269,7 +5269,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_Lib_base": [
+        "5A_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -5288,7 +5288,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_Lib_EEM1": [
+        "3B_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5307,7 +5307,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_Lib_EEM2": [
+        "3B_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5326,7 +5326,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_Lib_EEM3": [
+        "3B_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5345,7 +5345,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_Lib_EEM2": [
+        "7_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5364,7 +5364,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_Lib_EEM2": [
+        "5A_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5383,7 +5383,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_Lib_EEM1": [
+        "8_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5402,7 +5402,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_Lib_EEM1": [
+        "6B_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5421,7 +5421,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_Lib_EEM3": [
+        "6B_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5440,7 +5440,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_Lib_EEM2": [
+        "6B_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5459,7 +5459,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_Lib_base": [
+        "3C_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -5478,7 +5478,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6A_Lib_EEM3": [
+        "6A_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5497,7 +5497,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_Lib_EEM1": [
+        "3A_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5516,7 +5516,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_Lib_EEM3": [
+        "3A_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5535,7 +5535,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_Lib_EEM2": [
+        "3A_lib_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5554,7 +5554,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_Lib_base": [
+        "4A_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -5573,7 +5573,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_Lib_EEM4": [
+        "3A_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5592,7 +5592,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_Lib_EEM3": [
+        "4C_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5611,7 +5611,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_Lib_EEM3": [
+        "5A_lib_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5630,7 +5630,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_Lib_EEM1": [
+        "2B_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5649,7 +5649,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_Lib_EEM1": [
+        "5A_lib_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5668,7 +5668,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_Lib_base": [
+        "6B_lib_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 14.58,
@@ -5687,7 +5687,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_Lib_EEM4": [
+        "5A_lib_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 11.66,
@@ -5708,7 +5708,7 @@
         ]
     },
     "City Hall/Administration": {
-        "5B_Admin_EEM4": [
+        "5B_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5727,7 +5727,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6A_Admin_EEM4": [
+        "6A_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5746,7 +5746,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_Admin_EEM2": [
+        "4C_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5765,7 +5765,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5B_Admin_EEM1": [
+        "5B_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5784,7 +5784,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5B_Admin_EEM2": [
+        "5B_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5803,7 +5803,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5B_Admin_EEM3": [
+        "5B_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5822,7 +5822,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_Admin_EEM4": [
+        "3A_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5841,7 +5841,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_Admin_EEM3": [
+        "3A_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5860,7 +5860,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_Admin_EEM2": [
+        "3A_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5879,7 +5879,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_Admin_EEM1": [
+        "3A_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5898,7 +5898,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_Admin_EEM4": [
+        "4B_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5917,7 +5917,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_Admin_EEM4": [
+        "2A_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5936,7 +5936,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_Admin_EEM4": [
+        "6B_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5955,7 +5955,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_Admin_EEM2": [
+        "2A_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5974,7 +5974,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_Admin_EEM3": [
+        "2A_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -5993,7 +5993,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_Admin_EEM3": [
+        "4B_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6012,7 +6012,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_Admin_EEM1": [
+        "2A_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6031,7 +6031,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_Admin_base": [
+        "8_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -6050,7 +6050,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5B_Admin_base": [
+        "5B_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -6069,7 +6069,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_Admin_EEM1": [
+        "8_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6088,7 +6088,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_Admin_EEM4": [
+        "4C_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6107,7 +6107,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_Admin_base": [
+        "7_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -6126,7 +6126,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2A_Admin_base": [
+        "2A_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -6145,7 +6145,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_Admin_base": [
+        "5A_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -6164,7 +6164,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_Admin_EEM3": [
+        "2B_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6183,7 +6183,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_Admin_EEM2": [
+        "2B_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6202,7 +6202,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_Admin_EEM1": [
+        "2B_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6221,7 +6221,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_Admin_EEM1": [
+        "3B_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6240,7 +6240,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_Admin_EEM2": [
+        "8_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6259,7 +6259,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_Admin_EEM3": [
+        "8_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6278,7 +6278,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_Admin_EEM4": [
+        "3B_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6297,7 +6297,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_Admin_EEM4": [
+        "2B_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6316,7 +6316,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6A_Admin_base": [
+        "6A_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -6335,7 +6335,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_Admin_base": [
+        "6B_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -6354,7 +6354,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_Admin_EEM4": [
+        "7_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6373,7 +6373,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_Admin_EEM3": [
+        "6B_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6392,7 +6392,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3A_Admin_base": [
+        "3A_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -6411,7 +6411,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6A_Admin_EEM3": [
+        "6A_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6430,7 +6430,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_Admin_EEM4": [
+        "3C_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6449,7 +6449,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_Admin_EEM4": [
+        "4A_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6468,7 +6468,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_Admin_base": [
+        "1A_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -6487,7 +6487,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_Admin_EEM1": [
+        "4A_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6506,7 +6506,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_Admin_EEM2": [
+        "4A_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6525,7 +6525,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_Admin_EEM3": [
+        "4A_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6544,7 +6544,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_Admin_EEM1": [
+        "1A_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6563,7 +6563,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_Admin_EEM3": [
+        "1A_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6582,7 +6582,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_Admin_EEM2": [
+        "1A_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6601,7 +6601,7 @@
                 "total_heatRec": 0
             }
         ],
-        "1A_Admin_EEM4": [
+        "1A_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6620,7 +6620,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6A_Admin_EEM2": [
+        "6A_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6639,7 +6639,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_Admin_EEM4": [
+        "5A_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6658,7 +6658,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6A_Admin_EEM1": [
+        "6A_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6677,7 +6677,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_Admin_EEM1": [
+        "5A_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6696,7 +6696,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_Admin_EEM3": [
+        "5A_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6715,7 +6715,7 @@
                 "total_heatRec": 0
             }
         ],
-        "5A_Admin_EEM2": [
+        "5A_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6734,7 +6734,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_Admin_base": [
+        "3B_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -6753,7 +6753,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4A_Admin_base": [
+        "4A_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -6772,7 +6772,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_Admin_EEM2": [
+        "4B_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6791,7 +6791,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_Admin_EEM3": [
+        "4C_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6810,7 +6810,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_Admin_EEM2": [
+        "7_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6829,7 +6829,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_Admin_EEM1": [
+        "4C_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6848,7 +6848,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_Admin_base": [
+        "3C_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -6867,7 +6867,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_Admin_base": [
+        "4B_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -6886,7 +6886,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_Admin_EEM1": [
+        "3C_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6905,7 +6905,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_Admin_EEM2": [
+        "3B_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6924,7 +6924,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_Admin_EEM3": [
+        "3C_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6943,7 +6943,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3C_Admin_EEM2": [
+        "3C_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6962,7 +6962,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_Admin_EEM3": [
+        "7_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -6981,7 +6981,7 @@
                 "total_heatRec": 0
             }
         ],
-        "2B_Admin_base": [
+        "2B_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -7000,7 +7000,7 @@
                 "total_heatRec": 0
             }
         ],
-        "7_Admin_EEM1": [
+        "7_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -7019,7 +7019,7 @@
                 "total_heatRec": 0
             }
         ],
-        "3B_Admin_EEM3": [
+        "3B_admin_EEM3": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -7038,7 +7038,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4B_Admin_EEM1": [
+        "4B_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -7057,7 +7057,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_Admin_EEM1": [
+        "6B_admin_EEM1": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -7076,7 +7076,7 @@
                 "total_heatRec": 0
             }
         ],
-        "4C_Admin_base": [
+        "4C_admin_base": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 8.96,
@@ -7095,7 +7095,7 @@
                 "total_heatRec": 0
             }
         ],
-        "8_Admin_EEM4": [
+        "8_admin_EEM4": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
@@ -7114,7 +7114,7 @@
                 "total_heatRec": 0
             }
         ],
-        "6B_Admin_EEM2": [
+        "6B_admin_EEM2": [
             {
                 "total_extEqp": 0,
                 "total_intLgt": 4.93,
