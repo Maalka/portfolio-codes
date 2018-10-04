@@ -97,8 +97,9 @@ define(['angular', './main', 'highcharts'], function(angular) {
             if(this.series.name===("differences"+scope.options.id)){
               return false;
             }
+                console.log(this,'this');
                 return '<b>' + this.x + '</b><br/>' +
-                  'End Use: '+Math.round(this.y)+' '+scope.options.axislabel+'<br/>'+
+                  this.series.userOptions.name+':'+Math.round(this.y)+' '+scope.options.axislabel+'<br/>'+
                   'Total: '  + Math.round(this.y-this.point.difference) + ' '+scope.options.axislabel+ '<br/>' +
                   'Total Base: ' + Math.round(this.point.total-this.point.difference)+' '+scope.options.axislabel;
             }
