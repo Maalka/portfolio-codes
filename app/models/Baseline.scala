@@ -41,10 +41,14 @@ case class EUIMetrics(parameters: JsValue) {
   }
 
   def getEndUses:Future[Seq[Map[String,Any]]] = {
+
+
     for {
       propList <- modelEUI.getValidatedPropList
       modelEui <- Future.sequence(propList.map{modelEUI.lookupEndUses(_,None)})
       modelEnergy <- Future.sequence(propList.map{modelEUI.lookupModelEndUseEnergies(_)})
+      modelTotalEUI <- Future.sequence(propList.map{modelEUI.lookupModelTotalMetricIntensity(_)})
+
 
     } yield {
       val test = (propList,modelEui,modelEnergy)

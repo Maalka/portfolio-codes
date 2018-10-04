@@ -198,18 +198,9 @@ define(['angular'], function() {
         }
     };
 
-    function round(value, digits) {
-        if(!digits){
-            digits = 1;
-        }
-        value = value * Math.pow(10, digits);
-        value = Math.round(value);
-        value = value / Math.pow(10, digits);
-        return value;
-    }
+
     function groupDiffs(endUses,energyDiff,euiDiff){
           var showLabels=true;
-
           for(var i=0;i<endUses.length;i++){
             if(energyDiff[i].energy_diff<0){
               energyDiff[i].energy_diff=0;
@@ -226,18 +217,18 @@ define(['angular'], function() {
             var energyBase=energyDiff[i].energy_diff+energyScenario;
             var euiBase=euiDiff[i].eui_diff+euiScenario;
 
-
-
             var differenceEnergy=(energyDiff[i].energy_diff/energyBase);
             var differenceEui=(euiDiff[i].eui_diff/euiDiff[i].eui);
-
-
-
-
-            endUses[i].energy_diff=round(differenceEnergy);
-            endUses[i].eui_diff=round(differenceEui);
-            endUses[i].scenario_energy=round(energyScenario);
-            endUses[i].scenario_eui=round(euiBase);
+            endUses[i].energy={
+              base:energyBase,
+              difference:differenceEnergy,
+              scenario:energyScenario
+            };
+            endUses[i].eui={
+              base:euiBase,
+              difference:differenceEui,
+              scenario:euiScenario
+            };
 
             if(euiDiff[i].eui_diff===0||energyDiff[i].energy_diff===0){
               showLabels=false;
@@ -259,7 +250,6 @@ define(['angular'], function() {
             var totalEui=results.values[1].total_energy_list;
             $scope.endUseProps=results.values[4].end_uses;
             var energyDiffs=results.values[5].energy_diff;
-
             var euiDiffs=results.values[6].eui_diff;
             var showLabels=groupDiffs($scope.endUseProps,energyDiffs,euiDiffs);
             $scope.barOptions.eui.showLabels=false;
@@ -285,19 +275,19 @@ define(['angular'], function() {
             /*
             TESTING
             */
-            testPerformance('portfolioTotal',portfolioTotal,totalEui);
-            testPerformance('portfolioTotal',portfolioTotal,totalEnergy);
-            testPerformance('groupByBuildingType',groupByBuildingType,$scope.endUseProps);
+
+
 
         });
     };
-
-      function testPerformance(name,func,params){
-        //var t0 = performance.now();
+/*
+      function testPerformance(name,func){
+        var t0 = performance.now();
         func(params);   // <---- The function you're measuring time for
-        //var t1 = performance.now();
-        //console.log(name+ ":" + (t1 - t0) + " milliseconds.");
+        var t1 = performance.now();
+        console.log(name+ ":" + (t1 - t0) + " milliseconds.");
       }
+      */
       function portfolioTotal(list,energyType){
           var totalPortfolioEui=0;
           for(var i=0;i<list.length;i++){
@@ -322,17 +312,21 @@ define(['angular'], function() {
         }
         return inLegend;
       }
+
       function convertToMBtus(value){
         return value/1000;
       }
+
       function createSeries(endUse){
-        var categories = [];
-        var differences={
+        let categories = [];
+        console.log('endUse');
+        let differences={
           eui:[],
           energy:[]
         };
-
-        var terms = {
+        //Cooling, Ext. Equipment, Ext. Lighting,
+        //Fans, Generator, Heat Recovery, Heat Rejection, Heating, Humidity, Int. Equipment, Int. Lighting, Pumps, Refrigeration, Hot Water
+        let terms = {
           clg: {},
           extEqp: {},
           extLgt: {},
@@ -349,7 +343,8 @@ define(['angular'], function() {
           swh: {},
           net: {}
         };
-        var properties = {
+
+        let properties = {
           eui: {},
           energy: {}
         };
@@ -357,20 +352,21 @@ define(['angular'], function() {
           properties.eui[term] = [];
           properties.energy[term] = [];
         }
-
         endUse.forEach(function(item){
-            differences.eui.push(item.eui_diff);
-            differences.energy.push(item.energy_diff);
+            differences.eui.push(item.eui.difference);
+            differences.energy.push(item.energy.difference);
             categories.push(item.building_name);
-            for(var term in item.energy_breakdown){
 
-                properties.energy[term].push({y:convertToMBtus(item.energy_breakdown[term]),difference:item.energy_diff,total:item.scenario_energy});
+            for(let term in item.energy_breakdown){
+                properties.energy[term].push({y:convertToMBtus(item.energy_breakdown[term]),difference:item.energy.difference,total:item.energy.scenario,base:item.energy.base,name:prettyNames[term]});
             }
-            for(var euiTerm in item.eui_breakdown){
-                properties.eui[euiTerm].push({y:item.eui_breakdown[euiTerm],difference:item.eui_diff,total:item.scenario_eui});
+            for(let term in item.eui_breakdown){
+                properties.eui[term].push({y:item.eui_breakdown[term],difference:item.eui.difference,total:item.eui.scenario,base:item.eui.base,name:prettyNames[term]});
             }
+
         });
-        var legend=inLegend(properties,terms);
+        let legend=inLegend(properties,terms);
+
         return {
           properties:properties,
           differences:differences,
@@ -602,6 +598,25 @@ define(['angular'], function() {
         }
     };
 
+
+    var prettyNames={
+        clg: "Cooling",
+        extEqp: "Ext. Equipment",
+        extLgt: "Ext. Lighting",
+        fans: "Fans",
+        gentor: "Generator",
+        heatRec: "Heat Recovery",
+        heatRej: "Heat Rejection",
+        htg: "Heating",
+        humid: "Humidity",
+        intEqp: "Int. Equipment",
+        intLgt: "Int. Lighting",
+        pumps: "Pumps",
+        refrg: "Refrigeration",
+        swh: "Hot Water",
+        net: "net"
+
+    };
     $scope.geographicProperties = {
         country : [],
         city : [],
