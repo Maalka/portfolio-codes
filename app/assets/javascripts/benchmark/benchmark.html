@@ -18,21 +18,16 @@
                         <a href ng-click="submit()"><i class="arrow down icon" style="color: #06a1f9"></i></a>
                     </h3>
                 </div>
+                <div class="ui container" style="min-height:200px" ng-if="!endUses"></div>
+
+                    <div class="sixteen wide column"
+                         style="padding-top:14px" ng-if="endUses">
+                        <div class="ui hidden divider"></div>
+                        <div ng-include src="'javascripts/benchmark/analysis_result.html'">Not Defined</div>
+                    </div>
+
             </div>
         </div>
-    </div>
-
-    <div class="ui container" style="min-height:200px" ng-if="!endUses"></div>
-
-    <div class="ui stackable grid container" style="padding-top:14px" ng-if="endUses">
-
-        <div class="sixteen wide column"
-             ng-class="{'desktop-padding-right': largeScreen}"
-             element="'#data-input'">
-            <div class="ui hidden divider"></div>
-            <div ng-include src="'javascripts/benchmark/analysis_result.html'">Not Defined</div>
-        </div>
-
     </div>
 
 

@@ -54,9 +54,9 @@ case class ModelValues(parameters:JsValue) {
 
   def getBuildingLookupDetails(propID:String):Future[Map[String,String]] = concurrent.Future{
     propID match {
-      case "SecSchl" => Map("name"->"K-12 School","id" -> "SecSchl")
-      case "Admin" => Map("name"->"City Hall/Administration","id" -> "Admin")
-      case "Lib" => Map("name"->"Public Library","id" -> "Lib")
+      case "sec_school" => Map("name"->"K-12 School","id" -> "sec_school")
+      case "admin" => Map("name"->"City Hall/Administration","id" -> "admin")
+      case "lib" => Map("name"->"Public Library","id" -> "lib")
       case "fire_station" => Map("name"->"Fire Station","id" -> "fire_station")
       case "police_station" => Map("name"->"Police Station","id" -> "police_station")
     }
@@ -76,12 +76,12 @@ case class ModelValues(parameters:JsValue) {
 
 
     val retobj = propDesc.building_type match {
-      case "SecSchl" => Map("type" -> "K-12 School",
-        "key" -> cz.concat("_SecSchl_" + scenario))
-      case "Admin" => Map("type" -> "City Hall/Administration",
-        "key" -> cz.concat("_Admin_" + scenario))
-      case "Lib" => Map("type" -> "Public Library",
-        "key" -> cz.concat("_Lib_" + scenario))
+      case "sec_school" => Map("type" -> "K-12 School",
+        "key" -> cz.concat("_sec_school_" + scenario))
+      case "admin" => Map("type" -> "City Hall/Administration",
+        "key" -> cz.concat("_admin_" + scenario))
+      case "lib" => Map("type" -> "Public Library",
+        "key" -> cz.concat("_lib_" + scenario))
       case "fire_station" => Map("type" -> "Fire Station",
         "key" -> cz.concat("_fire_station_" + scenario))
       case "police_station" => Map("type" -> "Police Station",

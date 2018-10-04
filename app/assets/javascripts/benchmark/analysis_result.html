@@ -1,37 +1,32 @@
 
 	<div class="ui basic segment">
 		<form class="ui large form">
-
 			<h2 class="ui dividing header">
 				<i class="maalka-blue signal icon" style="font-size:25px;"></i>VIEW RESULTS BELOW
 			</h2>
 
 
-				<div class="ui segment about">
-					<div class="ui grid">
+			<div class="ui segment about">
+				<div class="ui grid">
 
-						<div class="four wide column"></div>
-						<div class="one wide column">
-							<label class="row-label" style="margin-right:12px;">Metric:</label>
-						</div>
-						<div class="seven wide column">
-							<div class="inline fields">
-								<div class="sixteen wide field">
-									<select class="ui dropdown sixteen wide column"
-											ng-model="auxModel.scenario"
-											ng-options="item.id as item.name for item in scenarios"
-											name="scenario">
-										<option value="">Select</option>
-									</select>
-								</div>
+					<div class="four wide column"></div>
+					<div class="two wide column">
+						<label class="row-label" style="margin-right:12px;">Scenario:</label>
+					</div>
+					<div class="six wide column">
+						<div class="inline fields">
+							<div class="sixteen wide field">
+								<select class="ui dropdown sixteen wide column"
+										ng-model="auxModel.scenario"
+										ng-options="item.id as item.name for item in scenarios"
+										name="scenario">
+									<option value="">Select</option>
+								</select>
 							</div>
 						</div>
 					</div>
 				</div>
-
-
-
-
+			</div>
 		</form>
 	</div>
 
@@ -50,7 +45,7 @@
 
 
 
-		<div class="eight wide column" style="padding-right:20px; background-color:white;">
+		<div class="seven wide column" style="padding-right:20px; background-color:white;">
 			<div class="row" style="padding-top:0.1em;padding-left:5em;;">
 				<h2 class="ui dividing header">
 					Portfolio Energy:
@@ -63,7 +58,8 @@
 
 			</div>
 		</div>
-		<div class="eight wide column" style="padding-left:20px; padding-right:20px; background-color:white;">
+		<div class="one wide column"></div>
+		<div class="six wide column" style="padding-left:20px; padding-right:20px; background-color:white;">
 			<div class="row" style="padding-top:0.1em;padding-left:1.5em;">
 				<h2 class="ui dividing header">
 					Portfolio EUI:
@@ -76,9 +72,10 @@
 			</div>
 		</div>
 
-		<div class="eight wide column">
+		<div class="seven wide column">
 			<bar data="energySeries" categories="categories" differences="differences.energy" options="barOptions.energy" ></bar>
 		</div>
+		<div class="one wide column"></div>
 		<div class="eight wide column">
 			<bar  data="euiSeries" categories="categories" differences="differences.eui" options="barOptions.eui"></bar>
 		</div>

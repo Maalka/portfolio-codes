@@ -443,9 +443,9 @@ define(['angular'], function() {
       //inital order of the building groupings
       var filteredArr=[];
       var buildingTypes={
-        Lib:[],
-        Admin:[],
-        SecSchl:[],
+        lib:[],
+        admin:[],
+        sec_school:[],
         fire_station:[],
         police_station:[]
       };
@@ -579,19 +579,19 @@ define(['angular'], function() {
 
     $scope.scenarios = [
         {id:"base",name:"Base"},
-        {id:"EEM1",name:"Low Cost"},
-        {id:"EEM2",name:"Medium Cost"},
-        {id:"EEM3",name:"High Cost"},
-        {id:"EEM4",name:"Extravagant"}
+        {id:"EEM1",name:"Lighting Retrofit"},
+        {id:"EEM2",name:"HVAC Retrofit"},
+        {id:"EEM3",name:"Green Retrofit"},
+        {id:"EEM4",name:"Deep Green Retrofit"}
     ];
 
     $scope.buildingProperties = {
 
         buildingType: {
             commercial: [
-                {name:"K-12 School",id:"SecSchl"},
-                {name:"City Hall/Administration",id:"Admin"},
-                {name:"Public Library",id:"Lib"},
+                {name:"K-12 School",id:"sec_school"},
+                {name:"City Hall/Administration",id:"admin"},
+                {name:"Public Library",id:"lib"},
                 {name:"Fire Station",id:"fire_station"},
                 {name:"Police Station",id:"police_station"}
             ]
