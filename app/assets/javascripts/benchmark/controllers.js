@@ -583,10 +583,10 @@ define(['angular'], function() {
 
     $scope.scenarios = [
         {id:"base",name:"Base"},
-        {id:"EEM1",name:"Low Cost"},
-        {id:"EEM2",name:"Medium Cost"},
-        {id:"EEM3",name:"High Cost"},
-        {id:"EEM4",name:"Extravagant"}
+        {id:"EEM1",name:"Lighting Retrofit"},
+        {id:"EEM2",name:"HVAC Retrofit"},
+        {id:"EEM3",name:"Green Retrofit"},
+        {id:"EEM4",name:"Deep Green Retrofit"}
     ];
 
     $scope.buildingProperties = {
