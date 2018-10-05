@@ -31,10 +31,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
       link: function(scope, element){
 
         function connectLegends(current){
-
-
             var siblingChart=angular.element(element).parent().parent().find('.highcharts-container._energy').parent().highcharts();
-
           var currentChart=current;
           //if the chart legend is visible, if its not it was selected
           //so it should be hidden
@@ -173,10 +170,10 @@ define(['angular', './main', 'highcharts'], function(angular) {
             }
           }
         }
+        //show/hide data labels based on if data is present
         function showHideDataLabels(){
-
           var labelOptions= {
-                enabled: true,
+                enabled: $scope.options.enableLabels,
                  align:'left',
                  useHTML: true,
                  style: {
@@ -187,20 +184,13 @@ define(['angular', './main', 'highcharts'], function(angular) {
                   return Math.round((((Math.round(this.y*100))/100))*100)+' %';
                 }
             };
-            if($scope.options.id==='_eui'){
-              labelOptions.enabled=false;
+            if($scope.options.showLabels){
+              labelOptions.color="#000000";
             }else{
-              if($scope.options.showLabels){
-                labelOptions.color="#000000";
-              }else{
-                labelOptions.color="#FFFFFF";
-              }
+              labelOptions.color="rgba(255, 255, 255, 0)";
             }
-
           return labelOptions;
         }
-        console.log($scope.differences,'diff');
-
         function addInDifferences(){
             var differences = {
              name: 'differences'+$scope.options.id,
