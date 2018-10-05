@@ -25,11 +25,16 @@ define(['angular', './main', 'highcharts'], function(angular) {
 
 
       },
-      template:'<div id="container"></div>',
+      templateUrl: function(){
+             return 'javascripts/common/partials/split_bar.html';
+      },
       link: function(scope, element){
 
         function connectLegends(current){
-          var siblingChart=angular.element(element).parent().prev().children().highcharts();
+
+
+            var siblingChart=angular.element(element).parent().parent().find('.highcharts-container._energy').parent().highcharts();
+
           var currentChart=current;
           //if the chart legend is visible, if its not it was selected
           //so it should be hidden
