@@ -214,6 +214,7 @@ define(['angular'], function() {
             var energyScenario=energyDiff[i].energy;
             var euiScenario=euiDiff[i].eui;
 
+
             var energyBase=energyDiff[i].energy_diff+energyScenario;
             var euiBase=euiDiff[i].eui_diff+euiScenario;
 
@@ -224,17 +225,16 @@ define(['angular'], function() {
               difference:differenceEnergy,
               scenario:energyScenario
             };
-            console.log(endUses[i].energy);
             endUses[i].eui={
               base:euiBase,
               difference:differenceEui,
               scenario:euiScenario
             };
-
             if(euiDiff[i].eui_diff===0||energyDiff[i].energy_diff===0){
               showLabels=false;
             }
           }
+          $scope.endUses=endUses;
           return showLabels;
     }
 
@@ -320,7 +320,6 @@ define(['angular'], function() {
 
       function createSeries(endUse){
         let categories = [];
-        console.log('endUse');
         let differences={
           eui:[],
           energy:[]
@@ -357,9 +356,9 @@ define(['angular'], function() {
             differences.eui.push(item.eui.difference);
             differences.energy.push(item.energy.difference);
             categories.push(item.building_name);
-
+            console.log(item,'enduse');
             for(let term in item.energy_breakdown){
-                properties.energy[term].push({y:convertToMBtus(item.energy_breakdown[term]),difference:item.energy.difference,total:item.energy.scenario,base:convertToMBtus(item.energy.base),name:prettyNames[term]});
+                properties.energy[term].push({y:convertToMBtus(item.energy_breakdown[term]),difference:item.energy.difference,total:convertToMBtus(item.energy.scenario),base:convertToMBtus(item.energy.base),name:prettyNames[term]});
             }
             for(let term in item.eui_breakdown){
                 properties.eui[term].push({y:item.eui_breakdown[term],difference:item.eui.difference,total:item.eui.scenario,base:item.eui.base,name:prettyNames[term]});
