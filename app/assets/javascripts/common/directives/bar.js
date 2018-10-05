@@ -99,15 +99,15 @@ define(['angular', './main', 'highcharts'], function(angular) {
             shared: false,
             useHTML: true,
             formatter: function() {
+
+
             if(this.series.name===("differences"+scope.options.id)){
               return false;
             }
-
-
                 return '<b>' + this.x + '</b><br/>' +
                   this.point.name+': '+Math.round(this.y)+' '+scope.options.axislabel+'<br/>'+
-                  'Total: '  + Math.floor(this.point.total) + ' '+scope.options.axislabel+ '<br/>' +
-                  'Total Base: ' + Math.floor(((this.point.total+this.point.base)/1000))+' '+scope.options.axislabel;
+                  'Total: '  + Math.floor((this.point.total).toFixed(2)) + ' '+scope.options.axislabel+ '<br/>' +
+                  'Total Base: ' + Math.floor((this.point.base).toFixed(2))+' '+scope.options.axislabel;
             }
           },
           title: {
@@ -156,8 +156,6 @@ define(['angular', './main', 'highcharts'], function(angular) {
           index = 1;
           var legendIndex=0;
           for (var propEnergy in $scope.data) {
-            console.log($scope.data[propEnergy],'data');
-
             if (propEnergy !== 'net') {
                var modelEnergy = {
                 name: $scope.data[propEnergy][0].name,
@@ -176,6 +174,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
           }
         }
         function showHideDataLabels(){
+
           var labelOptions= {
                 enabled: true,
                  align:'left',
@@ -185,16 +184,22 @@ define(['angular', './main', 'highcharts'], function(angular) {
                    paddingLeft: '10px',
                  },
                 formatter:function(){
-                  return (Math.floor(this.y*100)/100)*100+' %';
+                  return Math.round((((Math.round(this.y*100))/100))*100)+' %';
                 }
             };
-          if($scope.options.showLabels){
-            labelOptions.color="#000000";
-          }else{
-            labelOptions.color="#FFFFFF";
-          }
+            if($scope.options.id==='_eui'){
+              labelOptions.enabled=false;
+            }else{
+              if($scope.options.showLabels){
+                labelOptions.color="#000000";
+              }else{
+                labelOptions.color="#FFFFFF";
+              }
+            }
+
           return labelOptions;
         }
+        console.log($scope.differences,'diff');
 
         function addInDifferences(){
             var differences = {
@@ -209,6 +214,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
              borderWidth: 0
             };
             series.push(differences);
+
         }
         createSeries();
         addInDifferences();
