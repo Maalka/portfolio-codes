@@ -175,8 +175,26 @@ define(['angular', './main', 'highcharts'], function(angular) {
             }
           }
         }
-
-
+        function showHideDataLabels(){
+          var labelOptions= {
+                enabled: true,
+                 align:'left',
+                 useHTML: true,
+                 style: {
+                   fontSize: '10px',
+                   paddingLeft: '10px',
+                 },
+                formatter:function(){
+                  return (Math.floor(this.y*100)/100)*100+' %';
+                }
+            };
+          if($scope.options.showLabels){
+            labelOptions.color="#000000";
+          }else{
+            labelOptions.color="#FFFFFF";
+          }
+          return labelOptions;
+        }
 
         function addInDifferences(){
             var differences = {
@@ -187,19 +205,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
              showInLegend:false,
              stack:$scope.options.id,
              index:0,
-             dataLabels: {
-                   enabled: $scope.options.showLabels,
-                    color: '#000000',
-                    align:'left',
-                    useHTML: true,
-                    style: {
-                      fontSize: '10px',
-                      paddingLeft: '10px',
-                    },
-                   formatter:function(){
-                     return (Math.floor(this.y*100)/100)*100+' %';
-                   }
-               },
+             dataLabels:showHideDataLabels(),
              borderWidth: 0
             };
             series.push(differences);
