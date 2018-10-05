@@ -158,7 +158,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
               "enum": ["imperial", "metric"]
             },
             "scenario": {
-              "type": "string",
+              "type": "string",getTotalEUIBreakdownList
               "enum": ["base", "EEM1", "EEM2", "EEM3", "EEM4"]
             },
             "climate_zone": {
@@ -189,11 +189,6 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
 
 
         val futures = Future.sequence(Seq(
-
-          Baseline.getTotalEUIList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-          Baseline.getTotalEnergyList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-          Baseline.getTotalEUIBreakdownList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-          Baseline.getTotalEnergyBreakdownList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
           Baseline.getEndUses.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
           Baseline.getEnergyDiff.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
           Baseline.getEUIDiff.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
@@ -201,10 +196,6 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
 
         val fieldNames = Seq(
 
-          "total_eui_list",
-          "total_energy_list",
-          "end_use_eui_list",
-          "end_use_energy_list",
           "end_uses",
           "energy_diff",
           "eui_diff"
