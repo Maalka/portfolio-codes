@@ -102,12 +102,10 @@ define(['angular', './main', 'highcharts'], function(angular) {
             if(this.series.name===("differences"+scope.options.id)){
               return false;
             }
-
-
                 return '<b>' + this.x + '</b><br/>' +
                   this.point.name+': '+Math.round(this.y)+' '+scope.options.axislabel+'<br/>'+
                   'Total: '  + Math.floor(this.point.total) + ' '+scope.options.axislabel+ '<br/>' +
-                  'Total Base: ' + Math.floor(((this.point.total+this.point.base)/1000))+' '+scope.options.axislabel;
+                  'Total Base: ' + Math.floor(this.point.base)+' '+scope.options.axislabel;
             }
           },
           title: {
@@ -185,7 +183,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
                    paddingLeft: '10px',
                  },
                 formatter:function(){
-                  return (Math.floor(this.y*100)/100)*100+' %';
+                  return Math.round((((Math.round(this.y*100))/100))*100)+' %';
                 }
             };
           if($scope.options.showLabels){

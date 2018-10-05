@@ -218,12 +218,13 @@ define(['angular'], function() {
             var euiBase=euiDiff[i].eui_diff+euiScenario;
 
             var differenceEnergy=(energyDiff[i].energy_diff/energyBase);
-            var differenceEui=(euiDiff[i].eui_diff/euiDiff[i].eui);
+            var differenceEui=(euiDiff[i].eui_diff/euiBase);
             endUses[i].energy={
               base:energyBase,
               difference:differenceEnergy,
               scenario:energyScenario
             };
+            console.log(endUses[i].energy);
             endUses[i].eui={
               base:euiBase,
               difference:differenceEui,
@@ -358,7 +359,7 @@ define(['angular'], function() {
             categories.push(item.building_name);
 
             for(let term in item.energy_breakdown){
-                properties.energy[term].push({y:convertToMBtus(item.energy_breakdown[term]),difference:item.energy.difference,total:item.energy.scenario,base:item.energy.base,name:prettyNames[term]});
+                properties.energy[term].push({y:convertToMBtus(item.energy_breakdown[term]),difference:item.energy.difference,total:item.energy.scenario,base:convertToMBtus(item.energy.base),name:prettyNames[term]});
             }
             for(let term in item.eui_breakdown){
                 properties.eui[term].push({y:item.eui_breakdown[term],difference:item.eui.difference,total:item.eui.scenario,base:item.eui.base,name:prettyNames[term]});
