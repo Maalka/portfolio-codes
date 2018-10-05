@@ -25,11 +25,16 @@ define(['angular', './main', 'highcharts'], function(angular) {
 
 
       },
-      template:'<div id="container"></div>',
+      templateUrl: function(){
+             return 'javascripts/common/partials/split_bar.html';
+      },
       link: function(scope, element){
 
         function connectLegends(current){
-          var siblingChart=angular.element(element).parent().prev().children().highcharts();
+
+
+            var siblingChart=angular.element(element).parent().parent().find('.highcharts-container._energy').parent().highcharts();
+
           var currentChart=current;
           //if the chart legend is visible, if its not it was selected
           //so it should be hidden
@@ -97,11 +102,12 @@ define(['angular', './main', 'highcharts'], function(angular) {
             if(this.series.name===("differences"+scope.options.id)){
               return false;
             }
-                console.log(this,'this');
+
+
                 return '<b>' + this.x + '</b><br/>' +
-                  this.series.userOptions.name+':'+Math.round(this.y)+' '+scope.options.axislabel+'<br/>'+
-                  'Total: '  + Math.round(this.y-this.point.difference) + ' '+scope.options.axislabel+ '<br/>' +
-                  'Total Base: ' + Math.round(this.point.total-this.point.difference)+' '+scope.options.axislabel;
+                  this.point.name+': '+Math.round(this.y)+' '+scope.options.axislabel+'<br/>'+
+                  'Total: '  + Math.floor(this.point.total) + ' '+scope.options.axislabel+ '<br/>' +
+                  'Total Base: ' + Math.floor(((this.point.total+this.point.base)/1000))+' '+scope.options.axislabel;
             }
           },
           title: {
@@ -150,9 +156,11 @@ define(['angular', './main', 'highcharts'], function(angular) {
           index = 1;
           var legendIndex=0;
           for (var propEnergy in $scope.data) {
+            console.log($scope.data[propEnergy],'data');
+
             if (propEnergy !== 'net') {
                var modelEnergy = {
-                name: propEnergy,
+                name: $scope.data[propEnergy][0].name,
                 id: propEnergy+$scope.options.id,
                 data: $scope.data[propEnergy],
                 color: colors[index],
@@ -189,7 +197,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
                       paddingLeft: '10px',
                     },
                    formatter:function(){
-                     return (this.y*100)+' %';
+                     return (Math.floor(this.y*100)/100)*100+' %';
                    }
                },
              borderWidth: 0

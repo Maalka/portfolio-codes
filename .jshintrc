@@ -6,6 +6,8 @@
   "undef": true,
   "unused": true,
   "browser": true,
+
+  "esversion": 6,
   "predef": {
     "requirejs": true,
     "require": true,
