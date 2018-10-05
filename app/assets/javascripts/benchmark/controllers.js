@@ -243,10 +243,11 @@ define(['angular'], function() {
 
      $q.resolve($scope.futures).then(function (results) {
             //retrieves endUse object from api
-            $scope.endUses=results.values[4].end_uses;
+            console.log(results);
+            $scope.endUses=results.values[0].end_uses;
             //retrieves differences object from api
-            let energyDifference=results.values[5].energy_diff;
-            let euiDifference=results.values[6].eui_diff;
+            let energyDifference=results.values[1].energy_diff;
+            let euiDifference=results.values[2].eui_diff;
 
 
             //attaches differences to endUses

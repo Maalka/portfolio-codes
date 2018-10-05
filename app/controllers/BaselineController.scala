@@ -158,7 +158,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
               "enum": ["imperial", "metric"]
             },
             "scenario": {
-              "type": "string",getTotalEUIBreakdownList
+              "type": "string",
               "enum": ["base", "EEM1", "EEM2", "EEM3", "EEM4"]
             },
             "climate_zone": {
