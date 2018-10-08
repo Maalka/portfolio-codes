@@ -237,16 +237,16 @@ define(['angular'], function() {
         $scope.futures = benchmarkServices.getEnergyMetrics(submission);
 
      $q.resolve($scope.futures).then(function (results) {
-
         let energyDifference;
         let euiDifference;
         let endUses;
             results.values.forEach(function(item){
-                if(Object.keys(item)[0]==='end_uses'){
+                let key=Object.keys(item)[0];
+                if(key==='end_uses'){
                    endUses=item.end_uses;
-                }else if(Object.keys(item)[0]==='energy_diff'){
+                }else if(key==='energy_diff'){
                    energyDifference=item.energy_diff;
-                }else if(Object.keys(item)[0]==='eui_diff'){
+                }else if(key==='eui_diff'){
                    euiDifference=item.eui_diff;
                 }
             });
