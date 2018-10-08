@@ -10,13 +10,8 @@ define(['angular'], function() {
   let RootCtrl = function($rootScope) {
     $rootScope.includeHeader = maalkaIncludeHeader;
   };
-
-
-
   RootCtrl.$inject = ['$rootScope'];
-
   let DashboardCtrl = function($rootScope, $scope, $window, $sce, $timeout, $q, $log, benchmarkServices) {
-
 
 
     $rootScope.includeHeader = maalkaIncludeHeader;
@@ -242,14 +237,20 @@ define(['angular'], function() {
         $scope.futures = benchmarkServices.getEnergyMetrics(submission);
 
      $q.resolve($scope.futures).then(function (results) {
-            //retrieves endUse object from api
-            console.log(results);
-            $scope.endUses=results.values[0].end_uses;
-            //retrieves differences object from api
-            let energyDifference=results.values[1].energy_diff;
-            let euiDifference=results.values[2].eui_diff;
 
-
+        let energyDifference;
+        let euiDifference;
+        let endUses;
+            results.values.forEach(function(item){
+                if(Object.keys(item)[0]==='end_uses'){
+                   endUses=item.end_uses;
+                }else if(Object.keys(item)[0]==='energy_diff'){
+                   energyDifference=item.energy_diff;
+                }else if(Object.keys(item)[0]==='eui_diff'){
+                   euiDifference=item.eui_diff;
+                }
+            });
+            $scope.endUses=endUses;
             //attaches differences to endUses
             attachDifferences($scope.endUses,energyDifference,euiDifference);
 
