@@ -1,0 +1,28 @@
+building_name,building_type,floor_area,floor_area_units,climate_zone
+School 1,sec_school,10000,mSQ,1A
+Fire Station 1,fire_station,200000,ftSQ,1A
+City Hall 1,admin,300000,ftSQ,1A
+Library 1,lib,401232,ftSQ,1A
+Police 1,police_station,123123,ftSQ,1A
+Library 3,lib,50123,ftSQ,1A
+Office12,Office,100000,ftSQ,1A
+School 11,sec_school,10000,mSQ,1A
+School 23,sec_school,200000,ftSQ,1A
+City Hall 14,admin,242345,ftSQ,1A
+Library 11,lib,401232,ftSQ,1A
+Library 24,lib,123123,ftSQ,1A
+Library 31,lib,50123,ftSQ,1A
+Office17,Office,100000,ftSQ,1A
+School 16,sec_school,343443,mSQ,1A
+School 26,sec_school,200000,ftSQ,1A
+City Hall 17,admin,300000,ftSQ,1A
+Library 16,lib,1234,ftSQ,1A
+Library 24,lib,123123,ftSQ,1A
+Library 37,lib,50123,ftSQ,1A
+Office128,Office,334555,ftSQ,1A
+School 114,sec_school,10000,mSQ,1A
+School 236,sec_school,200000,ftSQ,1A
+City Hall 144,admin,3433,ftSQ,1A
+Library 115,lib,401232,ftSQ,1A
+Library 247,lib,3422,ftSQ,1A
+Library 317,lib,3242344,ftSQ,1A
