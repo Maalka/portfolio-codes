@@ -1,50 +1,37 @@
-<div>
 
 	<div class="ui basic segment">
 		<form class="ui large form">
-
 			<h2 class="ui dividing header">
 				<i class="maalka-blue signal icon" style="font-size:25px;"></i>VIEW RESULTS BELOW
 			</h2>
 
 
-				<div class="ui segment about">
-					<div class="ui grid">
+			<div class="ui segment about">
+				<div class="ui grid">
 
-						<div class="four wide column"></div>
-						<div class="one wide column">
-							<label class="row-label" style="margin-right:12px;">Metric:</label>
-						</div>
-						<div class="seven wide column">
-							<div class="inline fields">
-								<div class="sixteen wide field">
-									<select class="ui dropdown sixteen wide column"
-											ng-model="auxModel.scenario"
-											ng-options="item.id as item.name for item in scenarios"
-											name="scenario">
-										<option value="">Select</option>
-									</select>
-								</div>
+					<div class="four wide column"></div>
+					<div class="two wide column">
+						<label class="row-label" style="margin-right:12px;">Scenario:</label>
+					</div>
+					<div class="six wide column">
+						<div class="inline fields">
+							<div class="sixteen wide field">
+								<select class="ui dropdown sixteen wide column"
+										ng-model="auxModel.scenario"
+										ng-options="item.id as item.name for item in scenarios"
+										name="scenario">
+									<option value="">Select</option>
+								</select>
 							</div>
 						</div>
 					</div>
 				</div>
-
-
-
-
+			</div>
 		</form>
 	</div>
 
 
-
-	</div>
-
-	<h2 class="ui dividing header"></h2>
-
-
 	<div class="ui padded sixteen column grid" style="margin-bottom:10px;">
-
 
         <div class="ui basic sixteen wide column" ng-if="endUses">
             <div class="ui sixteen wide grid">
@@ -57,20 +44,44 @@
         </div>
 
 
+		<div class="seven wide column" style="padding-right:20px; background-color:white;">
+			<div class="row" style="padding-top:0.1em;padding-left:5em;;">
+				<h2 class="ui dividing header">
+					Portfolio Energy:
+					<div>
+						<span style="font-size:1em">{{portfolioEnergy | number :0 }}</span>
+						<span style="text-transform:none;">MBtus</span>
+					</div>
 
-        <div class="sixteen wide column" style="padding-left:20px; padding-right:20px; padding-bottom:10px; background-color:white;" ng-if="endUses">
-
-
-			<div class="ui sixteen wide grid">
-
-				{{endUses}}
+				</h2>
 
 			</div>
+		</div>
+		<div class="one wide column"></div>
+		<div class="six wide column" style="padding-left:20px; padding-right:20px; background-color:white;">
+			<div class="row" style="padding-top:0.1em;padding-left:1.5em;">
+				<h2 class="ui dividing header">
+					Portfolio EUI:
+					<div>
+						<span style="font-size:1em">{{portfolioEui | number :0 }}</span>
+						<span style="text-transform:none;"> kBtu/ft<sup>2</sup></span>
+					</div>
 
+				</h2>
+			</div>
+		</div>
+
+		<div class="seven wide column">
+			<bar data="energySeries" categories="categories" differences="differences.energy" options="barOptions.energy" ></bar>
+		</div>
+		<div class="one wide column"></div>
+		<div class="eight wide column">
+			<bar  data="euiSeries" categories="categories" differences="differences.eui" options="barOptions.eui"></bar>
 		</div>
 
 
 	</div>
+
 	<div>
 		<div class="ui basic horizontal segments">
 			<div class="ui basic segment right aligned">
@@ -78,4 +89,3 @@
 			</div>
 		</div>
 	</div>
-</div>

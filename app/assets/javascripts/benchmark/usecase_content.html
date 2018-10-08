@@ -1,0 +1,258 @@
+
+<div class="ui basic segment">
+
+    <h1 class="ui center aligned block header">Municipal Portfolio Codes Assessment Use Case</h1>
+
+
+    <div class="ui hidden divider"></div>
+    <div class="ui secondary very padded segment">
+        <p>
+            Cities across the country are beginning to explore ways to improve the energy efficiency of their building portfolios.
+            The process of identifying specific improvement strategies can be long and confusing, spanning multiple levels of
+            analysis. The Portfolio Codes Assessment tool was designed to be the first step, by enabling municipalities to
+            conduct a quick, simple analysis to understand the typical breakdown of energy end-uses for their buildings and the
+            impact that different tiers of investment strategies may have on their overall energy-use and efficiency.
+        </p>
+    </div>
+    <div class="ui hidden divider"></div>
+
+    <h1 class="small header">
+        <i>How was the Portfolio Codes Tool created?</i>
+    </h1>
+
+    <p>
+      The MPP team worked with the cities of Providence (RI), Grand Rapids (MI), and Eugene (OR) to develop and refine a process
+      for data-driven Strategic Energy Management. The cities were chosen because they could offer perspectives into how energy-usage patterns may vary
+        across distinct climate zones.</p>
+
+
+    <div class="ui hidden divider"></div>
+
+    <img class="ui centered large image" src="./assets/images/map.svg">
+
+    <div class="ui hidden divider"></div>
+
+    <div class="ui secondary very padded segment">
+        <p>Over time, the team was able to work with each city to collect energy-use data for each building in its portfolio.
+        The team normalized the data by building size and grouped buildings by type to statistically determine a representative
+        energy-use profile for each building type in the portfolio (See Below - Red lines correspond to representative building).</p>
+    </div>
+
+    <div class="ui hidden divider"></div>
+    <div class="ui hidden divider"></div>
+
+    <img class="ui centered big image" src="./assets/images/portfolio energy over time.png">
+
+    <div class="ui hidden divider"></div>
+    <div class="ui hidden divider"></div>
+
+    <div class="ui secondary very padded segment">
+        <p>The representative building energy-use profile was then combined with actual meteorological (AMY) data to articulate
+        and calibrate a precise energy model for the most common building types found in a municipal portfolio.
+
+        The breakdown of energy end-uses was determined for each building type.
+        </p>
+    </div>
+
+        <img class="ui centered big image" src="./assets/images/end-use.svg"></p>
+    <div class="ui secondary very padded segment">
+        <p>
+        Finally, several scenarios for improving energy efficiency were tested on the representative energy models and results were
+        integrated into the open-source tool.
+        </p>
+    </div>
+
+    <div class="ui hidden divider"></div>
+
+    <h1 class="small header">
+        <i>What were the scenarios tested on the calibrated models?</i>
+    </h1>
+
+    <p>
+        Four tiers of improvement strategies, increasing in cost and comprehensiveness, were then applied to the calibrated models and impacts were analyzed.
+
+        Outputs of these calibrated models and simulation were finally integrated into this open-source tool to enable users to understand differences in how buildings across
+        climate zones consume energy and how improvement strategies can impact performance across a portfolio.
+    </p>
+
+    <div class="ui hidden divider"></div>
+
+
+    <img class="ui huge centered image" src="./assets/images/retrofit.svg">
+
+    <div class="ui hidden divider"></div>
+
+
+
+
+    <div class="ui ordered list" style="padding-left:100px;">
+
+        <div class="item">
+            <div class="header">Scenario EEM1: Lighting Retrofit</div>
+            <ul>
+                <li> <p>Upgrade lighting to LEDs </p></li>
+                <li> <p>Add occupancy sensors to common areas such as corridors, restrooms, mechanical room and lobby </p></li>
+            </ul>
+        </div>
+        <br>
+        <div class="item">
+            <div class="header">Scenario EEM2: HVAC Retrofit</div>
+            <ul>
+                <li> <p>Match ASHRAE 90.1-2016 HVAC efficiency </p></li>
+                <li> <p>Includes lighting retrofit from 1st scenario </p></li>
+            </ul>
+        </div>
+        <br>
+        <div class="item">
+            <div class="header">Scenario EEM3: Green Retrofit</div>
+            <ul>
+                <li> <p>Full ASHRAE 90.1 Baseline building (lighting, HVAC, envelope) – uses VAV w/ Reheat system </p></li>
+                <li> <p>Infiltration rate is reduced from 0.3 CFM/ exterior surface to 0.1 CFM/ exterior surface,
+                        due to envelope retrofit (WWR not changed) </p></li>
+            </ul>
+        </div>
+        <br>
+        <div class="item">
+            <div class="header">Scenario EEM4: Deep Green Retrofit</div>
+            <ul>
+                <li><p>High Performance Envelope: R-40 Roof Insulation and R13 + R15 c.i. Wall Insulation </p></li>
+                <li> <p>High Performance Window: U-0.25/ SHGC-0.38 </p></li>
+                <li> <p>Better Cooling Efficiency: 15 EER for package single zone split system; 10 EER for AHU system </p></li>
+                <li> <p>Includes all other ASHRAE 90.1 retrofits </p></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="ui hidden divider"></div>
+
+
+
+    <h1 class="small header">
+        <i>How do I use the Portfolios Codes Tool?</i>
+    </h1>
+
+    <div class="ui secondary padded segment">
+    <p><b>Option 1:</b> Manually Enter Building Information</p>
+    </div>
+
+    <div class="ui hidden divider"></div>
+
+    <img class="ui huge centered image" src="./assets/images/manual initial input.png">
+
+    <img class="ui huge centered image" src="./assets/images/manual building input.png">
+
+    <p>
+        <i> The tool accepts five types of  buildings: Administration (e.g. Office), Libraries,
+            Police Stations, Fire Stations, and K-12 Schools. If Gross Floor Area data is not available,
+            users can click 'Use Default Values', which will provide the option to set rough building sizes based on typical municipal designations:
+        </i>
+
+
+        <br><br>
+        <div style="padding-left:100px;">
+
+            <ul class="ui list">
+                <li>
+                    Very Small: 5000 sq.ft
+                </li>
+                <li>
+                    Small: 15000 sq.ft
+                </li>
+                <li>
+                    Medium: 25000 sq.ft
+                </li>
+                <li>
+                    Medium-Large: 50000 sq.ft
+                </li>
+                <li>
+                    Large: 100000 sq.ft
+                </li>
+                <li>
+                    Very Large: 250000 sq.ft
+                </li>
+
+            </ul>
+
+        </div>
+    <br><br>
+    </p>
+
+    <div class="ui secondary padded segment">
+        <p><b>Option 2:</b> Upload CSV for Portfolio of Buildings</p>
+    </div>
+
+    <div class="ui hidden divider"></div>
+
+    <img class="ui large centered image" src="./assets/images/csv_example.png">
+
+    <div class="ui hidden divider"></div>
+
+
+
+
+
+
+    <div style="padding-left:100px;">
+    <h2 class="ui header">Download and start with the Sample CSV here <a href="../assets/files/codes_sample.csv" class="export"> here</a>. </h2>
+    </div>
+
+
+    <div class="ui hidden divider"></div>
+
+    <img class="ui huge centered image" src="./assets/images/csv upload.png">
+
+    <div class="ui hidden divider"></div>
+
+
+    <p>
+        <i>Click 'Upload', and  the 'Generate Results' to view  energy-use results.
+        Note: CSV climate_zone must be the same for all buildings.</i>
+    </p>
+
+
+    <div class="ui hidden divider"></div>
+
+    <img class="ui huge centered image" src="./assets/images/results.png">
+
+    <div class="ui hidden divider"></div>
+
+
+
+    <p>
+
+            The left bars represent the breakdown of energy end-uses for each building. Moving the cursor over part of the bar
+            displays the total energy-use for the building and specified end-use. The right bars represent intensity.</i> <br><br>
+    </p>
+
+    <div class="ui hidden divider"></div>
+
+    <img class="ui huge centered image" src="./assets/images/scenario.png">
+
+    <div class="ui hidden divider"></div>
+
+    <p>
+        <i>To view the impact of different retrofit scenarios, users can select from the list of 4 Upgrade Tiers in the dropdown above.
+            The % difference from the 'Base' and selected scenarios to the right of each bar represents expected energy savings.</i> <br><br>
+    </p>
+
+    <div class="ui hidden divider"></div>
+
+    <img class="ui huge centered image" src="./assets/images/savings.png">
+
+    <div class="ui hidden divider"></div>
+
+    <p>
+        <i>Users can explore the impacts of different scenarios on buildings across their municipal portfolio.</i>
+
+    </p>
+
+    <div class="ui hidden divider"></div>
+
+
+    <div class="ui hidden divider"></div>
+    <div class="ui hidden divider"></div>
+
+
+
+</div>
+    

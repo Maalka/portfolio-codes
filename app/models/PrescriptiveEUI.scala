@@ -22,9 +22,16 @@ case class ModelValues(parameters:JsValue) {
   }
 
 
+  def lookupModelTotalBaseIntensity(propDesc:ValidatedPropTypes): Future[Energy] = {
+    for {
+      endUseDistList <- lookupEndUses(propDesc, Some("base"))
+      totalEUI <- getModelTotalEUI(endUseDistList)
+    } yield KBtus(totalEUI)
+  }
+
   def lookupModelTotalMetricIntensity(propDesc:ValidatedPropTypes): Future[Energy] = {
     for {
-      endUseDistList <- lookupEndUses(propDesc)
+      endUseDistList <- lookupEndUses(propDesc, None)
       totalEUI <- getModelTotalEUI(endUseDistList)
     } yield KBtus(totalEUI)
   }
@@ -32,14 +39,14 @@ case class ModelValues(parameters:JsValue) {
 
   def lookupModelEndUseEnergies(propDesc:ValidatedPropTypes): Future[TotalDistribution] = {
     for {
-      endUseDistList <- lookupEndUses(propDesc)
+      endUseDistList <- lookupEndUses(propDesc, None)
       endUsePercents <- transformEndUses(1/propDesc.floor_area.value,endUseDistList)
     } yield endUsePercents
   }
 
   def lookupModelEndUsePercents(propDesc:ValidatedPropTypes): Future[TotalDistribution] = {
     for {
-      endUseDistList <- lookupEndUses(propDesc)
+      endUseDistList <- lookupEndUses(propDesc, None)
       sum <- getModelTotalEUI(endUseDistList)
       endUsePercents <- transformEndUses(sum,endUseDistList)
     } yield endUsePercents
@@ -47,36 +54,47 @@ case class ModelValues(parameters:JsValue) {
 
   def getBuildingLookupDetails(propID:String):Future[Map[String,String]] = concurrent.Future{
     propID match {
-      case "SecSchl" => Map("name"->"K-12 School","id" -> "SecSchl")
-      case "Admin" => Map("name"->"City Hall/Administration","id" -> "Admin")
-      case "Lib" => Map("name"->"Public Library","id" -> "Lib")
+      case "sec_school" => Map("name"->"K-12 School","id" -> "sec_school")
+      case "admin" => Map("name"->"City Hall/Administration","id" -> "admin")
+      case "lib" => Map("name"->"Public Library","id" -> "lib")
+      case "fire_station" => Map("name"->"Fire Station","id" -> "fire_station")
+      case "police_station" => Map("name"->"Police Station","id" -> "police_station")
     }
   }
-  def getLookupString(propDesc:ValidatedPropTypes):Future[Map[String,String]] = concurrent.Future {
+  def getLookupString(propDesc:ValidatedPropTypes, scen:Option[String]):Future[Map[String,String]] = concurrent.Future {
 
-    var cz: String = propDesc.climate_zone.toString
-    val scenario:String =
-      (parameters \ "scenario").validate[String] match {
-        case b:JsSuccess[String] => b.get
-        case _ => "base"
+    val cz: String = propDesc.climate_zone.toString
+    val scenario:String = scen match {
+      case Some(a) => a
+      case _ => {
+        (parameters \ "scenario").validate[String] match {
+          case b:JsSuccess[String] => b.get
+          case _ => "base"
+        }
       }
+    }
+
 
     val retobj = propDesc.building_type match {
-      case "SecSchl" => Map("type" -> "K-12 School",
-        "key" -> cz.concat("_SecSchl_" + scenario))
-      case "Admin" => Map("type" -> "City Hall/Administration",
-        "key" -> cz.concat("_Admin_" + scenario))
-      case "Lib" => Map("type" -> "Public Library",
-        "key" -> cz.concat("_Lib_" + scenario))
+      case "sec_school" => Map("type" -> "K-12 School",
+        "key" -> cz.concat("_sec_school_" + scenario))
+      case "admin" => Map("type" -> "City Hall/Administration",
+        "key" -> cz.concat("_admin_" + scenario))
+      case "lib" => Map("type" -> "Public Library",
+        "key" -> cz.concat("_lib_" + scenario))
+      case "fire_station" => Map("type" -> "Fire Station",
+        "key" -> cz.concat("_fire_station_" + scenario))
+      case "police_station" => Map("type" -> "Police Station",
+        "key" -> cz.concat("_police_station_" + scenario))
     }
 
     retobj
   }
 
-  def lookupEndUses(propDesc:ValidatedPropTypes): Future[TotalDistribution] = {
+  def lookupEndUses(propDesc:ValidatedPropTypes,scenario:Option[String]): Future[TotalDistribution] = {
     for {
       table <- lookupTable
-      building <- getLookupString(propDesc)
+      building <- getLookupString(propDesc, scenario)
       euiDist <-
         Future {
           (table \ building("type") \ building("key")).head.toOption match {
@@ -116,7 +134,6 @@ case class ModelValues(parameters:JsValue) {
     }
 
   def transformEndUses(factor:Double,Total:TotalDistribution):Future[TotalDistribution] = Future {
-
     TotalDistribution(
           Total.total_htg/factor,
           Total.total_clg/factor,
@@ -229,7 +246,8 @@ case class TotalDistribution(
                               total_swh:Double = 0.0,
                               total_refrg:Double = 0.0,
                               total_gentor:Double = 0.0,
-                              total_net:Double = 0.0)
+                              total_net:Double = 0.0
+                            )
 
 object TotalDistribution {
   implicit val TotalDistributionReads: Reads[TotalDistribution] = Json.reads[TotalDistribution]

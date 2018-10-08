@@ -7,15 +7,15 @@ name := "portfolio_codes"
 organization in ThisBuild := "com.maalka"
 
 // TODO Set your version here
-version := "1.1.2.0"
+version := "1.0.0.0"
 
 scalaVersion in ThisBuild := "2.11.6"
 
 maintainer in Linux := "Clay Teeter <clay.teeter@maalka.com>"
 maintainer in Docker := "Clay Teeter <clay.teeter@maalka.com>"
 
-packageSummary in Linux := "ZNC Tool"
-packageDescription := "ZNC Tool"
+packageSummary in Linux := "Portfolio Codes"
+packageDescription := "Portfolio Codes"
 
 dockerRepository := Some("maalka")
 dockerBaseImage := "maalka/oracle8"
@@ -39,16 +39,13 @@ libraryDependencies ++= Seq(
   "org.webjars" % "jquery" % "2.1.3",
   "org.webjars" %% "webjars-play" % "2.6.3",
   "org.webjars" % "angularjs" % "1.4.7" exclude("org.webjars", "jquery"),
-  "org.webjars" % "highcharts" % "4.2.3",
-  "org.webjars" % "highstock" % "4.2.3",
+  "org.webjars" % "highcharts" % "6.1.2",
+   "org.webjars" % "highstock" % "6.0.3",
   "org.webjars" % "matchmedia-ng" % "1.0.5",
   "org.webjars.bower" % "filesaver" % "1.3.3",
   "org.webjars.npm" % "ng-file-upload" % "12.2.13",
-
   "org.typelevel" %% "squants" % "1.3.1-maalka-1.0",
-
   "com.github.tototoshi" %% "scala-csv" % "1.2.1",
-
   "com.typesafe.akka" %% "akka-slf4j" % "2.5.15",
   "com.typesafe.akka" %% "akka-stream" % "2.5.15",
   "com.typesafe.play" %% "play-json-joda" % "2.6.8",

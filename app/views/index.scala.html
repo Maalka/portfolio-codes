@@ -2,12 +2,20 @@
 @(includeHeader: Boolean)<!DOCTYPE html>
 <html>
   <head>
+
     <title data-ng-bind="pageTitle"></title>
-    <link rel="shortcut icon" type="image/x-icon" href="@routes.Assets.versioned("images/favicon.ico")">
+    <!-- Highchart scripts !-->
+    <link rel="shortcut icon" type="image/x-icon" href="@routes.Assets.versioned("images/favicon.png")">
     <link rel="stylesheet" href="@routes.Assets.versioned("javascripts/semantic/semantic.css")" />
     <link rel="stylesheet" href="@routes.Assets.versioned("javascripts/semantic/transition.css")" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Oswald:300,400,700" />
     <link href='https://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://use.typekit.net/aye2sbm.css">
+
+
+
+
+
 
     <link rel="stylesheet" href="@routes.Assets.versioned("fonts/font-awesome-4.6.3/css/font-awesome.css")" />
 
@@ -27,12 +35,19 @@
         ga('send', 'pageview');
       </script>
     }
-    <script> 
+    <script>
       var maalkaIncludeHeader = @includeHeader;
     </script>
+
   </head>
-  <body id="benchmark" ng-cloak>
-    <div data-ng-view  ng-cloak>
+  <body id="benchmark" class="site" ng-cloak>
+    @if(includeHeader) {
+      @header()
+    }
+    <div class="site-content" data-ng-view  ng-cloak>
     </div>
+    @if(includeHeader) {
+      @footer()
+    }
   </body>
 </html>

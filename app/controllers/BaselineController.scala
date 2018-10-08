@@ -115,7 +115,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
   val schema = Json.fromJson[SchemaType](Json.parse(
     """{
         "type": "array",
-        "id": "http://znc.maalka.com/znc",
+        "id": "http://portfolio-codes.maalka.com/baseline",
         "items": [
           {
           "id": "/items",
@@ -131,7 +131,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
                    "properties": {
                      "building_type": {
                      "type": "string",
-                     "enum": ["SecSchl", "Admin", "Lib"]
+                     "enum": ["sec_school", "admin", "lib","fire_station","police_station"]
                      },
                      "building_name": {
                        "type": "string"
@@ -156,6 +156,10 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
             "reporting_units": {
               "type": "string",
               "enum": ["imperial", "metric"]
+            },
+            "scenario": {
+              "type": "string",
+              "enum": ["base", "EEM1", "EEM2", "EEM3", "EEM4"]
             },
             "climate_zone": {
               "type": "string",
@@ -185,22 +189,16 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
 
 
         val futures = Future.sequence(Seq(
-
-          Baseline.getTotalEUIList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-          Baseline.getTotalEnergyList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-          Baseline.getTotalEUIBreakdownList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
-          Baseline.getTotalEnergyBreakdownList.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
-
-
+          Baseline.getEndUses.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
+          Baseline.getEnergyDiff.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
+          Baseline.getEUIDiff.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
         ))
 
         val fieldNames = Seq(
 
-          "total_eui_list",
-          "total_energy_list",
-          "end_use_eui_list",
-          "end_use_energy_list"
-
+          "end_uses",
+          "energy_diff",
+          "eui_diff"
         )
 
         futures.map(fieldNames.zip(_)).map { r =>

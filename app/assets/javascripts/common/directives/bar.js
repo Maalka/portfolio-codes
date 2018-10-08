@@ -3,293 +3,214 @@
  * changes form inputs based on property type
  * and supports multiple property types
  */
-define(['angular','highcharts', './main'], function(angular) {
+define(['angular', './main', 'highcharts'], function(angular) {
   'use strict';
-
   var mod = angular.module('common.directives');
-
   mod.directive('bar', [function() {
+    return {
 
-      return {
-          restrict: 'A',
-          scope: {
-            approach: '=approach',
-            endUses: '=endUses',
-            units: '=units',
-            prescriptiveRequirements: '=prescriptiveRequirements'
+      restrict: 'E',
+      //define the scope property, pass data through into this directive
+      //isolate scope, the directive has its own scope, not the same as the scope in the html
+      //get scope data off html and map it onto this scope
+      replace:true,
+      scope: {
+        //mapping scope into isolate scope
+        //key value pairs, to give this scope data
+        //passing in data and bnding data
+        data: '=',
+        differences:'=',
+        options: '=',
+        categories:'='
+
+
+      },
+      templateUrl: function(){
+             return 'javascripts/common/partials/split_bar.html';
+      },
+      link: function(scope, element){
+
+        function connectLegends(current){
+            var siblingChart=angular.element(element).parent().parent().find('.highcharts-container._energy').parent().highcharts();
+          var currentChart=current;
+          //if the chart legend is visible, if its not it was selected
+          //so it should be hidden
+          if(current.visible){
+            siblingChart.series.forEach(function(item){
+              if(item.name===currentChart.name){
+                  item.hide();
+              }
+            });
+          }else{
+            siblingChart.series.forEach(function(item){
+              if(item.name===currentChart.name){
+                  item.show();
+              }
+            });
+          }
+
+          return true;
+        }
+
+        var options = {
+          chart: {
+            className:scope.options.id,
+            type: 'bar',
+            marginTop: 50,
+            marginBottom: 70,
+            height: scope.height
           },
-          controller: ["$scope", "$element","$timeout", function ($scope, $element, $timeout) {
-
-
-
-
-            var chart;
-
-            var loadSeries = function(chart) {
-
-                //$element.css({height: 400px});
-                chart.margin = 0;
-                chart.isDirtyBox = true;
-
-//                chart.redraw();
-                chart.reflow();
-
-            };
-
-            $scope.getTotalMetric = function(){
-                var maxY;
-                for(var i = 0; i < $scope.endUses.endUses.length; i++ ) {
-                    if($scope.endUses.endUses[i][0] === 'Total'){
-                        maxY = $scope.endUses.endUses[i][1] + 10;
-                    }
-                }
-
-                return (maxY === 'undefined') ? 60 : maxY;
-
-            };
-
-
-
-            $scope.getEndUse = function(key){
-                for(var i = 0; i < $scope.endUses.endUses.length; i++ ) {
-                    if($scope.endUses.endUses[i][0] === key) {
-                        if($scope.approach === 'prescriptive'){
-                            if($scope.endUses.endUses[i][3] === null){
-                                return 0.0;
-                            }else {
-                                return $scope.endUses.endUses[i][3];
-                            }
-                        } else   if($scope.approach === 'performance'){
-                           if($scope.endUses.endUses[i][1] === null){
-                               return 0.0;
-                           }else {
-                               return $scope.endUses.endUses[i][1];
-                        }
-                    }
-                }
+          yAxis: {
+            min: 0,
+            gridLineColor: 'transparent',
+            gridLineWidth: 0,
+            lineWidth: 1,
+            title: {
+              useHTML:true,
+              text: scope.options.axislabel
             }
-            };
-
-
-
-            $scope.showRenewable = function(attr){
-                if($scope.prescriptiveRequirements.prescriptive_resource === 1){
-                    if(attr==='legend'){
-                        return 1;
-                    }else if(attr==='data'){
-                        return $scope.prescriptiveRequirements.procured_norm;
-                    }
-                } else {
-                    return null;
-                }
-            };
-
-
-            $scope.getOtherEndUses = function(){
-                var sumOther = 0;
-                for(var j = 0; j < $scope.endUses.endUsesOther.length; j++ ) {
-                    if($scope.approach === 'prescriptive'){
-                        if($scope.endUses.endUsesOther[j][3] !== null){
-                            sumOther = sumOther + $scope.endUses.endUsesOther[j][3];
-                        }
-                    } else if($scope.approach === 'performance'){
-                       if($scope.endUses.endUsesOther[j][1] !== null){
-                           sumOther = sumOther + $scope.endUses.endUsesOther[j][1];
-                       }
-                    }
-
-                }
-                return sumOther;
-            };
-
-            var plot = function () {
-
-                var options = {
-                  chart: {
-                      type: 'column',
-                      marginRight: 190,
-                      spacingTop: 20,
-                      //spacingRight: 10,
-                      spacingBottom: 15,
-                      spacingLeft: 10,
-                  },
-                  legend: {
-                    itemStyle: {
-                            font: '9pt',
-                            fontWeight: 100
-                        },
-                    verticalAlign: 'top',
-                    width: 150,
-                    align: 'right'
-                  },
-                  firstLegend: {
-                    itemWidth: 100,
-                    itemMarginBottom: 4,
-                    title: {
-                        text: '<span style="margin-bottom: 5px;">End Uses</span>',
-                    style: {
-                            fontStyle: 'bold'
-                      }
-                  },
-                    y: 10
-                  },
-                  secondLegend: {
-                    itemWidth: 100,
-                    itemMarginBottom: 4,
-                    title: {
-                        text: '<span style="margin-bottom: 5px;">Renewable Energy</span>',
-                    style: {
-                            fontStyle: 'bold'
-                      }
-},
-                    y: 220
-                  },
-                  title: {
-                      text: null,//'ESTIMATED ENERGY CONSUMPTION',
-                      align: 'left',
-                      margin: 20,
-                      x:15,
-                      style: {
-                            color: '#00A0B0',
-                            fontWeight: 'bold',
-                            fontSize: 15,
-                        }
-                  },
-                  xAxis: {
-                      categories: ['End Uses', 'Renewable Energy'],
-                      labels: {
-                        autoRotation: false
-                      }
-                  },
-                  yAxis: {
-                      min: 0,
-                      max: $scope.getTotalMetric(), //$scope.prescriptiveRequirements.building_energy_norm + 60,
-                      title: {
-                          text: $scope.units
-                      },
-                  },
-                  tooltip: {
-                      shared: false,
-                      pointFormat: "{series.name}: <b>{point.y:.2f}</b>"
-                  },
-                  credits: {
-                      enabled: false
-                  },
-                  plotOptions: {
-                      column: {
-                          stacking: 'normal'
-                      },
-                      series: {
-                          borderWidth: 0
-                      }
-                  },
-                  series: [
-                      {
-                          name: 'Heating',
-                          color: '#f88b50',
-                          data: [[0,$scope.getEndUse("Heating")]],
-                          legendID: 0,
-                      },
-                      {
-                          name: 'Cooling',
-                          color: '#9bd9fd',
-                          data: [[0,$scope.getEndUse("Cooling")]],
-                                    legendID: 0,
-                      },
-                      {
-                          name: 'Fans',
-                          color: '#B15679',
-                          data: [[0,$scope.getEndUse("Fans")]],
-                          legendID: 0,
-                      },
-                      {
-                          name: 'Interior Lighting',
-                          color: '#facd6f',
-                          data: [[0,$scope.getEndUse("Interior Lighting")]],
-                          legendID: 0,
-                      },
-                      {
-                          name: 'Plug Loads',
-                          color: '#2f4598',
-                          data: [[0,$scope.getEndUse("Plug Loads")]],
-                          legendID: 0,
-                      },
-                      {
-                          name: 'Service Hot Water',
-                          color: '#06a1f9',
-                          data: [[0,$scope.getEndUse("Service Hot Water")]],
-                          legendID: 0,
-                      },
-                      {
-                          name: 'Other',
-                          color: '#7f6fb1',
-                          data: [[0,$scope.getOtherEndUses()]],
-                          legendID: 0,
-                      },
-                      {
-                          name: 'Off site',
-                          color: '#b0cdc6',
-                          data: [[1,$scope.showRenewable('data')]],
-                          legendID: $scope.showRenewable('legend'),
-                      },
-                      {
-                          name: 'On site',
-                          color: '#398371',
-                          data: [[1,$scope.prescriptiveRequirements.pv_potential_norm]],
-                          legendID: 1,
-                      }
-                  ]
-              };
-
-              $timeout(function () {
-
-                angular.element($element).highcharts(options, function () { 
-                  chart = this;
-                });
-              }, 0);
-            };
-            if ($scope.endUses !== undefined) {
-              plot();
+          },
+      legend:{
+       align: 'right',
+       verticalAlign: 'top',
+       layout: 'vertical',
+            itemStyle: {
+                lineHeight: '14px'
             }
-
-            $scope.$watch("endUses", function (br) {
-
-              if (chart !== undefined) {
-                if (br !== undefined) {
-                  loadSeries(chart);
-                }
+        },
+          plotOptions: {
+            series: {
+              stacking: 'normal'
+            },
+            bar: {
+              maxPointWidth: 40,
+              pointPadding: 0,
+              events: {
+                  legendItemClick: function () {
+                    connectLegends(this);
+                  }
               }
+            }
+          },
+          tooltip: {
+            shared: false,
+            useHTML: true,
+            formatter: function() {
 
-            });
 
+            if(this.series.name===("differences"+scope.options.id)){
+              return false;
+            }
+                return '<b>' + this.x + '</b><br/>' +
+                  this.point.name+': '+Math.round(this.y)+' '+scope.options.axislabel+'<br/>'+
+                  'Total: '  + Math.floor((this.point.total).toFixed(2)) + ' '+scope.options.axislabel+ '<br/>' +
+                  'Total Base: ' + Math.floor((this.point.base).toFixed(2))+' '+scope.options.axislabel;
+            }
+          },
+          title: {
+            text: ''
+          },
+          xAxis: {
+            categories: scope.categories,
+            labels: {
+              style: {
+                fontSize: '11px',
+                fontWeight: 100
+              },
+              enabled:scope.options.label
 
-            $scope.$watch("prescriptiveRequirements", function (br) {
-
-              if (chart !== undefined) {
-                if (br !== undefined) {
-                  loadSeries(chart);
-                }
-              }
-            });
-            $scope.$watch("auxModel.reportingUnits", function (br) {
-
-              if (chart !== undefined) {
-                if (br !== undefined) {
-                  loadSeries(chart);
-                }
-              }
-            });
-
-            $scope.$watch("barPlotUnits", function (br) {
-
-              if (chart !== undefined) {
-                if (br !== undefined) {
-                  loadSeries(chart);
-                }
-              }
-            });
-
-          }]
+            }
+          },
+          series: scope.series
         };
+        var chart;
+
+          angular.element(element).highcharts(options, function () {
+              chart=this;
+              scope.containerW=chart.containerWidth;
+          });
+
+          scope.$watch('containerW',function(){
+            //on a container width change redraw the chart
+              redraw();
+          });
+        //redraw the highcharts and set it to the contrainer width on resize
+        function redraw(){
+          chart.isDirtyBox=true;
+          chart.chartWidth=chart.containerWidth;
+          chart.reflow();
+          chart.redraw();
+        }
+      },
+      controller: ["$scope",function($scope) {
+
+
+        var series = [];
+        var colors = ['#FFF','#1F2C5C', '#3F58CE', '#5D70D4', '#08B4BB', '#6BD2D6', '#06A1F9', '#0579BB', '#F5B569', '#EB885C', '#D4483D', '#64467D', '#9A6ECE','#06AED5','#564787','#000000','#000000'];
+        var index;
+
+        function createSeries() {
+          index = 1;
+          var legendIndex=0;
+          for (var propEnergy in $scope.data) {
+            if (propEnergy !== 'net') {
+               var modelEnergy = {
+                name: $scope.data[propEnergy][0].name,
+                id: propEnergy+$scope.options.id,
+                data: $scope.data[propEnergy],
+                color: colors[index],
+                index: index,
+                showInLegend:$scope.options.showInLegend[legendIndex++],
+                linkedTo:$scope.options.linkedTo,
+                stack:$scope.options.id,
+                borderWidth: 0
+              };
+              index++;
+             series.push(modelEnergy);
+            }
+          }
+        }
+        //show/hide data labels based on if data is present
+        function showHideDataLabels(){
+          var labelOptions= {
+                enabled: $scope.options.enableLabels,
+                 align:'left',
+                 useHTML: true,
+                 style: {
+                   fontSize: '10px',
+                   paddingLeft: '10px',
+                 },
+                formatter:function(){
+                  return Math.round((((Math.round(this.y*100))/100))*100)+' %';
+                }
+            };
+            if($scope.options.showLabels){
+              labelOptions.color="#000000";
+            }else{
+              labelOptions.color="rgba(255, 255, 255, 0)";
+            }
+          return labelOptions;
+        }
+        function addInDifferences(){
+            var differences = {
+             name: 'differences'+$scope.options.id,
+             id: 'differences'+$scope.options.id,
+             data: $scope.differences,
+             color: '#FFFFFF',
+             showInLegend:false,
+             stack:$scope.options.id,
+             index:0,
+             dataLabels:showHideDataLabels(),
+             borderWidth: 0
+            };
+            series.push(differences);
+
+        }
+        createSeries();
+        addInDifferences();
+        $scope.series = series;
+        $scope.height = $scope.categories.length*10+360;
+      }]
+    };
   }]);
 });
