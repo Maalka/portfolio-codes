@@ -11,7 +11,7 @@ define(['angular'], function() {
     $rootScope.includeHeader = maalkaIncludeHeader;
   };
   RootCtrl.$inject = ['$rootScope'];
-  let DashboardCtrl = function($rootScope, $scope, $window, $sce, $timeout, $q, $log, benchmarkServices) {
+  let DashboardCtrl = function($rootScope, $scope, $window, $sce, $timeout, $q, $log, benchmarkServices,apiServices,sorting) {
 
 
     $rootScope.includeHeader = maalkaIncludeHeader;
@@ -195,40 +195,6 @@ define(['angular'], function() {
     };
 
 
-    function attachDifferences(endUses,energyDiff,euiDiff){
-          for(let i=0;i<endUses.length;i++){
-            if(energyDiff[i].energy_diff<0){
-              energyDiff[i].energy_diff=0;
-            }
-            if(euiDiff[i].eui_diff<0){
-              euiDiff[i].eui_diff=0;
-            }
-            //TODO: net energy is off by 3*area units
-            //diff+senario=base and you want diff/base
-
-            let energyScenario=energyDiff[i].energy;
-            let euiScenario=euiDiff[i].eui;
-
-
-            let energyBase=energyDiff[i].energy_diff+energyScenario;
-            let euiBase=euiDiff[i].eui_diff+euiScenario;
-
-            let differenceEnergy=(energyDiff[i].energy_diff/energyBase);
-            let differenceEui=(euiDiff[i].eui_diff/euiBase);
-            endUses[i].energy={
-              base:energyBase,
-              difference:differenceEnergy,
-              scenario:energyScenario
-            };
-            endUses[i].eui={
-              base:euiBase,
-              difference:differenceEui,
-              scenario:euiScenario
-            };
-
-          }
-          $scope.endUses=endUses;
-    }
 
 
     $scope.computeBenchmarkResult = function(submission){
@@ -237,23 +203,13 @@ define(['angular'], function() {
         $scope.futures = benchmarkServices.getEnergyMetrics(submission);
 
      $q.resolve($scope.futures).then(function (results) {
-        let energyDifference;
-        let euiDifference;
-        let endUses;
-            results.values.forEach(function(item){
-                let key=Object.keys(item)[0];
-                if(key==='end_uses'){
-                   endUses=item.end_uses;
-                }else if(key==='energy_diff'){
-                   energyDifference=item.energy_diff;
-                }else if(key==='eui_diff'){
-                   euiDifference=item.eui_diff;
-                }
-            });
+        let energyDifference=apiServices.getEndUse(results,'energy_diff');
+        let euiDifference=apiServices.getEndUse(results,'eui_diff');
+        let endUses=apiServices.getEndUse(results,'end_uses');
+
             $scope.endUses=endUses;
             //attaches differences to endUses
-            attachDifferences($scope.endUses,energyDifference,euiDifference);
-
+            $scope.endUses=apiServices.attachDifferences(endUses,energyDifference,euiDifference);
 
             //calculates portfolio totals
             let portfolioTotals=portfolioTotal($scope.endUses);
@@ -262,6 +218,8 @@ define(['angular'], function() {
 
             //groups buildings by type
             $scope.endUses=groupByBuildingType($scope.endUses);
+            console.log(apiServices.groupByBuildingType(endUses),'groupByBuilding');
+            console.log(sorting.sort,'sort');
 
             var series=createSeries($scope.endUses);
 
@@ -669,7 +627,7 @@ define(['angular'], function() {
 
 
   };
-  DashboardCtrl.$inject = ['$rootScope', '$scope', '$window','$sce','$timeout', '$q', '$log', 'benchmarkServices'];
+  DashboardCtrl.$inject = ['$rootScope', '$scope', '$window','$sce','$timeout', '$q', '$log', 'benchmarkServices','apiServices','sorting'];
   return {
     DashboardCtrl: DashboardCtrl,
     RootCtrl: RootCtrl
