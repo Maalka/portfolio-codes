@@ -287,16 +287,18 @@ define(['angular'], function() {
 
 
     function portfolioTotal(endUse){
-
-      let totalBaseEnergy=0;
-      let totalBaseEui=0;
+      let totalEnergyScenario=0;
+      let totalEuiScenario=0;
       endUse.forEach(function(item){
-          totalBaseEnergy+=Math.floor((item.energy.base)/1000);
-          totalBaseEui+=Math.floor(item.eui.base);
+
+
+          totalEnergyScenario+=Math.floor((item.energy.scenario)/1000);
+          totalEuiScenario+=Math.floor(item.eui.scenario);
       });
+
       return {
-        eui:totalBaseEui,
-        energy:totalBaseEnergy
+        eui:totalEuiScenario,
+        energy:totalEnergyScenario
       };
     }
       function inLegend(series){
@@ -358,13 +360,14 @@ define(['angular'], function() {
             differences.energy.push(item.energy.difference);
             categories.push(item.building_name);
             for(let term in item.energy_breakdown){
-                properties.energy[term].push({y:convertToMBtus(item.energy_breakdown[term]),difference:item.energy.difference,total:convertToMBtus(item.energy.scenario),base:convertToMBtus(item.energy.base),name:prettyNames[term]});
+                properties.energy[term].push({y:convertToMBtus(item.energy_breakdown[term]),difference:item.energy.difference,scenario:convertToMBtus(item.energy.scenario),base:convertToMBtus(item.energy.base),name:prettyNames[term]});
             }
             for(let term in item.eui_breakdown){
-                properties.eui[term].push({y:item.eui_breakdown[term],difference:item.eui.difference,total:item.eui.scenario,base:item.eui.base,name:prettyNames[term]});
+                properties.eui[term].push({y:item.eui_breakdown[term],difference:item.eui.difference,scenario:item.eui.scenario,base:item.eui.base,name:prettyNames[term]});
             }
 
         });
+
         return {
           properties:properties,
           differences:differences,
