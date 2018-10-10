@@ -26,6 +26,8 @@ define(['angular', 'common'], function(angular) {
 				return endUse;
 			},
 			attachDifferences:function(endUses,energyDiff,euiDiff){
+				console.log(endUses,'services');
+
 				for(let i=0;i<endUses.length;i++){
 					if(energyDiff[i].energy_diff<0){
 						energyDiff[i].energy_diff=0;
@@ -90,9 +92,88 @@ define(['angular', 'common'], function(angular) {
 		    }
 		};
 	});
+	mod.factory('calculations',function(){
+		return {
+			totalScenario:function(endUse){
+					let totalScenarioEnergy=0;
+					let totalScenarioEui=0;
+					endUse.forEach(function(item){
+							totalScenarioEnergy+=Math.floor((item.energy.scenario)/1000);
+							totalScenarioEui+=Math.floor(item.eui.scenario);
+					});
+					return {
+						eui:totalScenarioEui,
+						energy:totalScenarioEnergy
+					};
+			}
+		};
+	});
 	mod.factory('sorting',function(){
 		return {
-			sort:'test'
+			test:'sort',
+			sort:function(endUses) {
+	      for(let s=0;s<endUses.length;s++){
+	        for (let z = 0; z < (endUses.length - s) - 1; z++) {
+	          let net = endUses[z].energy_breakdown.net;
+	          let next = endUses[z + 1].energy_breakdown.net;
+	          if (next > net) {
+	            let store = endUses[z];
+	            endUses[z] = endUses[z + 1];
+	            endUses[z + 1] = store;
+	          }
+	        }
+	      }
+	    },
+		 sortBuildings:function(buildingTypes){
+				//sorting buildings in each group by net energy type
+				for(let building in buildingTypes){
+					for(let i=0;i<buildingTypes[building].length;i++){
+							this.sort(buildingTypes[building]);
+					}
+				}
+			},
+			 findTotalEnergy:function(buildingTypes){
+				let orderBy=[];
+				for(let category in buildingTypes){
+					//operated for each category
+				 let sum=0;
+					for(let z=0;z<buildingTypes[category].length;z++){
+						 sum+=buildingTypes[category][z].energy_breakdown.net;
+					}
+					if(sum!==0){
+						orderBy.push({building:category,total:sum,size:buildingTypes[category].length});
+					}
+				}
+				return orderBy;
+			},
+			 findAverageEnergy:function(buildingGroup){
+						let averageArr=[];
+						let totalEnergy=this.findTotalEnergy(buildingGroup);
+						totalEnergy.forEach(function(item){
+							let average=(item.total/item.size);
+							averageArr.push({building:item.building,average:average});
+						});
+						return averageArr;
+			},
+		 sortByHighestAverage:function(buildingGroup){
+						let buildingAverages=this.findAverageEnergy(buildingGroup);
+						let order=[];
+							for(let i=0;i<buildingAverages.length;i++){
+								for (let v = 0; v < (buildingAverages.length - i) - 1; v++) {
+									let average = buildingAverages[v].average;
+									let next = buildingAverages[v + 1].average;
+									if (next > average) {
+										let store = buildingAverages[v];
+										buildingAverages[v] = buildingAverages[v + 1];
+										buildingAverages[v + 1] = store;
+									}
+								}
+						}
+						buildingAverages.forEach(function(item){
+							order.push(item.building);
+						});
+					return order;
+			}
 		};
 	});
 	return mod;

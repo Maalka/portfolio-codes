@@ -11,7 +11,7 @@ define(['angular'], function() {
     $rootScope.includeHeader = maalkaIncludeHeader;
   };
   RootCtrl.$inject = ['$rootScope'];
-  let DashboardCtrl = function($rootScope, $scope, $window, $sce, $timeout, $q, $log, benchmarkServices,apiServices,sorting) {
+  let DashboardCtrl = function($rootScope, $scope, $window, $sce, $timeout, $q, $log, benchmarkServices,apiServices,sorting,calculations) {
 
 
     $rootScope.includeHeader = maalkaIncludeHeader;
@@ -206,21 +206,20 @@ define(['angular'], function() {
         let energyDifference=apiServices.getEndUse(results,'energy_diff');
         let euiDifference=apiServices.getEndUse(results,'eui_diff');
         let endUses=apiServices.getEndUse(results,'end_uses');
-
-            $scope.endUses=endUses;
-            //attaches differences to endUses
-            $scope.endUses=apiServices.attachDifferences(endUses,energyDifference,euiDifference);
+        console.log(endUses,'enduse');
+        //attaches differences to endUses
+        $scope.endUses=apiServices.attachDifferences(endUses,energyDifference,euiDifference);
 
             //calculates portfolio totals
-            let portfolioTotals=portfolioTotal($scope.endUses);
-            $scope.portfolioEui=portfolioTotals.eui;
-            $scope.portfolioEnergy=portfolioTotals.energy;
+          $scope.portfolioEui=calculations.totalScenario(endUses).eui;
+          $scope.portfolioEnergy=calculations.totalScenario(endUses).energy;
+
+
+
 
             //groups buildings by type
             $scope.endUses=groupByBuildingType($scope.endUses);
-            console.log(apiServices.groupByBuildingType(endUses),'groupByBuilding');
-            console.log(sorting.sort,'sort');
-
+            console.log(sorting.test);
             var series=createSeries($scope.endUses);
 
             //always hide the labels for eui
@@ -242,21 +241,6 @@ define(['angular'], function() {
             $scope.categories=series.categories;
         });
     };
-
-
-    function portfolioTotal(endUse){
-
-      let totalBaseEnergy=0;
-      let totalBaseEui=0;
-      endUse.forEach(function(item){
-          totalBaseEnergy+=Math.floor((item.energy.base)/1000);
-          totalBaseEui+=Math.floor(item.eui.base);
-      });
-      return {
-        eui:totalBaseEui,
-        energy:totalBaseEnergy
-      };
-    }
       function inLegend(series){
         let inLegend=[];
         for (let term in $scope.propertyTerms) {
@@ -316,10 +300,10 @@ define(['angular'], function() {
             differences.energy.push(item.energy.difference);
             categories.push(item.building_name);
             for(let term in item.energy_breakdown){
-                properties.energy[term].push({y:convertToMBtus(item.energy_breakdown[term]),difference:item.energy.difference,total:convertToMBtus(item.energy.scenario),base:convertToMBtus(item.energy.base),name:prettyNames[term]});
+                properties.energy[term].push({y:convertToMBtus(item.energy_breakdown[term]),difference:item.energy.difference,scenario:convertToMBtus(item.energy.scenario),base:convertToMBtus(item.energy.base),name:prettyNames[term]});
             }
             for(let term in item.eui_breakdown){
-                properties.eui[term].push({y:item.eui_breakdown[term],difference:item.eui.difference,total:item.eui.scenario,base:item.eui.base,name:prettyNames[term]});
+                properties.eui[term].push({y:item.eui_breakdown[term],difference:item.eui.difference,scenario:item.eui.scenario,base:item.eui.base,name:prettyNames[term]});
             }
 
         });
@@ -627,7 +611,7 @@ define(['angular'], function() {
 
 
   };
-  DashboardCtrl.$inject = ['$rootScope', '$scope', '$window','$sce','$timeout', '$q', '$log', 'benchmarkServices','apiServices','sorting'];
+  DashboardCtrl.$inject = ['$rootScope', '$scope', '$window','$sce','$timeout', '$q', '$log', 'benchmarkServices','apiServices','sorting','calculations'];
   return {
     DashboardCtrl: DashboardCtrl,
     RootCtrl: RootCtrl

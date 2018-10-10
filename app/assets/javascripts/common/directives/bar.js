@@ -103,7 +103,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
             }
                 return '<b>' + this.x + '</b><br/>' +
                   this.point.name+': '+Math.round(this.y)+' '+scope.options.axislabel+'<br/>'+
-                  'Total: '  + Math.floor((this.point.total).toFixed(2)) + ' '+scope.options.axislabel+ '<br/>' +
+                  'Total: '  + Math.floor((this.point.scenario).toFixed(2)) + ' '+scope.options.axislabel+ '<br/>' +
                   'Total Base: ' + Math.floor((this.point.base).toFixed(2))+' '+scope.options.axislabel;
             }
           },
