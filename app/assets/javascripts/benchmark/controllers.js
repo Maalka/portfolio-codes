@@ -203,22 +203,23 @@ define(['angular'], function() {
         $scope.futures = benchmarkServices.getEnergyMetrics(submission);
 
      $q.resolve($scope.futures).then(function (results) {
+       console.log(results,'results');
         let energyDifference=apiServices.getEndUse(results,'energy_diff');
         let euiDifference=apiServices.getEndUse(results,'eui_diff');
         let endUses=apiServices.getEndUse(results,'end_uses');
-        console.log(endUses,'enduse');
         //attaches differences to endUses
         $scope.endUses=apiServices.attachDifferences(endUses,energyDifference,euiDifference);
-
             //calculates portfolio totals
-          $scope.portfolioEui=calculations.totalScenario(endUses).eui;
-          $scope.portfolioEnergy=calculations.totalScenario(endUses).energy;
+        $scope.portfolioEui=calculations.totalScenario(endUses).eui;
+        $scope.portfolioEnergy=calculations.totalScenario(endUses).energy;
+          //groups buildings by type
+          //reutrns group building types
+        let groupedEndUses=apiServices.groupByBuildingType($scope.endUses);
+        sorting.buildingGroupsByNetEnergy(groupedEndUses);
+        sorting.sortByHighestAverage(groupedEndUses);
 
 
-
-
-            //groups buildings by type
-            $scope.endUses=groupByBuildingType($scope.endUses);
+          console.log(groupedEndUses,'groupedEndUses');
             console.log(sorting.test);
             var series=createSeries($scope.endUses);
 

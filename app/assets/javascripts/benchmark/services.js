@@ -26,8 +26,6 @@ define(['angular', 'common'], function(angular) {
 				return endUse;
 			},
 			attachDifferences:function(endUses,energyDiff,euiDiff){
-				console.log(endUses,'services');
-
 				for(let i=0;i<endUses.length;i++){
 					if(energyDiff[i].energy_diff<0){
 						energyDiff[i].energy_diff=0;
@@ -37,7 +35,6 @@ define(['angular', 'common'], function(angular) {
 					}
 					//TODO: net energy is off by 3*area units
 					//diff+senario=base and you want diff/base
-
 					let energyScenario=energyDiff[i].energy;
 					let euiScenario=euiDiff[i].eui;
 
@@ -56,7 +53,6 @@ define(['angular', 'common'], function(angular) {
 						difference:differenceEui,
 						scenario:euiScenario
 					};
-
 				}
 				return endUses;
 			},
@@ -74,7 +70,6 @@ define(['angular', 'common'], function(angular) {
 		      endUses.forEach(function(item){
 		        buildingTypes[item.building_type].push(item);
 		      });
-
 					/*
 		      //sorting buildings in each group by net energy type
 					let filteredArr=[];
@@ -124,7 +119,7 @@ define(['angular', 'common'], function(angular) {
 	        }
 	      }
 	    },
-		 sortBuildings:function(buildingTypes){
+		 buildingGroupsByNetEnergy:function(buildingTypes){
 				//sorting buildings in each group by net energy type
 				for(let building in buildingTypes){
 					for(let i=0;i<buildingTypes[building].length;i++){
