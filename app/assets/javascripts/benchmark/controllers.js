@@ -208,20 +208,16 @@ define(['angular'], function() {
         let euiDifference=apiServices.getEndUse(results,'eui_diff');
         let endUses=apiServices.getEndUse(results,'end_uses');
         //attaches differences to endUses
-        $scope.endUses=apiServices.attachDifferences(endUses,energyDifference,euiDifference);
+        endUses=apiServices.attachDifferences(endUses,energyDifference,euiDifference);
             //calculates portfolio totals
         $scope.portfolioEui=calculations.totalScenario(endUses).eui;
         $scope.portfolioEnergy=calculations.totalScenario(endUses).energy;
           //groups buildings by type
           //reutrns group building types
-        let groupedEndUses=apiServices.groupByBuildingType($scope.endUses);
-        sorting.buildingGroupsByNetEnergy(groupedEndUses);
-        sorting.sortByHighestAverage(groupedEndUses);
-
-
-          console.log(groupedEndUses,'groupedEndUses');
-            console.log(sorting.test);
-            var series=createSeries($scope.endUses);
+        $scope.endUses=apiServices.groupByBuildingType(endUses);
+        console.log($scope.endUses,'groupedEndUses');
+        console.log(sorting.test);
+        var series=createSeries($scope.endUses);
 
             //always hide the labels for eui
             $scope.barOptions.eui.showLabels=false;
@@ -235,7 +231,10 @@ define(['angular'], function() {
             //differences series
             $scope.differences=series.differences;
             //building properties series energy
+
             $scope.energySeries=series.properties.energy;
+            console.log(series.properties.energy,'energy');
+
             //building properties series eui
             $scope.euiSeries=series.properties.eui;
             //building categories
@@ -326,96 +325,6 @@ define(['angular'], function() {
       }
     }
 
-    function filter(endUses) {
-      for(let s=0;s<endUses.length;s++){
-        for (let z = 0; z < (endUses.length - s) - 1; z++) {
-          let net = endUses[z].energy_breakdown.net;
-          let next = endUses[z + 1].energy_breakdown.net;
-          if (next > net) {
-            let store = endUses[z];
-            endUses[z] = endUses[z + 1];
-            endUses[z + 1] = store;
-          }
-        }
-      }
-    }
-    function findTotalEnergy(buildingTypes){
-      let orderBy=[];
-      for(let category in buildingTypes){
-        //operated for each category
-       let sum=0;
-        for(let z=0;z<buildingTypes[category].length;z++){
-           sum+=buildingTypes[category][z].energy_breakdown.net;
-        }
-        if(sum!==0){
-          orderBy.push({building:category,total:sum,size:buildingTypes[category].length});
-        }
-      }
-      return orderBy;
-    }
-    function findAverageEnergy(buildingGroup){
-          let averageArr=[];
-          let totalEnergy=findTotalEnergy(buildingGroup);
-          totalEnergy.forEach(function(item){
-            let average=(item.total/item.size);
-            averageArr.push({building:item.building,average:average});
-          });
-          return averageArr;
-    }
-    function sortByHighestAverage(buildingGroup){
-          let buildingAverages=findAverageEnergy(buildingGroup);
-          let order=[];
-            for(let i=0;i<buildingAverages.length;i++){
-              for (let v = 0; v < (buildingAverages.length - i) - 1; v++) {
-                let average = buildingAverages[v].average;
-                let next = buildingAverages[v + 1].average;
-                if (next > average) {
-                  let store = buildingAverages[v];
-                  buildingAverages[v] = buildingAverages[v + 1];
-                  buildingAverages[v + 1] = store;
-                }
-              }
-          }
-          buildingAverages.forEach(function(item){
-            order.push(item.building);
-          });
-          return order;
-    }
-    function sortBuildings(buildingTypes){
-      //sorting buildings in each group by net energy type
-      for(let building in buildingTypes){
-        for(let i=0;i<buildingTypes[building].length;i++){
-            filter(buildingTypes[building]);
-        }
-      }
-    }
-    function groupByBuildingType(endUses) {
-      //building types for overarching groups defined
-      //inital order of the building groupings
-      let filteredArr=[];
-      let buildingTypes={
-        lib:[],
-        admin:[],
-        sec_school:[],
-        fire_station:[],
-        police_station:[]
-      };
-      //add a building to each building type
-      endUses.forEach(function(item){
-        buildingTypes[item.building_type].push(item);
-      });
-      //sorting buildings in each group by net energy type
-      sortBuildings(buildingTypes);
-      let order=sortByHighestAverage(buildingTypes);
-      //reformat data for end use with including sorting by highest average order
-      order.forEach(function(item){
-        for(let v=0;v<buildingTypes[item].length;v++){
-          filteredArr.push(buildingTypes[item][v]);
-        }
-      });
-      //filteredArray is the array to be returned
-      return filteredArr;
-    }
 
 
      $scope.propertyTerms = {
@@ -619,3 +528,97 @@ define(['angular'], function() {
 
   };
 });
+
+
+/*
+function filter(endUses) {
+  for(let s=0;s<endUses.length;s++){
+    for (let z = 0; z < (endUses.length - s) - 1; z++) {
+      let net = endUses[z].energy_breakdown.net;
+      let next = endUses[z + 1].energy_breakdown.net;
+      if (next > net) {
+        let store = endUses[z];
+        endUses[z] = endUses[z + 1];
+        endUses[z + 1] = store;
+      }
+    }
+  }
+}
+function findTotalEnergy(buildingTypes){
+  let orderBy=[];
+  for(let category in buildingTypes){
+    //operated for each category
+   let sum=0;
+    for(let z=0;z<buildingTypes[category].length;z++){
+       sum+=buildingTypes[category][z].energy_breakdown.net;
+    }
+    if(sum!==0){
+      orderBy.push({building:category,total:sum,size:buildingTypes[category].length});
+    }
+  }
+  return orderBy;
+}
+function findAverageEnergy(buildingGroup){
+      let averageArr=[];
+      let totalEnergy=findTotalEnergy(buildingGroup);
+      totalEnergy.forEach(function(item){
+        let average=(item.total/item.size);
+        averageArr.push({building:item.building,average:average});
+      });
+      return averageArr;
+}
+function sortByHighestAverage(buildingGroup){
+      let buildingAverages=findAverageEnergy(buildingGroup);
+      let order=[];
+        for(let i=0;i<buildingAverages.length;i++){
+          for (let v = 0; v < (buildingAverages.length - i) - 1; v++) {
+            let average = buildingAverages[v].average;
+            let next = buildingAverages[v + 1].average;
+            if (next > average) {
+              let store = buildingAverages[v];
+              buildingAverages[v] = buildingAverages[v + 1];
+              buildingAverages[v + 1] = store;
+            }
+          }
+      }
+      buildingAverages.forEach(function(item){
+        order.push(item.building);
+      });
+      return order;
+}
+function sortBuildings(buildingTypes){
+  //sorting buildings in each group by net energy type
+  for(let building in buildingTypes){
+    for(let i=0;i<buildingTypes[building].length;i++){
+        filter(buildingTypes[building]);
+    }
+  }
+}
+function groupByBuildingType(endUses) {
+  //building types for overarching groups defined
+  //inital order of the building groupings
+  let filteredArr=[];
+  let buildingTypes={
+    lib:[],
+    admin:[],
+    sec_school:[],
+    fire_station:[],
+    police_station:[]
+  };
+  //add a building to each building type
+  endUses.forEach(function(item){
+    buildingTypes[item.building_type].push(item);
+  });
+  //sorting buildings in each group by net energy type
+  sortBuildings(buildingTypes);
+  let order=sortByHighestAverage(buildingTypes);
+  //reformat data for end use with including sorting by highest average order
+  order.forEach(function(item){
+    for(let v=0;v<buildingTypes[item].length;v++){
+      filteredArr.push(buildingTypes[item][v]);
+    }
+  });
+  //filteredArray is the array to be returned
+  return filteredArr;
+}
+*/

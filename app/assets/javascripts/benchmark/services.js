@@ -12,7 +12,7 @@ define(['angular', 'common'], function(angular) {
 		};
 		return services;
 	}]);
-	mod.factory('apiServices', function() {
+	mod.factory('apiServices',['sorting', function(sorting) {
 
 		return{
 			getEndUse:function(endPoints,key){
@@ -70,11 +70,11 @@ define(['angular', 'common'], function(angular) {
 		      endUses.forEach(function(item){
 		        buildingTypes[item.building_type].push(item);
 		      });
-					/*
+
 		      //sorting buildings in each group by net energy type
 					let filteredArr=[];
-		      sortBuildings(buildingTypes);
-		      let order=sortByHighestAverage(buildingTypes);
+		      sorting.sortBuildings(buildingTypes);
+		      let order=sorting.sortByHighestAverage(buildingTypes);
 		      //reformat data for end use with including sorting by highest average order
 		      order.forEach(function(item){
 		        for(let v=0;v<buildingTypes[item].length;v++){
@@ -82,11 +82,10 @@ define(['angular', 'common'], function(angular) {
 		        }
 		      });
 		      //filteredArray is the array to be returned
-					*/
-		      return buildingTypes;
+		      return filteredArr;
 		    }
 		};
-	});
+	}]);
 	mod.factory('calculations',function(){
 		return {
 			totalScenario:function(endUse){
@@ -119,7 +118,7 @@ define(['angular', 'common'], function(angular) {
 	        }
 	      }
 	    },
-		 buildingGroupsByNetEnergy:function(buildingTypes){
+		 sortBuildings:function(buildingTypes){
 				//sorting buildings in each group by net energy type
 				for(let building in buildingTypes){
 					for(let i=0;i<buildingTypes[building].length;i++){
