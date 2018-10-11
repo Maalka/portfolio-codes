@@ -148,7 +148,7 @@ define(['angular', 'common'], function(angular) {
 				}
 				return orderBy;
 			},
-			 findAverageEnergy:function(buildingGroup){
+		 findAverageEnergy:function(buildingGroup){
 						let averageArr=[];
 						let totalEnergy=this.findTotalEnergy(buildingGroup);
 						totalEnergy.forEach(function(item){
@@ -178,7 +178,7 @@ define(['angular', 'common'], function(angular) {
 			}
 		};
 	});
-	mod.factory('series', function() {
+	mod.factory('constants',function(){
 		let prettyNames={
 				clg: "Cooling",
 				extEqp: "Ext. Equipment",
@@ -215,9 +215,12 @@ define(['angular', 'common'], function(angular) {
 		};
 		return {
 			getTerms:terms,
-			getPrettyNames:prettyNames,
+			getPrettyNames:prettyNames
+		};
+	});
+	mod.factory('series',['constants', function(constants) {
+		return {
 		 create:function(endUse){
-
 				let categories = [];
 				let differences={
 					eui:[],
@@ -225,13 +228,11 @@ define(['angular', 'common'], function(angular) {
 				};
 				//Cooling, Ext. Equipment, Ext. Lighting,
 				//Fans, Generator, Heat Recovery, Heat Rejection, Heating, Humidity, Int. Equipment, Int. Lighting, Pumps, Refrigeration, Hot Water
-
-
 				let properties = {
 					eui: {},
 					energy: {}
 				};
-				for (let term in this.getTerms) {
+				for (let term in constants.getTerms) {
 					properties.eui[term] = [];
 					properties.energy[term] = [];
 				}
@@ -244,10 +245,22 @@ define(['angular', 'common'], function(angular) {
 						categories.push(item.building_name);
 						for(let term in item.energy_breakdown){
 
-								properties.energy[term].push({y:convertToMBtus(item.energy_breakdown[term]),difference:item.energy.difference,scenario:convertToMBtus(item.energy.scenario),base:convertToMBtus(item.energy.base),name:prettyNames[term]});
+								properties.energy[term].push({
+									y:convertToMBtus(item.energy_breakdown[term]),
+									difference:item.energy.difference,
+									scenario:convertToMBtus(item.energy.scenario),
+									base:convertToMBtus(item.energy.base),
+									name:constants.getPrettyNames[term]
+								});
 						}
 						for(let term in item.eui_breakdown){
-								properties.eui[term].push({y:item.eui_breakdown[term],difference:item.eui.difference,scenario:item.eui.scenario,base:item.eui.base,name:prettyNames[term]});
+								properties.eui[term].push({
+									y:item.eui_breakdown[term],
+									difference:item.eui.difference,
+									scenario:item.eui.scenario,
+									base:item.eui.base,
+									name:constants.getPrettyNames[term]
+								});
 						}
 
 				});
@@ -258,8 +271,8 @@ define(['angular', 'common'], function(angular) {
 			};
 		}
 	};
-	});
-	mod.factory('hcOptions',['series',function(series){
+}]);
+	mod.factory('hcOptions',['constants',function(constants){
 		return {
 			showLabels:function(endUses){
 					//if the difference in energy is equal to Zero
@@ -273,7 +286,7 @@ define(['angular', 'common'], function(angular) {
 			},
 			filterLegend:function(hcData){
 					let inLegend=[];
-					for (let term in series.getTerms) {
+					for (let term in constants.getTerms) {
 							let total=0;
 							for(let i=0;i<hcData.energy[term].length;i++){
 									total+=hcData.energy[term][i].y;
