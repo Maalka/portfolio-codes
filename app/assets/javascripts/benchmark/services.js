@@ -1,6 +1,8 @@
 define(['angular', 'common'], function(angular) {
 	'use strict';
 	var mod = angular.module('benchmark.services', ['benchmark.common']);
+
+
 	mod.service('benchmarkServices', ['playRoutes', function(playRoutes) {
 		var services = {
 			'getEnergyMetrics': function(model) {
@@ -12,6 +14,8 @@ define(['angular', 'common'], function(angular) {
 		};
 		return services;
 	}]);
+
+
 	mod.factory('apiServices',['sorting', function(sorting) {
 
 		return{
@@ -86,6 +90,8 @@ define(['angular', 'common'], function(angular) {
 		    }
 		};
 	}]);
+
+
 	mod.factory('calculations',function(){
 		return {
 			totalScenario:function(endUse){
@@ -102,6 +108,8 @@ define(['angular', 'common'], function(angular) {
 			}
 		};
 	});
+
+
 	mod.factory('sorting',function(){
 		return {
 			test:'sort',
@@ -170,5 +178,116 @@ define(['angular', 'common'], function(angular) {
 			}
 		};
 	});
+	mod.factory('series', function() {
+		let prettyNames={
+				clg: "Cooling",
+				extEqp: "Ext. Equipment",
+				extLgt: "Ext. Lighting",
+				fans: "Fans",
+				gentor: "Generator",
+				heatRec: "Heat Recovery",
+				heatRej: "Heat Rejection",
+				htg: "Heating",
+				humid: "Humidity",
+				intEqp: "Int. Equipment",
+				intLgt: "Int. Lighting",
+				pumps: "Pumps",
+				refrg: "Refrigeration",
+				swh: "Hot Water",
+				net: "net"
+		};
+		let terms = {
+			clg: {},
+			extEqp: {},
+			extLgt: {},
+			fans: {},
+			gentor: {},
+			heatRec: {},
+			heatRej: {},
+			htg: {},
+			humid: {},
+			intEqp: {},
+			intLgt: {},
+			pumps: {},
+			refrg: {},
+			swh: {},
+			net: {}
+		};
+		return {
+			getTerms:terms,
+			getPrettyNames:prettyNames,
+		 create:function(endUse){
+
+				let categories = [];
+				let differences={
+					eui:[],
+					energy:[]
+				};
+				//Cooling, Ext. Equipment, Ext. Lighting,
+				//Fans, Generator, Heat Recovery, Heat Rejection, Heating, Humidity, Int. Equipment, Int. Lighting, Pumps, Refrigeration, Hot Water
+
+
+				let properties = {
+					eui: {},
+					energy: {}
+				};
+				for (let term in this.getTerms) {
+					properties.eui[term] = [];
+					properties.energy[term] = [];
+				}
+				function convertToMBtus(value){
+					return value/1000;
+				}
+				endUse.forEach(function(item){
+						differences.eui.push(item.eui.difference);
+						differences.energy.push(item.energy.difference);
+						categories.push(item.building_name);
+						for(let term in item.energy_breakdown){
+
+								properties.energy[term].push({y:convertToMBtus(item.energy_breakdown[term]),difference:item.energy.difference,scenario:convertToMBtus(item.energy.scenario),base:convertToMBtus(item.energy.base),name:prettyNames[term]});
+						}
+						for(let term in item.eui_breakdown){
+								properties.eui[term].push({y:item.eui_breakdown[term],difference:item.eui.difference,scenario:item.eui.scenario,base:item.eui.base,name:prettyNames[term]});
+						}
+
+				});
+				return {
+					properties:properties,
+					differences:differences,
+					categories:categories
+			};
+		}
+	};
+	});
+	mod.factory('hcOptions',['series',function(series){
+		return {
+			showLabels:function(endUses){
+					//if the difference in energy is equal to Zero
+					//then we do not want to show the labels
+					//because there has been no change from base
+					if(endUses[0].energy.difference===0){
+						return false;
+					}else{
+						return true;
+					}
+			},
+			filterLegend:function(hcData){
+					let inLegend=[];
+					for (let term in series.getTerms) {
+							let total=0;
+							for(let i=0;i<hcData.energy[term].length;i++){
+									total+=hcData.energy[term][i].y;
+							}
+							if(total===0){
+								inLegend.push(false);
+							}else{
+								inLegend.push(true);
+							}
+					}
+					return inLegend;
+			}
+		};
+	}]);
+
 	return mod;
 });
