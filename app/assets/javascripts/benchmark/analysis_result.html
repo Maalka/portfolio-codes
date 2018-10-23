@@ -48,7 +48,6 @@
 				<h2 class="ui hidden divider">
 					<div style="float:left;">
 						Portfolio Energy:
-
 						<span style="font-size:1em">{{portfolioEnergy | number :0 }}</span>
 						<span style="text-transform:none;">MBtus</span>
 					</div>
@@ -71,6 +70,33 @@
 				</h2>
 			</div>
 		</div>
+
+		<div class="seven wide column" style="padding-right:20px; background-color:white;">
+			<div class="row" style="padding-left:5em;;">
+				<h2 class="ui hidden divider" style="margin:0px;">
+					<div style="float:left;">
+						Base Energy:
+						<span style="font-size:1em">{{totalBaseEnergy | number :0 }}</span>
+						<span style="text-transform:none;">MBtus</span>
+					</div>
+				</h2>
+			</div>
+		</div>
+		<div class="one wide column"></div>
+		<div class="six wide column" style="padding-left:20px; padding-right:20px; background-color:white;">
+			<div class="row" style="padding-left:1.5em;">
+				<h2 class="ui hidden divider" style="margin:0px;">
+					<div style="float:left;">
+						Base Eui:
+
+						<span style="font-size:1em">{{totalBaseEui | number :0 }}</span>
+						<span style="text-transform:none;"> kBtu/ft<sup>2</sup></span>
+					</div>
+
+				</h2>
+			</div>
+		</div>
+
 <div class="fourteen wide column"><div style="margin-left:3.9em;margin-right:0.9em;margin-top:0.1em;" class="ui dividing header"></div></div>
 		<div class="seven wide column">
 			<bar data="energySeries" categories="categories" differences="differences.energy" options="barOptions.energy" ></bar>

@@ -144,7 +144,6 @@ define(['angular', './main', 'highcharts'], function(angular) {
 
 
         var series = [];
-        var colors = ['#FFF','#1F2C5C', '#3F58CE', '#5D70D4', '#08B4BB', '#6BD2D6', '#06A1F9', '#0579BB', '#F5B569', '#EB885C', '#D4483D', '#64467D', '#9A6ECE','#06AED5','#564787','#000000','#000000'];
         var index;
 
         function createSeries() {
@@ -156,7 +155,7 @@ define(['angular', './main', 'highcharts'], function(angular) {
                 name: $scope.data[propEnergy][0].name,
                 id: propEnergy+$scope.options.id,
                 data: $scope.data[propEnergy],
-                color: colors[index],
+                color: $scope.data[propEnergy][0].color,
                 index: index,
                 showInLegend:$scope.options.showInLegend[legendIndex++],
                 linkedTo:$scope.options.linkedTo,

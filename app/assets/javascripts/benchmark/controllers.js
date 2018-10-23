@@ -208,6 +208,12 @@ define(['angular'], function() {
             //calculates portfolio totals
         $scope.portfolioEui=calculations.totalScenario($scope.endUses).eui;
         $scope.portfolioEnergy=calculations.totalScenario($scope.endUses).energy;
+        $scope.totalBaseEui=calculations.totalBase($scope.endUses).eui;
+        $scope.totalBaseEnergy=calculations.totalBase($scope.endUses).energy;
+
+        console.log($scope.totalBaseEui,'totalBaseEui');
+        console.log($scope.totalBaseEnergy,'totalBaseEnergy');
+
           //groups buildings by type
           //reutrns group building types
         $scope.endUses=apiServices.groupByBuildingType($scope.endUses);

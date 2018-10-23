@@ -1,6 +1,6 @@
 define(['angular', 'common'], function(angular) {
 	'use strict';
-	var mod = angular.module('benchmark.services', ['benchmark.common']);
+	var mod = angular.module('benchmark.services', ['benchmark.common','benchmark.utilities']);
 
 
 	mod.service('benchmarkServices', ['playRoutes', function(playRoutes) {
@@ -15,6 +15,36 @@ define(['angular', 'common'], function(angular) {
 		return services;
 	}]);
 
+	mod.factory('model',['utilities',function(utilities){
+		return {
+			getKeyValues:function(key){
+			var values=[];
+				utilities.breakdownModel.forEach(function(model){
+					values.push(model[key]);
+				});
+				return values;
+			},
+			getPrettyName:function(keyValue){
+				var name;
+				utilities.breakdownModel.forEach(function(model){
+						if(model.key===keyValue){
+								name=model.name;
+						}
+				});
+				return name;
+			},
+			getColor:function(keyValue){
+				var color;
+				utilities.breakdownModel.forEach(function(model){
+						if(model.key===keyValue){
+								color=model.color;
+						}
+				});
+				return color;
+			}
+		};
+
+}]);
 
 	mod.factory('apiServices',['sorting', function(sorting) {
 
@@ -105,6 +135,18 @@ define(['angular', 'common'], function(angular) {
 						eui:totalScenarioEui,
 						energy:totalScenarioEnergy
 					};
+			},
+			totalBase:function(endUse){
+			let totalBaseEnergy=0;
+			let totalBaseEui=0;
+			endUse.forEach(function(item){
+					totalBaseEnergy+=Math.floor((item.energy.base)/1000);
+					totalBaseEui+=Math.floor(item.eui.base);
+			});
+			return {
+				energy:totalBaseEnergy,
+				eui:totalBaseEui
+			};
 			}
 		};
 	});
@@ -178,47 +220,7 @@ define(['angular', 'common'], function(angular) {
 			}
 		};
 	});
-	mod.factory('constants',function(){
-		let prettyNames={
-				clg: "Cooling",
-				extEqp: "Ext. Equipment",
-				extLgt: "Ext. Lighting",
-				fans: "Fans",
-				gentor: "Generator",
-				heatRec: "Heat Recovery",
-				heatRej: "Heat Rejection",
-				htg: "Heating",
-				humid: "Humidity",
-				intEqp: "Int. Equipment",
-				intLgt: "Int. Lighting",
-				pumps: "Pumps",
-				refrg: "Refrigeration",
-				swh: "Hot Water",
-				net: "net"
-		};
-		let terms = {
-			clg: {},
-			extEqp: {},
-			extLgt: {},
-			fans: {},
-			gentor: {},
-			heatRec: {},
-			heatRej: {},
-			htg: {},
-			humid: {},
-			intEqp: {},
-			intLgt: {},
-			pumps: {},
-			refrg: {},
-			swh: {},
-			net: {}
-		};
-		return {
-			getTerms:terms,
-			getPrettyNames:prettyNames
-		};
-	});
-	mod.factory('series',['constants', function(constants) {
+	mod.factory('series', ['model',function(model) {
 		return {
 		 create:function(endUse){
 				let categories = [];
@@ -232,10 +234,10 @@ define(['angular', 'common'], function(angular) {
 					eui: {},
 					energy: {}
 				};
-				for (let term in constants.getTerms) {
-					properties.eui[term] = [];
-					properties.energy[term] = [];
-				}
+				model.getKeyValues('key').forEach(function(key){
+	          properties.eui[key] = [];
+	          properties.energy[key] = [];
+	      });
 				function convertToMBtus(value){
 					return value/1000;
 				}
@@ -250,7 +252,8 @@ define(['angular', 'common'], function(angular) {
 									difference:item.energy.difference,
 									scenario:convertToMBtus(item.energy.scenario),
 									base:convertToMBtus(item.energy.base),
-									name:constants.getPrettyNames[term]
+									name:model.getPrettyName(term),
+                  color:model.getColor(term)
 								});
 						}
 						for(let term in item.eui_breakdown){
@@ -259,7 +262,8 @@ define(['angular', 'common'], function(angular) {
 									difference:item.eui.difference,
 									scenario:item.eui.scenario,
 									base:item.eui.base,
-									name:constants.getPrettyNames[term]
+									name:model.getPrettyName(term),
+									color:model.getColor(term)
 								});
 						}
 
@@ -272,7 +276,7 @@ define(['angular', 'common'], function(angular) {
 		}
 	};
 }]);
-	mod.factory('hcOptions',['constants',function(constants){
+	mod.factory('hcOptions',['model',function(model){
 		return {
 			showLabels:function(endUses){
 					//if the difference in energy is equal to Zero
@@ -285,20 +289,21 @@ define(['angular', 'common'], function(angular) {
 					}
 			},
 			filterLegend:function(hcData){
-					let inLegend=[];
-					for (let term in constants.getTerms) {
-							let total=0;
-							for(let i=0;i<hcData.energy[term].length;i++){
-									total+=hcData.energy[term][i].y;
-							}
-							if(total===0){
-								inLegend.push(false);
-							}else{
-								inLegend.push(true);
-							}
+				var inLegend=[];
+				var hcDataTerms=model.getKeyValues('key');
+				hcDataTerms.forEach(function(hcDataTerm){
+					var total=0;
+					for(var i=0;i<hcData.energy[hcDataTerm].length;i++){
+							total+=hcData.energy[hcDataTerm][i].y;
 					}
-					return inLegend;
-			}
+					if(total===0){
+						inLegend.push(false);
+					}else{
+						inLegend.push(true);
+					}
+				});
+				return inLegend;
+		}
 		};
 	}]);
 
