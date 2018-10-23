@@ -7,15 +7,15 @@ name := "portfolio_codes"
 organization in ThisBuild := "com.maalka"
 
 // TODO Set your version here
-version := "1.1.2.0"
+version := "1.0.0.0"
 
 scalaVersion in ThisBuild := "2.11.6"
 
 maintainer in Linux := "Clay Teeter <clay.teeter@maalka.com>"
 maintainer in Docker := "Clay Teeter <clay.teeter@maalka.com>"
 
-packageSummary in Linux := "ZNC Tool"
-packageDescription := "ZNC Tool"
+packageSummary in Linux := "Portfolio Codes"
+packageDescription := "Portfolio Codes"
 
 dockerRepository := Some("maalka")
 dockerBaseImage := "maalka/oracle8"
