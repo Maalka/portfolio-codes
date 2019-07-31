@@ -10,13 +10,8 @@ define(['angular'], function() {
   let RootCtrl = function($rootScope) {
     $rootScope.includeHeader = maalkaIncludeHeader;
   };
-
-
-
   RootCtrl.$inject = ['$rootScope'];
-
-  let DashboardCtrl = function($rootScope, $scope, $window, $sce, $timeout, $q, $log, benchmarkServices) {
-
+  let DashboardCtrl = function($rootScope, $scope, $window, $sce, $timeout, $q, $log, benchmarkServices,apiServices,calculations,series,hcOptions) {
 
 
     $rootScope.includeHeader = maalkaIncludeHeader;
@@ -42,12 +37,10 @@ define(['angular'], function() {
 
     $scope.barOptions.eui.axislabel = " [kBtu/ft<sup>2</sup>]";
 
-
     $scope.auxModel = {};
     $scope.auxModel.climate_zone = null;
     $scope.auxModel.scenario = "base";
     $scope.auxModel.reporting_units = "imperial";
-
 
     $scope.sizeDefault = false;
     $scope.temp = {};
@@ -142,7 +135,6 @@ define(['angular'], function() {
     $scope.$watch("auxModel.approach", function () {
 
         $scope.forms.hasValidated = false;
-        $scope.endUses = null;
         $scope.endUses=null;
 
     });
@@ -200,40 +192,6 @@ define(['angular'], function() {
     };
 
 
-    function attachDifferences(endUses,energyDiff,euiDiff){
-          for(let i=0;i<endUses.length;i++){
-            if(energyDiff[i].energy_diff<0){
-              energyDiff[i].energy_diff=0;
-            }
-            if(euiDiff[i].eui_diff<0){
-              euiDiff[i].eui_diff=0;
-            }
-            //TODO: net energy is off by 3*area units
-            //diff+senario=base and you want diff/base
-
-            let energyScenario=energyDiff[i].energy;
-            let euiScenario=euiDiff[i].eui;
-
-
-            let energyBase=energyDiff[i].energy_diff+energyScenario;
-            let euiBase=euiDiff[i].eui_diff+euiScenario;
-
-            let differenceEnergy=(energyDiff[i].energy_diff/energyBase);
-            let differenceEui=(euiDiff[i].eui_diff/euiBase);
-            endUses[i].energy={
-              base:energyBase,
-              difference:differenceEnergy,
-              scenario:energyScenario
-            };
-            endUses[i].eui={
-              base:euiBase,
-              difference:differenceEui,
-              scenario:euiScenario
-            };
-
-          }
-          $scope.endUses=endUses;
-    }
 
 
     $scope.computeBenchmarkResult = function(submission){
@@ -242,254 +200,41 @@ define(['angular'], function() {
         $scope.futures = benchmarkServices.getEnergyMetrics(submission);
 
      $q.resolve($scope.futures).then(function (results) {
-            //retrieves endUse object from api
-            console.log(results);
-            $scope.endUses=results.values[0].end_uses;
-            //retrieves differences object from api
-            let energyDifference=results.values[1].energy_diff;
-            let euiDifference=results.values[2].eui_diff;
-
-
-            //attaches differences to endUses
-            attachDifferences($scope.endUses,energyDifference,euiDifference);
-
-
+        let energyDifference=apiServices.getEndUse(results,'energy_diff');
+        let euiDifference=apiServices.getEndUse(results,'eui_diff');
+        let endUses=apiServices.getEndUse(results,'end_uses');
+        //attaches differences to endUses
+        $scope.endUses=apiServices.attachDifferences(endUses,energyDifference,euiDifference);
             //calculates portfolio totals
-            let portfolioTotals=portfolioTotal($scope.endUses);
-            $scope.portfolioEui=portfolioTotals.eui;
-            $scope.portfolioEnergy=portfolioTotals.energy;
+        $scope.portfolioEui=calculations.totalScenario($scope.endUses).eui;
+        $scope.portfolioEnergy=calculations.totalScenario($scope.endUses).energy;
+        $scope.totalBaseEui=calculations.totalBase($scope.endUses).eui;
+        $scope.totalBaseEnergy=calculations.totalBase($scope.endUses).energy;
 
-            //groups buildings by type
-            $scope.endUses=groupByBuildingType($scope.endUses);
+        console.log($scope.totalBaseEui,'totalBaseEui');
+        console.log($scope.totalBaseEnergy,'totalBaseEnergy');
 
-            var series=createSeries($scope.endUses);
-
-            //always hide the labels for eui
+          //groups buildings by type
+          //reutrns group building types
+        $scope.endUses=apiServices.groupByBuildingType($scope.endUses);
+          let hcData=series.create($scope.endUses);
+          //always hide the labels for eui
             $scope.barOptions.eui.showLabels=false;
             //show labels for eui depending of if the sum of each term is > 0
-            $scope.barOptions.energy.showLabels=showLabels($scope.endUses);
+            $scope.barOptions.energy.showLabels=hcOptions.showLabels($scope.endUses);
             //always want to hide the energy legend
             $scope.barOptions.energy.showInLegend = false;
             //show in legend, if the total values for a particular term is > 0
-            $scope.barOptions.eui.showInLegend=inLegend(series.properties);
-
+            $scope.barOptions.eui.showInLegend=hcOptions.filterLegend(hcData.properties);
             //differences series
-            $scope.differences=series.differences;
+            $scope.differences=hcData.differences;
             //building properties series energy
-            $scope.energySeries=series.properties.energy;
+            $scope.energySeries=hcData.properties.energy;
             //building properties series eui
-            $scope.euiSeries=series.properties.eui;
+            $scope.euiSeries=hcData.properties.eui;
             //building categories
-            $scope.categories=series.categories;
+            $scope.categories=hcData.categories;
         });
-    };
-
-
-    function portfolioTotal(endUse){
-
-      let totalBaseEnergy=0;
-      let totalBaseEui=0;
-      endUse.forEach(function(item){
-          totalBaseEnergy+=Math.floor((item.energy.base)/1000);
-          totalBaseEui+=Math.floor(item.eui.base);
-      });
-      return {
-        eui:totalBaseEui,
-        energy:totalBaseEnergy
-      };
-    }
-      function inLegend(series){
-        let inLegend=[];
-        for (let term in $scope.propertyTerms) {
-            let total=0;
-            for(let i=0;i<series.energy[term].length;i++){
-                total+=series.energy[term][i].y;
-            }
-            if(total===0){
-              inLegend.push(false);
-            }else{
-              inLegend.push(true);
-            }
-        }
-        return inLegend;
-      }
-
-      function convertToMBtus(value){
-        return value/1000;
-      }
-
-      function createSeries(endUse){
-        let categories = [];
-        let differences={
-          eui:[],
-          energy:[]
-        };
-        //Cooling, Ext. Equipment, Ext. Lighting,
-        //Fans, Generator, Heat Recovery, Heat Rejection, Heating, Humidity, Int. Equipment, Int. Lighting, Pumps, Refrigeration, Hot Water
-        let terms = {
-          clg: {},
-          extEqp: {},
-          extLgt: {},
-          fans: {},
-          gentor: {},
-          heatRec: {},
-          heatRej: {},
-          htg: {},
-          humid: {},
-          intEqp: {},
-          intLgt: {},
-          pumps: {},
-          refrg: {},
-          swh: {},
-          net: {}
-        };
-
-        let properties = {
-          eui: {},
-          energy: {}
-        };
-        for (let term in terms) {
-          properties.eui[term] = [];
-          properties.energy[term] = [];
-        }
-        endUse.forEach(function(item){
-            differences.eui.push(item.eui.difference);
-            differences.energy.push(item.energy.difference);
-            categories.push(item.building_name);
-            for(let term in item.energy_breakdown){
-                properties.energy[term].push({y:convertToMBtus(item.energy_breakdown[term]),difference:item.energy.difference,total:convertToMBtus(item.energy.scenario),base:convertToMBtus(item.energy.base),name:prettyNames[term]});
-            }
-            for(let term in item.eui_breakdown){
-                properties.eui[term].push({y:item.eui_breakdown[term],difference:item.eui.difference,total:item.eui.scenario,base:item.eui.base,name:prettyNames[term]});
-            }
-
-        });
-        return {
-          properties:properties,
-          differences:differences,
-          categories:categories
-      };
-    }
-
-    function showLabels(endUses){
-      //if the difference in energy is equal to Zero
-      //then we do not want to show the labels
-      //because there has been no change from base
-      if(endUses[0].energy.difference===0){
-        return false;
-      }else{
-        return true;
-      }
-    }
-
-    function filter(endUses) {
-      for(let s=0;s<endUses.length;s++){
-        for (let z = 0; z < (endUses.length - s) - 1; z++) {
-          let net = endUses[z].energy_breakdown.net;
-          let next = endUses[z + 1].energy_breakdown.net;
-          if (next > net) {
-            let store = endUses[z];
-            endUses[z] = endUses[z + 1];
-            endUses[z + 1] = store;
-          }
-        }
-      }
-    }
-    function findTotalEnergy(buildingTypes){
-      let orderBy=[];
-      for(let category in buildingTypes){
-        //operated for each category
-       let sum=0;
-        for(let z=0;z<buildingTypes[category].length;z++){
-           sum+=buildingTypes[category][z].energy_breakdown.net;
-        }
-        if(sum!==0){
-          orderBy.push({building:category,total:sum,size:buildingTypes[category].length});
-        }
-      }
-      return orderBy;
-    }
-    function findAverageEnergy(buildingGroup){
-          let averageArr=[];
-          let totalEnergy=findTotalEnergy(buildingGroup);
-          totalEnergy.forEach(function(item){
-            let average=(item.total/item.size);
-            averageArr.push({building:item.building,average:average});
-          });
-          return averageArr;
-    }
-    function sortByHighestAverage(buildingGroup){
-          let buildingAverages=findAverageEnergy(buildingGroup);
-          let order=[];
-            for(let i=0;i<buildingAverages.length;i++){
-              for (let v = 0; v < (buildingAverages.length - i) - 1; v++) {
-                let average = buildingAverages[v].average;
-                let next = buildingAverages[v + 1].average;
-                if (next > average) {
-                  let store = buildingAverages[v];
-                  buildingAverages[v] = buildingAverages[v + 1];
-                  buildingAverages[v + 1] = store;
-                }
-              }
-          }
-          buildingAverages.forEach(function(item){
-            order.push(item.building);
-          });
-          return order;
-    }
-    function sortBuildings(buildingTypes){
-      //sorting buildings in each group by net energy type
-      for(let building in buildingTypes){
-        for(let i=0;i<buildingTypes[building].length;i++){
-            filter(buildingTypes[building]);
-        }
-      }
-    }
-    function groupByBuildingType(endUses) {
-      //building types for overarching groups defined
-      //inital order of the building groupings
-      let filteredArr=[];
-      let buildingTypes={
-        lib:[],
-        admin:[],
-        sec_school:[],
-        fire_station:[],
-        police_station:[]
-      };
-      //add a building to each building type
-      endUses.forEach(function(item){
-        buildingTypes[item.building_type].push(item);
-      });
-      //sorting buildings in each group by net energy type
-      sortBuildings(buildingTypes);
-      let order=sortByHighestAverage(buildingTypes);
-      //reformat data for end use with including sorting by highest average order
-      order.forEach(function(item){
-        for(let v=0;v<buildingTypes[item].length;v++){
-          filteredArr.push(buildingTypes[item][v]);
-        }
-      });
-      //filteredArray is the array to be returned
-      return filteredArr;
-    }
-
-
-     $scope.propertyTerms = {
-      clg: {},
-      extEqp: {},
-      extLgt: {},
-      fans: {},
-      gentor: {},
-      heatRec: {},
-      heatRej: {},
-      htg: {},
-      humid: {},
-      intEqp: {},
-      intLgt: {},
-      pumps: {},
-      refrg: {},
-      swh: {},
-      net: {}
     };
 
     $scope.submitErrors = function () {
@@ -505,6 +250,7 @@ define(['angular'], function() {
 
     $scope.submit = function () {
         $scope.endUses = null;
+
         if($scope.auxModel.approach === "manual"){
             $scope.submitForm();
         } else {
@@ -623,24 +369,7 @@ define(['angular'], function() {
     };
 
 
-    let prettyNames={
-        clg: "Cooling",
-        extEqp: "Ext. Equipment",
-        extLgt: "Ext. Lighting",
-        fans: "Fans",
-        gentor: "Generator",
-        heatRec: "Heat Recovery",
-        heatRej: "Heat Rejection",
-        htg: "Heating",
-        humid: "Humidity",
-        intEqp: "Int. Equipment",
-        intLgt: "Int. Lighting",
-        pumps: "Pumps",
-        refrg: "Refrigeration",
-        swh: "Hot Water",
-        net: "net"
 
-    };
     $scope.geographicProperties = {
         country : [],
         city : [],
@@ -668,7 +397,7 @@ define(['angular'], function() {
 
 
   };
-  DashboardCtrl.$inject = ['$rootScope', '$scope', '$window','$sce','$timeout', '$q', '$log', 'benchmarkServices'];
+  DashboardCtrl.$inject = ['$rootScope', '$scope', '$window','$sce','$timeout', '$q', '$log', 'benchmarkServices','apiServices','calculations','series','hcOptions'];
   return {
     DashboardCtrl: DashboardCtrl,
     RootCtrl: RootCtrl
